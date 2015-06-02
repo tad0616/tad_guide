@@ -1,0 +1,26 @@
+Tad Guide 1.1 Function Item (2013-08-18 release)
+================================================
+ 1. Modify the example import content, making it smarter (without first establishing classification does not cover off original content, and more flexible).
+ 2. Import the modified example of contents include:
+  (1) tad_player video player (will establish a classification, load 4 Movie Info)
+  (2) tad_link good station link (creates 3 classification, load 12 site data)
+  (3) tadgallery electronic album (will establish a classification, loading 17 photo data)
+  (4) randomquote random small language (Aphorisms 37 loads data)
+  (5) tad_rss Friends NEWS (RSS data loads 4)
+  (6) tadnews station message (will create two custom pages classification, load 4 + N papers custom page data, will create a news classification, load 8 news items)
+ 3. Date and publishers of information to automatic grab the moment.
+ 4. tadtools adjust preferences: Sign unconformity OpenID, OpenID row 4
+ 5. Cancellation of all blocks import mechanism
+ 6. Add one-click install feature
+
+
+
+
+Tad Guide 1.0 Function Item (2013-06-30 release)
+================================================
+ 1. You can install or update recommended online modules
+ 2. Can be added after optimization preferences
+ 3. recommend to quickly enable or block all the blocks
+ 4. Fast create groups
+ 5. fast open correspondence classified according to the group classification for each of the modules have support, and set a good permissions
+ 6. Import sample content
