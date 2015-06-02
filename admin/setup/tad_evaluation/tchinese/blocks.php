@@ -1,0 +1,3 @@
+<?php
+$new_data[0]=array('options'=>'','title'=>'øÄÊüÖªøú','side'=>'0','weight'=>'21','visible'=>'1');
+?>
