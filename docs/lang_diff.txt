@@ -1,11 +1,4 @@
-LANGUAGE DIFFERENCES
-=====================
+Read Me First
+=============
 
-Below are language differences from a version to next version.
-
-Legend :
-+ Added
-- Removed
-* Modified
-x renamed
-
+Please make sure that you download the XOOPS Icon Set, and upload it to uploads/images directory

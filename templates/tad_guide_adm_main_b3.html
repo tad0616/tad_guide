@@ -3,27 +3,27 @@
 <div class="container-fluid">
   <{if $now_op=="login_form"}>
 
-    <div class="row-fluid">
-      <div class="span6">
+    <div class="row">
+      <div class="col-md-6">
         <h2><{$smarty.const._MA_GUIDE_SSH_ID}></h2>
         <div class="well">
           <form action="main.php" method="post">
-            <div class="row-fluid">
-              <label class="span5 text-right"><{$smarty.const._MA_GUIDE_SSH_HOST}><{$smarty.const._TAD_FOR}></label>
-              <div class="span7">
-                <input type="text" name="ssh_host" placeholder="<{$smarty.const._MA_GUIDE_SSH_HOST}>" value="<{$tad_adm_ssh_host}>" class="span12">
+            <div class="row">
+              <label class="col-md-5 text-right"><{$smarty.const._MA_GUIDE_SSH_HOST}><{$smarty.const._TAD_FOR}></label>
+              <div class="col-md-7">
+                <input type="text" name="ssh_host" placeholder="<{$smarty.const._MA_GUIDE_SSH_HOST}>" value="<{$tad_adm_ssh_host}>" class="col-md-12">
               </div>
             </div>
-            <div class="row-fluid">
-              <label class="span5 text-right"><{$smarty.const._MA_GUIDE_SSH_ID}><{$smarty.const._TAD_FOR}></label>
-              <div class="span7">
-                <input type="text" name="ssh_id" placeholder="<{$smarty.const._MA_GUIDE_SSH_ID}>" class="span12" value="<{$tad_adm_ssh_id}>">
+            <div class="row">
+              <label class="col-md-5 text-right"><{$smarty.const._MA_GUIDE_SSH_ID}><{$smarty.const._TAD_FOR}></label>
+              <div class="col-md-7">
+                <input type="text" name="ssh_id" placeholder="<{$smarty.const._MA_GUIDE_SSH_ID}>" class="col-md-12" value="<{$tad_adm_ssh_id}>">
               </div>
             </div>
-            <div class="row-fluid">
-              <label class="span5 text-right"><{$smarty.const._MA_GUIDE_SSH_PASS}><{$smarty.const._TAD_FOR}></label>
-              <div class="span7">
-                <input type="password" name="ssh_passwd" placeholder="<{$smarty.const._MA_GUIDE_SSH_PASS}>" class="span12" value="<{$tad_adm_ssh_passwd}>">
+            <div class="row">
+              <label class="col-md-5 text-right"><{$smarty.const._MA_GUIDE_SSH_PASS}><{$smarty.const._TAD_FOR}></label>
+              <div class="col-md-7">
+                <input type="password" name="ssh_passwd" placeholder="<{$smarty.const._MA_GUIDE_SSH_PASS}>" class="col-md-12" value="<{$tad_adm_ssh_passwd}>">
               </div>
             </div>
 
@@ -40,26 +40,26 @@
         </div>
       </div>
 
-      <div class="span6">
+      <div class="col-md-6">
         <h2><{$smarty.const._MA_GUIDE_FTP_ID}></h2>
         <div class="well">
           <form action="main.php" method="post">
-            <div class="row-fluid">
-              <label class="span5 text-right"><{$smarty.const._MA_GUIDE_FTP_HOST}><{$smarty.const._TAD_FOR}></label>
-              <div class="span7">
-                <input type="text" name="ftp_host" placeholder="<{$smarty.const._MA_GUIDE_FTP_HOST}>" value="<{$tad_adm_ftp_host}>" class="span12">
+            <div class="row">
+              <label class="col-md-5 text-right"><{$smarty.const._MA_GUIDE_FTP_HOST}><{$smarty.const._TAD_FOR}></label>
+              <div class="col-md-7">
+                <input type="text" name="ftp_host" placeholder="<{$smarty.const._MA_GUIDE_FTP_HOST}>" value="<{$tad_adm_ftp_host}>" class="col-md-12">
               </div>
             </div>
-            <div class="row-fluid">
-              <label class="span5 text-right"><{$smarty.const._MA_GUIDE_FTP_ID}><{$smarty.const._TAD_FOR}></label>
-              <div class="span7">
-                <input type="text" name="ftp_id" placeholder="<{$smarty.const._MA_GUIDE_FTP_ID}>" class="span12" value="<{$tad_adm_ftp_id}>">
+            <div class="row">
+              <label class="col-md-5 text-right"><{$smarty.const._MA_GUIDE_FTP_ID}><{$smarty.const._TAD_FOR}></label>
+              <div class="col-md-7">
+                <input type="text" name="ftp_id" placeholder="<{$smarty.const._MA_GUIDE_FTP_ID}>" class="col-md-12" value="<{$tad_adm_ftp_id}>">
               </div>
             </div>
-            <div class="row-fluid">
-              <label class="span5 text-right"><{$smarty.const._MA_GUIDE_FTP_PASS}><{$smarty.const._TAD_FOR}></label>
-              <div class="span7">
-                <input type="password" name="ftp_passwd" placeholder="<{$smarty.const._MA_GUIDE_FTP_PASS}>" class="span12" value="<{$tad_adm_ftp_passwd}>">
+            <div class="row">
+              <label class="col-md-5 text-right"><{$smarty.const._MA_GUIDE_FTP_PASS}><{$smarty.const._TAD_FOR}></label>
+              <div class="col-md-7">
+                <input type="password" name="ftp_passwd" placeholder="<{$smarty.const._MA_GUIDE_FTP_PASS}>" class="col-md-12" value="<{$tad_adm_ftp_passwd}>">
                 <{$smarty.const._MA_GUIDE_FTP_NOTE}>
               </div>
             </div>
@@ -107,12 +107,10 @@
         });
       });
     </script>
-    <div class="row-fluid">
-
     <form action="main.php" method="post" class="form-horizontal" role="form">
-      <div class="control-group">
-        <div class="span2 controls">
-          <select id="group_kind" class="span12">
+      <div class="form-group">
+        <div class="col-md-2 control-label">
+          <select id="group_kind" class="form-control">
             <option value="custom"><{$smarty.const._MA_GUIDE_CUSTOM}></option>
             <option value="es12_school"><{$smarty.const._MA_GUIDE_ES12_SCHOOL}></option>
             <option value="es24_school"><{$smarty.const._MA_GUIDE_ES24_SCHOOL}></option>
@@ -121,16 +119,15 @@
             <option value="jh7_school"><{$smarty.const._MA_GUIDE_JH7_SCHOOL}></option>
           </select>
         </div>
-        <div class="span9 controls">
-          <input type="text" name="create_group" id="create_group" value="" class="span12" placeholder="<{$smarty.const._MA_GUIDE_CREATE_GROUP_PLACEHOLDER}>">
+        <div class="col-md-9">
+          <input type="text" name="create_group" id="create_group" value="" class="form-control" placeholder="<{$smarty.const._MA_GUIDE_CREATE_GROUP_PLACEHOLDER}>">
           <input type="hidden" name="op" value="to_create_group">
         </div>
-        <div class="span1 controls">
+        <div class="col-md-1">
           <button type="submit" class="btn btn-primary"><{$smarty.const._MA_GUIDE_CREATE}></button>
         </div>
       </div>
     </form>
-
     <table id="list_modules" class="table table-bordered table-hover" style="width:auto;">
       <thead>
         <tr>
@@ -158,11 +155,11 @@
               <td nowrap>
                 <a name="<{$mod.dirname}>"> </a>
                 <{if $mod.kind=="module"}>
-                  <a id="view_well<{$mod.module_sn}>" class="btn btn-mini btn-info" href="javascript:alert('<{$mod.descript}>')"><{$smarty.const._MA_GUIDE_MODULE}></a>
+                  <a id="view_well<{$mod.module_sn}>" class="btn btn-xs btn-info" href="javascript:alert('<{$mod.descript}>')"><{$smarty.const._MA_GUIDE_MODULE}></a>
                 <{elseif $mod.kind=="theme"}>
-                  <a id="view_well<{$mod.module_sn}>" class="btn btn-mini btn-success" href="javascript:alert('<{$mod.descript}>')"><{$smarty.const._MA_GUIDE_THEME}></a>
+                  <a id="view_well<{$mod.module_sn}>" class="btn btn-xs btn-success" href="javascript:alert('<{$mod.descript}>')"><{$smarty.const._MA_GUIDE_THEME}></a>
                 <{elseif $mod.kind=="fix"}>
-                  <a id="view_well<{$mod.module_sn}>" class="btn btn-mini btn-warning" href="javascript:alert('<{$mod.descript}>')"><{$smarty.const._MA_GUIDE_FIX}></a>
+                  <a id="view_well<{$mod.module_sn}>" class="btn btn-xs btn-warning" href="javascript:alert('<{$mod.descript}>')"><{$smarty.const._MA_GUIDE_FIX}></a>
                 <{/if}>
 
                 <a href="http://120.115.2.90/modules/tad_modules/index.php?module_sn=<{$mod.module_sn}>" target="_blank"><{$mod.name}></a>
@@ -176,16 +173,16 @@
 
               <td nowrap>
                 <{if $mod.function=='install'}>
-                  <a href="main.php?op=install_module&dirname=<{$mod.dirname}>&file_link=<{$mod.file_link}>&update_sn=<{$mod.update_sn}>" class="btn btn-mini btn-primary modulesadmin" data-fancybox-type="iframe"><{$smarty.const._MA_GUIDE_MOD_INSTALL_MODULE}></a>
+                  <a href="main.php?op=install_module&dirname=<{$mod.dirname}>&file_link=<{$mod.file_link}>&update_sn=<{$mod.update_sn}>" class="btn btn-xs btn-primary modulesadmin" data-fancybox-type="iframe"><{$smarty.const._MA_GUIDE_MOD_INSTALL_MODULE}></a>
                 <{elseif $mod.function=='update'}>
-                  <a href="<{$xoops_url}>/modules/<{$mod.dirname}>" class="btn btn-mini btn-info" target="_blank" alt="<{$smarty.const._MA_GUIDE_TO_MODULE}>" title="<{$smarty.const._MA_GUIDE_TO_MODULE}>"><i class="fa fa-arrow-right"></i></a>
-                  <a href="main.php?op=update_module&dirname=<{$mod.dirname}>&file_link=<{$mod.file_link}>&update_sn=<{$mod.update_sn}>" class="btn btn-mini btn-danger modulesadmin"  data-fancybox-type="iframe"><{$smarty.const._MA_GUIDE_MOD_UPDATE_MODULE}> <{$mod.new_version}></a>
+                  <a href="<{$xoops_url}>/modules/<{$mod.dirname}>" class="btn btn-xs btn-info" target="_blank" alt="<{$smarty.const._MA_GUIDE_TO_MODULE}>" title="<{$smarty.const._MA_GUIDE_TO_MODULE}>"><i class="fa fa-arrow-right"></i></a>
+                  <a href="main.php?op=update_module&dirname=<{$mod.dirname}>&file_link=<{$mod.file_link}>&update_sn=<{$mod.update_sn}>" class="btn btn-xs btn-danger modulesadmin"  data-fancybox-type="iframe"><{$smarty.const._MA_GUIDE_MOD_UPDATE_MODULE}> <{$mod.new_version}></a>
                 <{elseif $mod.function=='update_theme'}>
-                    <a href="main.php?op=update_theme&dirname=<{$mod.dirname}>&file_link=<{$mod.file_link}>&update_sn=<{$mod.update_sn}>" class="btn btn-mini btn-danger" ><{$smarty.const._MA_GUIDE_MOD_UPDATE_THEME}> <{$mod.new_version}></a>
+                    <a href="main.php?op=update_theme&dirname=<{$mod.dirname}>&file_link=<{$mod.file_link}>&update_sn=<{$mod.update_sn}>" class="btn btn-xs btn-danger" ><{$smarty.const._MA_GUIDE_MOD_UPDATE_THEME}> <{$mod.new_version}></a>
                 <{elseif $mod.function=='install_theme'}>
-                    <a href="main.php?op=install_theme&dirname=<{$mod.dirname}>&file_link=<{$mod.file_link}>&update_sn=<{$mod.update_sn}>" class="btn btn-mini btn-primary" ><{$smarty.const._MA_GUIDE_MOD_INSTALL_THEME}></a>
+                    <a href="main.php?op=install_theme&dirname=<{$mod.dirname}>&file_link=<{$mod.file_link}>&update_sn=<{$mod.update_sn}>" class="btn btn-xs btn-primary" ><{$smarty.const._MA_GUIDE_MOD_INSTALL_THEME}></a>
                 <{elseif $mod.function=='last_mod'}>
-                  <a href="<{$xoops_url}>/modules/<{$mod.dirname}>" class="btn btn-mini btn-info" target="_blank" alt="<{$smarty.const._MA_GUIDE_TO_MODULE}>" title="<{$smarty.const._MA_GUIDE_TO_MODULE}>"><i class="fa fa-arrow-right"></i></a>
+                  <a href="<{$xoops_url}>/modules/<{$mod.dirname}>" class="btn btn-xs btn-info" target="_blank" alt="<{$smarty.const._MA_GUIDE_TO_MODULE}>" title="<{$smarty.const._MA_GUIDE_TO_MODULE}>"><i class="fa fa-arrow-right"></i></a>
                   <a href="main.php?op=update_module&dirname=<{$mod.dirname}>&file_link=<{$mod.file_link}>&update_sn=<{$mod.update_sn}>" class="modulesadmin"  data-fancybox-type="iframe"><{$smarty.const._MA_GUIDE_MOD_LATEST}></a>
                 <{elseif $mod.function=='last_theme'}>
                     <a href="main.php?op=update_theme&dirname=<{$mod.dirname}>&file_link=<{$mod.file_link}>&update_sn=<{$mod.update_sn}>" ><{$smarty.const._MA_GUIDE_MOD_LATEST}></a>
@@ -197,7 +194,7 @@
 
               <td nowrap>
                 <{if $mod.function!='install'}>
-                  <a href="main.php?op=one_key&dirname=<{$mod.dirname}>&mid=<{$mod.mid}>" alt="<{$smarty.const._MA_GUIDE_ONE_KEY}>" title="<{$smarty.const._MA_GUIDE_ONE_KEY}>" class="btn btn-primary onekey" data-fancybox-type="iframe"><i class="fa fa-cog"></i></a>
+                  <a href="main.php?op=one_key&dirname=<{$mod.dirname}>&mid=<{$mod.mid}>" alt="<{$smarty.const._MA_GUIDE_ONE_KEY}>" title="<{$smarty.const._MA_GUIDE_ONE_KEY}>" class="btn btn-primary onekey" data-fancybox-type="iframe"><i class="fa fa-hand-o-up"></i></a>
                 <{/if}>
               </td>
 

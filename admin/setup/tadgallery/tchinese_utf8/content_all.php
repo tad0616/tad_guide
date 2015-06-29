@@ -13,9 +13,9 @@ function tadgallery_content($cate_sn=""){
 
   $max_sort++;
   $sql="INSERT INTO `".$xoopsDB->prefix("tad_gallery_cate")."`
-  (`of_csn`, `title`, `content`, `passwd`, `enable_group`, `enable_upload_group`, `sort`, `mode`, `show_mode`, `cover`, `no_hotlink`, `uid`)
+  (`of_csn`, `title`, `passwd`, `enable_group`, `enable_upload_group`, `sort`, `mode`, `show_mode`, `cover`, `no_hotlink`, `uid`)
   VALUES
-  (0,'戶外教學', '土耳其共和國（土耳其語：Türkiye Cumhuriyeti）是一個橫跨歐亞兩洲的國家，國土包括西亞的安納托利亞半島、以及巴爾幹半島的東色雷斯地區。北臨黑海，南臨地中海，東南與敘利亞、伊拉克接壤，西臨愛琴海，並與希臘以及保加利亞接壤，東部與喬治亞、亞美尼亞、亞塞拜然和伊朗接壤。在安納托利亞半島和東色雷斯地區之間的，是博斯普魯斯海峽、馬爾馬拉海和達達尼爾海峽，屬黑海海峽，別稱土耳其海峽，是連接黑海以及地中海的唯一航道。其首都是位處安納托利亞高原正中央的安卡拉。國民有98%是穆斯林，但法律規定實施政教分離。目前正申請加入歐盟，但是歐盟因北賽普勒斯及亞美尼亞種族大屠殺等問題暫時拒絕土耳其加入。土耳其由2009年起為突厥議會成員國。 其氣候屬地中海氣候，南部和西部氣候溫和，夏季乾熱，冬季多雨：黑海沿岸，涼爽濕潤；內陸、東北、東南則冬季寒冷，夏季乾熱。', '', '', '1', '{$max_sort}', '', '', '', '', '1')";
+  (0,'戶外教學', '', '', '1', '{$max_sort}', '', '', '', '', '1')";
   $xoopsDB->queryF($sql) or die($sql);
   $insert_id = $xoopsDB->getInsertId();
 

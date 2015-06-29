@@ -1,4 +1,4 @@
-README FIRST
------------------------
+Read Me First
+=============
 
-This module is used to quickly create a group and open the corresponding classification and setting authority in each module
+Please make sure that you download the XOOPS Icon Set, and upload it to uploads/images directory
