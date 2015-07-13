@@ -1,27 +1,27 @@
 <?php
-function tad_book3_content($cate_sn=""){
-  global $xoopsDB , $xoopsUser;
+function tad_book3_content($cate_sn = "")
+{
+    global $xoopsDB, $xoopsUser;
 
-  $sql="delete from `".$xoopsDB->prefix("tad_book3")."` where tbcsn='$cate_sn'";
-  $xoopsDB->queryF($sql) or die($sql);
+    $sql = "delete from `" . $xoopsDB->prefix("tad_book3") . "` where tbcsn='$cate_sn'";
+    $xoopsDB->queryF($sql) or die($sql);
 
-  $uid=$xoopsUser->uid();
+    $uid = $xoopsUser->uid();
 
-  $sql="INSERT INTO `".$xoopsDB->prefix("tad_book3")."` (`tbcsn`, `sort`, `title`, `description`, `author`, `read_group`, `passwd`, `enable`, `pic_name`, `counter`, `create_date`) VALUES
+    $sql = "INSERT INTO `" . $xoopsDB->prefix("tad_book3") . "` (`tbcsn`, `sort`, `title`, `description`, `author`, `read_group`, `passwd`, `enable`, `pic_name`, `counter`, `create_date`) VALUES
 
   ('$cate_sn', 1, 'XOOPS輕鬆架快速上手', '<p>XOOPS輕鬆架使用手冊，這本只要是針對校園使用，一般網站亦可參考，請自行融會貫通即可。</p>\r\n', '$uid', '', '', '1', '', 0, '2014-01-25 17:15:47')
   ";
 
-  $xoopsDB->queryF($sql) or die($sql);
+    $xoopsDB->queryF($sql) or die($sql);
 
-  //取得最後新增資料的流水編號
-  $tbsn=$xoopsDB->getInsertId();
+    //取得最後新增資料的流水編號
+    $tbsn = $xoopsDB->getInsertId();
 
+    $sql = "delete from `" . $xoopsDB->prefix("tad_book3_docs") . "` where  tbsn='$tbsn'";
+    $xoopsDB->queryF($sql) or die($sql);
 
-  $sql="delete from `".$xoopsDB->prefix("tad_book3_docs")."` where  tbsn='$tbsn'";
-  $xoopsDB->queryF($sql) or die($sql);
-
-  $sql="INSERT INTO `".$xoopsDB->prefix("tad_book3_docs")."` (`tbsn`, `category`, `page`, `paragraph`, `sort`, `title`, `content`, `add_date`, `last_modify_date`, `uid`, `count`, `enable`) VALUES
+    $sql = "INSERT INTO `" . $xoopsDB->prefix("tad_book3_docs") . "` (`tbsn`, `category`, `page`, `paragraph`, `sort`, `title`, `content`, `add_date`, `last_modify_date`, `uid`, `count`, `enable`) VALUES
 
   ('{$tbsn}', 1, 0, 0, 0, '什麼是「XOOPS輕鬆架」', '<p>這是一個可以讓您很快的架起一個完整的中文版XOOPS網站，無需經過繁瑣的安裝步驟，而且此網站可以架在 windows、Linux或隨身碟上並直接執行！XOOPS輕鬆架有四種版本：</p>\r\n\r\n<h3><a href=\"http://120.115.2.90/modules/tad_uploader/index.php?of_cat_sn=3\" target=\"_blank\">一、基本網站包</a></h3>\r\n\r\n<ol>\r\n <li>含XOOPS 2.5.6 UTF-8中文版以及基本模組（tad_tools、tad_adm、tad_themes），適用於各種平台，裡面不含伺服器。</li>\r\n <li>上傳 my_xoops_base_xxx.tgz 至主機上，解壓後，將 public_html 裡的檔案目錄放到伺服器的網頁目錄中，並將 xoops_data 及 xoops_libs 放到和網頁目錄同一層即可。</li>\r\n <li>開啟瀏覽器連到本機網站，按照畫面指示，分別設定完資料庫以即管理員帳號，即可得到一個完整的新網站。</li>\r\n</ol>\r\n\r\n<h3><a href=\"http://120.115.2.90/modules/tad_uploader/index.php?of_cat_sn=2\" target=\"_blank\">二、基本伺服包</a></h3>\r\n\r\n<ol>\r\n <li>含XOOPS 2.5.6 UTF-8中文版以及基本模組（tad_tools、tad_adm、tad_themes），僅適用Windows平台（強烈建議用win7或win8），裡面含有 UniForm 伺服器（Apache+MySQL+PHP）。</li>\r\n <li>執行my_xoops_base_xxx.exe 後，按照畫面指示，分別設定完資料庫以即管理員帳號，即可得到一個完整的新網站。</li>\r\n</ol>\r\n\r\n<h3><a href=\"http://120.115.2.90/modules/tad_uploader/index.php?of_cat_sn=9\" target=\"_blank\">三、整合網站包</a></h3>\r\n\r\n<ol>\r\n <li>含XOOPS 2.5.6 UTF-8中文版以及各式實用模組，已內建部份設定及內容（適合校園使用），適用於各種平台，裡面不含伺服器。</li>\r\n  <li>上傳 my_xoops_school_xxx.tgz 至主機上，解壓後，將 public_html 裡的檔案目錄放到伺服器的網頁目錄中，並將 xoops_data 及 xoops_libs 放到和網頁目錄同一層即可。</li>\r\n <li>開啟瀏覽器連到本機網站，按照畫面指示，分別設定完資料庫以即管理員帳號，即可得到一個完整的新網站。</li>\r\n</ol>\r\n\r\n<h3><a href=\"http://120.115.2.90/modules/tad_uploader/index.php?of_cat_sn=5\" target=\"_blank\">四、整合伺服包</a></h3>\r\n\r\n<ol>\r\n <li>含XOOPS 2.5.6 UTF-8中文版以及各式實用模組，已內建部份設定及內容（適合校園使用），僅適用Windows平台（強烈建議用win7或win8），裡面含有 UniForm 伺服器（Apache+MySQL+PHP）。</li>\r\n  <li>執行my_xoops_school_xxx.exe 後，按照畫面指示，分別設定完資料庫以即管理員帳號，即可得到一個完整的新網站。</li>\r\n</ol>\r\n', '1390641378', '1390663481', 1, 991, '1'),
   ('{$tbsn}', 1, 2, 0, 0, 'Linux下的安裝', '<h3>一、安裝步驟</h3>\r\n\r\n<ol>\r\n <li>若安裝者的身份並非root，那麼，請先確定已經有建立一組資料庫（含資料庫名稱、資料庫帳號、資料庫密碼）可以供XOOPS安裝使用。</li>\r\n <li>將 my_xoops_base_xxx.tgz 或 my_xoops_school_xxx.tgz 上傳到網頁目錄網頁目錄（/var/www 或 /home/xxx/public_html）的上一層（例如：/var 或者 /home/xxx/）</li>\r\n <li>或者直接在 Linux 下切換到網頁目錄的上一層，用 wget 抓取該壓縮檔亦可。</li>\r\n  <li>解壓縮該檔案： tar zxvf my_xoops_base_xxx.tgz</li>\r\n <li>將 解壓後的網頁目錄（public_html）改名為實際的網頁目錄名稱（例如：www）</li>\r\n  <li>因為預設擁有者可能不存在您的主機中，所以，請修改擁有者：「chown -R 擁有者:所屬群組 www」，例如：\r\n <pre class=\"brush:jscript;\">\r\nchown -R root:root www\r\nchown -R root:root xoops_data\r\nchown -R root:root xoops_lib</pre>\r\n </li>\r\n <li><u><span style=\"color:#B22222;\">不建議在windows下解壓再用 FTP 上傳，因為這樣所有屬性設定會跑掉。</span></u></li>\r\n  <li>若是從windows解壓再上傳的（或者小弟打包疏忽忘了設好權限的），請自行修改權限（路徑請自行視情況修改）：\r\n  <pre class=\"brush:jscript;\">\r\nchmod -R 777 /var/www/uploads\r\nchmod -R 777 /var/xoops_data</pre>\r\n </li>\r\n</ol>\r\n\r\n<h3>二、放置在 /var/www 的範例（主網站）</h3>\r\n\r\n<p><img alt=\"\" src=\"http://campus-xoops.tn.edu.tw/uploads/tad_book3/image/dcs/c034.png\" style=\"width: 600px; height: 304px;\" /></p>\r\n\r\n<ol>\r\n <li>因為是主網頁，所以，把三個目錄解壓縮到 /var 下，並將 public_html 改名為 www，和 xoops_data及 xoops_lib（這兩者名稱勿動） 放在同一層。</li>\r\n  <li>xoops_data含底下所有檔案及目錄讀寫屬性應為777</li>\r\n  <li>擁有者修改為root:root</li>\r\n  <li>網址即為：http://網址</li>\r\n <li>要放置在 /var/www/的子目錄下應該也行，例如自訂一個叫做 myxoops 的子目錄：/var/www/myxoops，但其位置應該是這樣：\r\n <ul>\r\n    <li>/var/www/myxoops（把原先的 public_html 改名為 myxoops）</li>\r\n   <li>/var/www/xoops_data（不可移出到 var/xoops_data）</li>\r\n    <li>/var/www/xoops_lib（不可移出到 var/xoops_lib）</li>\r\n  </ul>\r\n </li>\r\n</ol>\r\n\r\n<h3>三、放在 /home 下的範例（一般使用者）</h3>\r\n\r\n<ol>\r\n <li>因為是使用者（假設名為xoops的使用者）網頁，所以，把三個目錄解壓縮到 /home/xoops（即使用者名稱）下，public_html 一般無須改名（除非有去變動apache預設值），和 xoops_data及 xoops_lib（這兩者名稱勿動） 也是放在同一層。<br />\r\n <img alt=\"\" src=\"http://120.115.2.90/uploads/tad_book3/image/x129.png\" style=\"width: 600px; height: 182px;\" /></li>\r\n <li>xoops_data含底下所有檔案及目錄讀寫屬性應為777<br />\r\n <img alt=\"\" src=\"http://120.115.2.90/uploads/tad_book3/image/x132.png\" style=\"width: 600px; height: 182px;\" /></li>\r\n <li>擁有者修改為 xoops:xoops （即使用者名稱）</li>\r\n  <li>網址為：http://網址/~使用者名稱</li>\r\n</ol>\r\n', '1390641409', '1403484327', 1, 1016, '1'),
@@ -79,8 +79,8 @@ function tad_book3_content($cate_sn=""){
   ('{$tbsn}', 1, 3, 3, 0, '自己加上檔案類型 mime type', '<p>電子相簿中的3D牆需要載入主機裡面的rss檔，但預設的雲端主機並不認識 .rss 這種檔案類型，或者上傳影片時，主機也不認識mp4這種格式，所以，我們必須自己告訴主機</p>\r\n\r\n<p>請上載此 <a href=\"http://120.115.2.90/uploads/tad_book3/file/web.config\">web.config</a> 設定檔至 /site/wwwroot/ 底下即可！其內容為：</p>\r\n\r\n<pre class=\"brush:xml;\">\r\n&lt;configuration&gt;\r\n    &lt;system.webServer&gt;\r\n        &lt;staticContent&gt;            \r\n            &lt;mimeMap fileExtension=\".rss\" mimeType=\"application/rss+xml\" /&gt;\r\n            &lt;mimeMap fileExtension=\".mp4\" mimeType=\"video/mp4\" /&gt;\r\n     &lt;/staticContent&gt;\r\n    &lt;/system.webServer&gt;\r\n&lt;/configuration&gt;</pre>\r\n', '1397101045', '1401438791', 1, 160, '1');
 
   ";
-  $xoopsDB->queryF($sql) or die(mysql_error()."<br><br>".$sql);
-  //uzip_file();
+    $xoopsDB->queryF($sql) or die(mysql_error() . "<br><br>" . $sql);
+    //uzip_file();
 }
 
 // //上傳壓縮圖檔
@@ -101,4 +101,3 @@ function tad_book3_content($cate_sn=""){
 //   $zip->unzipAll(XOOPS_ROOT_PATH."/uploads/tad_link/");
 
 // }
-?>

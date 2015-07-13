@@ -1,8 +1,8 @@
 <?php
 
-$bak_table[1]['name']="tad_player";
-$bak_table[1]['sql']="
-CREATE TABLE `".$xoopsDB->prefix("tad_player_gbak")."` (
+$bak_table[1]['name'] = "tad_player";
+$bak_table[1]['sql']  = "
+CREATE TABLE `" . $xoopsDB->prefix("tad_player_gbak") . "` (
   `psn` smallint(5) unsigned NOT NULL auto_increment,
   `pcsn` smallint(5) unsigned NOT NULL default '0',
   `title` varchar(255) NOT NULL default '',
@@ -23,6 +23,3 @@ CREATE TABLE `".$xoopsDB->prefix("tad_player_gbak")."` (
   PRIMARY KEY  (`psn`)
 ) ENGINE=MyISAM;
 ";
-
-
-?>

@@ -1,7 +1,5 @@
 <?php
-$new_config['web_mode']='class';
+$new_config['web_mode'] = 'class';
 
-
-$mod_config['name']='ç­ç´šç¶²é ';
-$mod_config['weight']='16';
-?>
+$mod_config['name']   = '¯Z¯Åºô­¶';
+$mod_config['weight'] = '16';

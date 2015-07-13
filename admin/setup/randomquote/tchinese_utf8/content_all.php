@@ -1,12 +1,12 @@
 <?php
-function randomquote_content($cate_sn=""){
-  global $xoopsDB;
+function randomquote_content($cate_sn = "")
+{
+    global $xoopsDB;
 
-  // $sql="delete from `".$xoopsDB->prefix("citas")."`";
-  // $xoopsDB->queryF($sql) or die($sql);
+    // $sql="delete from `".$xoopsDB->prefix("citas")."`";
+    // $xoopsDB->queryF($sql) or die($sql);
 
-
-  $sql="INSERT INTO `".$xoopsDB->prefix("citas")."` (`texto`, `autor`) VALUES
+    $sql = "INSERT INTO `" . $xoopsDB->prefix("citas") . "` (`texto`, `autor`) VALUES
   ('◎ 脾氣嘴巴不好，心地再好也不能算好人。', '證嚴法師'),
   ('◎ 話多不如話少，話少不如話好',  '證嚴法師'),
   ('◎ 口說好話，心想好意，身行好事，腳走好路。', '證嚴法師'),
@@ -46,6 +46,5 @@ function randomquote_content($cate_sn=""){
   ('◎ 有智慧才能分辨善惡邪正；有謙虛才能建造美滿人生。', '證嚴法師');
   ";
 
-  $xoopsDB->queryF($sql) or die($sql);
+    $xoopsDB->queryF($sql) or die($sql);
 }
-?>
