@@ -1,3 +1,11 @@
+Tad Guide 1.2 Function Item (2015-07-13 release)
+================================================
+ 1. Modify the all profiles
+ 2. Add BootStrap3 support
+ 3. Add the English language (thanks Michael)
+ 4. Fixed code to conform to specifications PSR2
+
+
 Tad Guide 1.1 Function Item (2013-08-18 release)
 ================================================
  1. Modify the example import content, making it smarter (without first establishing classification does not cover off original content, and more flexible).
@@ -12,8 +20,6 @@ Tad Guide 1.1 Function Item (2013-08-18 release)
  4. tadtools adjust preferences: Sign unconformity OpenID, OpenID row 4
  5. Cancellation of all blocks import mechanism
  6. Add one-click install feature
-
-
 
 
 Tad Guide 1.0 Function Item (2013-06-30 release)
