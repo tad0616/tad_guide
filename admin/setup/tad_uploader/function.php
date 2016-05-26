@@ -5,7 +5,7 @@ function get_tad_uploader_cate($group_name)
     //`cat_sn`, `cat_title`, `cat_desc`, `cat_enable`, `uid`, `of_cat_sn`, `cat_share`, `cat_sort`, `cat_count`
 
     $sql                      = "select cat_sn , cat_title from " . $xoopsDB->prefix("tad_uploader") . " where cat_title like '%{$group_name}%'";
-    $result                   = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result                   = $xoopsDB->query($sql) or web_error($sql);
     list($cat_sn, $cat_title) = $xoopsDB->fetchRow($result);
     $cate['sn']               = $cat_sn;
     $cate['title']            = $cat_title;

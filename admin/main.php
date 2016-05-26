@@ -111,8 +111,8 @@ function one_key($dirname, $mid)
 
         </head>
         <body>
-        <link rel='stylesheet' type='text/css' media='screen' href='" . XOOPS_URL . "/modules/tadtools/bootstrap/css/bootstrap.css' />
-        <link rel='stylesheet' type='text/css' media='screen' href='" . XOOPS_URL . "/modules/tadtools/bootstrap/css/bootstrap-responsive.css' />
+        <link rel='stylesheet' type='text/css' media='screen' href='" . XOOPS_URL . "/modules/tadtools/bootstrap3/css/bootstrap.css' />
+
         <link rel='stylesheet' type='text/css' media='screen' href='" . XOOPS_URL . "/modules/tadtools/css/xoops_adm.css' />
         <form action='main.php' method='post'>
         <div class='container'>
@@ -122,7 +122,7 @@ function one_key($dirname, $mid)
           <input type='hidden' name='op' value='import_all_data'>
           <button type='submit' class='btn btn-primary'>" . _TAD_SAVE . "</button></h2>
 
-          <div class='row-fluid'>";
+          <div class='row'>";
 
     $import_content = "";
     if ($log['content_all_exists']) {
@@ -136,7 +136,7 @@ function one_key($dirname, $mid)
 
     if ($log['config_exists']) {
         $main .= "
-        <div class='span4'>
+        <div class='col-md-4'>
           <label class='checkbox'>
             <input type='checkbox' name='act_kind[]' value='config' checked>
             <h4>" . _MA_GUIDE_IMPORT_CONFIG . "</h4>
@@ -159,7 +159,7 @@ function one_key($dirname, $mid)
         }
 
         $main .= "
-        <div class='span4'>
+        <div class='col-md-4'>
           <label class='checkbox'>
             <h4><input type='checkbox' id='clickAll'>" . _MA_GUIDE_BLOCKS_COL . "</h4>
             <input type='hidden' name='act_kind[]' value='my_blocks'>
@@ -206,7 +206,7 @@ function one_key($dirname, $mid)
 
         if (!empty($groups_setup)) {
             $main .= "
-              <div class='span4'>
+              <div class='col-md-4'>
                 <label class='checkbox'>
                   <h4>" . _MA_GUIDE_CREATE_GROUP . "</h4>
                   <input type='hidden' name='act_kind[]' value='create_group'>
@@ -248,7 +248,7 @@ function get_last_update($dirname = "")
 {
     global $xoopsDB;
     $sql               = "select last_update from " . $xoopsDB->prefix("modules") . " where dirname='$dirname'";
-    $result            = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result            = $xoopsDB->query($sql) or web_error($sql);
     list($last_update) = $xoopsDB->fetchRow($result);
     return $last_update;
 }
@@ -259,7 +259,7 @@ function group_cate($dirname, $mid = 0)
     global $xoopsDB, $xoopsTpl, $mod_arr;
 
     $sql    = "select `groupid`, `name` from " . $xoopsDB->prefix("groups") . " order by groupid";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
 
     while (list($groupid, $name) = $xoopsDB->fetchRow($result)) {
         //以下會產生這些變數： `groupid`, `name`, `description`, `group_type`
@@ -295,7 +295,7 @@ function get_group()
     global $xoopsDB, $xoopsTpl, $mod_arr;
 
     $sql    = "select `groupid`, `name` from " . $xoopsDB->prefix("groups") . " order by groupid";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
     $group  = "";
     $i      = 0;
     while (list($groupid, $name) = $xoopsDB->fetchRow($result)) {
@@ -315,7 +315,7 @@ function to_create_group($create_group = "")
     $new_group = explode(';', $create_group);
 
     // $sql = "select groupid,name from ".$xoopsDB->prefix("groups")." order by groupid";
-    // $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
+    // $result = $xoopsDB->query($sql) or web_error($sql);
     // while(list($groupid,$name)=$xoopsDB->fetchRow($result)){
     //   $old_group[$groupid]=$name;
     // }
@@ -332,12 +332,12 @@ function mk_group($name = "")
 {
     global $xoopsDB;
     $sql           = "select groupid from " . $xoopsDB->prefix("groups") . " where `name`='$name'";
-    $result        = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result        = $xoopsDB->query($sql) or web_error($sql);
     list($groupid) = $xoopsDB->fetchRow($result);
 
     if (empty($groupid)) {
         $sql = "insert into " . $xoopsDB->prefix("groups") . " (`name`) values('{$name}')";
-        $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+        $xoopsDB->queryF($sql) or web_error($sql);
 
         //取得最後新增資料的流水編號
         $groupid = $xoopsDB->getInsertId();
@@ -373,7 +373,7 @@ function backup_config($dirname = "", $mid = "")
 {
     global $xoopsDB, $xoopsConfig;
 
-    $myts = &MyTextSanitizer::getInstance();
+    $myts = MyTextSanitizer::getInstance();
 
     //檢查有無之前備份
     $sql            = "select `act_date` from `" . $xoopsDB->prefix("tad_guide_backup") . "` where `act_kind`='config' and `kind_title`='{$dirname}'";
@@ -417,7 +417,7 @@ function restore_config($dirname = "", $mid = "")
 {
     global $xoopsDB, $xoopsConfig;
 
-    $myts = &MyTextSanitizer::getInstance();
+    $myts = MyTextSanitizer::getInstance();
     //檢查有無之前備份
     $sql                  = "select `backup_content` from `" . $xoopsDB->prefix("tad_guide_backup") . "` where `act_kind`='config' and `kind_title`='{$dirname}'";
     $result               = $xoopsDB->queryF($sql) or die($sql);
@@ -427,7 +427,7 @@ function restore_config($dirname = "", $mid = "")
         $restroe_sql = explode("##", $backup_content);
         foreach ($restroe_sql as $sql) {
             if (!empty($sql)) {
-                $xoopsDB->queryF($sql) or die(mysql_error() . "<hr>" . $sql);
+                $xoopsDB->queryF($sql) or web_error($sql);
             }
 
         }
@@ -441,7 +441,7 @@ function backup_blocks($dirname = "", $mid = "")
 {
     global $xoopsDB, $xoopsConfig;
 
-    $myts = &MyTextSanitizer::getInstance();
+    $myts = MyTextSanitizer::getInstance();
 
     //檢查有無之前備份
     $sql            = "select `act_date` from `" . $xoopsDB->prefix("tad_guide_backup") . "` where `act_kind`='blocks' and `kind_title`='{$dirname}'";
@@ -477,7 +477,7 @@ function restore_blocks($dirname = "", $mid = "")
 {
     global $xoopsDB, $xoopsConfig;
 
-    $myts = &MyTextSanitizer::getInstance();
+    $myts = MyTextSanitizer::getInstance();
 
     //檢查有無之前備份
     $sql                  = "select `backup_content` from `" . $xoopsDB->prefix("tad_guide_backup") . "` where `act_kind`='blocks' and `kind_title`='{$dirname}'";
@@ -723,7 +723,7 @@ function create_one_cate($mid = "", $groupid = "", $dirname = "")
     if (file_exists(XOOPS_ROOT_PATH . "/modules/tad_guide/admin/setup/{$dirname}/{$xoopsConfig['language']}/cate.php")) {
 
         $sql        = "select `name` from " . $xoopsDB->prefix("groups") . " where groupid='{$groupid}'";
-        $result     = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+        $result     = $xoopsDB->query($sql) or web_error($sql);
         list($name) = $xoopsDB->fetchRow($result);
 
         $create_cate[$groupid] = $name;
@@ -825,13 +825,13 @@ function content_backup($dirname = "", $bak_table = array())
     foreach ($bak_table as $bak) {
         if (!content_get_backup($bak['name'])) {
             $sql = $bak['sql'];
-            $xoopsDB->queryF($sql) or die($sql . "<br>" . mysql_error());
+            $xoopsDB->queryF($sql) or web_error($sql);
 
             $sql = "
       INSERT INTO `" . $xoopsDB->prefix("{$bak['name']}_gbak") . "`
       SELECT * from `" . $xoopsDB->prefix($bak['name']) . "`;
       ";
-            $xoopsDB->queryF($sql) or die($sql . "<br>" . mysql_error());
+            $xoopsDB->queryF($sql) or web_error($sql);
         }
     }
 }
@@ -913,7 +913,7 @@ switch ($op) {
         list_all_modules();
         break;
 
-    /*---判斷動作請貼在上方---*/
+        /*---判斷動作請貼在上方---*/
 }
 
 /*-----------秀出結果區--------------*/

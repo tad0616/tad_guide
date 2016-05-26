@@ -73,7 +73,7 @@ function tadnews_content($insert_id = "")
   ('{$insert_id}', '歷任校長', '<p>歷任校長內容製作中</p>', '{$now}', '0000-00-00 00:00:00', '1', '{$uid}', '', '', 5, '', '0', '0000-00-00 00:00:00', '', 3),
   ('{$insert_id}', '學校位置圖', '<p>學校位置圖內容製作中～</p>', '{$now}', '0000-00-00 00:00:00', '1', '{$uid}', '', '', 2, '', '0', '0000-00-00 00:00:00', '', 4)
    ";
-    $xoopsDB->queryF($sql) or die($sql . mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
 
     $max_sort++;
     $sql = "INSERT INTO `" . $xoopsDB->prefix("tad_news_cate") . "`
@@ -84,7 +84,7 @@ function tadnews_content($insert_id = "")
     $insert_id = $xoopsDB->getInsertId();
 
     $sql    = "select `groupid`,`name` from " . $xoopsDB->prefix("groups") . " where groupid > 3";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
 
     $i = 1;
     while (list($groupid, $name) = $xoopsDB->fetchRow($result)) {

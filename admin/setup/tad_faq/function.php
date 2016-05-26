@@ -5,7 +5,7 @@ function get_tad_faq_cate($group_name)
     //`fcsn`, `of_fcsn`, `title`, `description`, `sort`, `cate_pic`
 
     $sql                = "select fcsn , title  from " . $xoopsDB->prefix("tad_faq_cate") . " where title like '%{$group_name}%'";
-    $result             = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result             = $xoopsDB->query($sql) or web_error($sql);
     list($fcsn, $title) = $xoopsDB->fetchRow($result);
     $cate['sn']         = $fcsn;
     $cate['title']      = $title;
