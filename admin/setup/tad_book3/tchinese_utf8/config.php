@@ -1,5 +1,5 @@
 <?php
-$new_config['com_rule']                = '1';
+$new_config['com_rule']                = '0';
 $new_config['com_anonpost']            = '0';
 $new_config['use_pda']                 = '0';
 $new_config['use_social_tools']        = '1';

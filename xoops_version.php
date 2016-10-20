@@ -3,7 +3,7 @@ $modversion = array();
 
 //---模組基本資訊---//
 $modversion['name']        = _MI_TADGUIDE_NAME;
-$modversion['version']     = '1.41';
+$modversion['version']     = '1.42';
 $modversion['description'] = _MI_TADGUIDE_DESC;
 $modversion['author']      = _MI_TADGUIDE_AUTHOR;
 $modversion['credits']     = _MI_TADGUIDE_CREDITS;
@@ -13,7 +13,7 @@ $modversion['image']       = "images/logo.png";
 $modversion['dirname']     = basename(dirname(__FILE__));
 
 //---模組狀態資訊---//
-$modversion['release_date']        = '2016/05/26';
+$modversion['release_date']        = '2016/07/12';
 $modversion['module_website_url']  = 'http://tad0616.net';
 $modversion['module_website_name'] = _MI_TADGUIDE_AUTHOR_WEB;
 $modversion['module_status']       = 'release';
@@ -51,7 +51,7 @@ $modversion['hasMain'] = 0;
 
 //---樣板設定---//
 $i                                          = 0;
-$modversion['templates'][$i]['file']        = 'tad_guide_adm_main_b3.html';
-$modversion['templates'][$i]['description'] = 'tad_guide_adm_main_b3.html';
+$modversion['templates'][$i]['file']        = 'tad_guide_adm_main.tpl';
+$modversion['templates'][$i]['description'] = 'tad_guide_adm_main.tpl';
 
 //---區塊設定---//

@@ -12,7 +12,7 @@ $new_data[5] = array('options' => '10', 'title' => '¹q¤l³ø¤@Äý', 'side' => '0', 
 //¤ÀÃþ·s»D°Ï¶ô
 $new_data[6] = array('options' => '|5|1|1|99|color: gray; font-size: 12px; margin: 6px 0px; line-height: 180%;', 'title' => '¤ÀÃþ·s»D°Ï¶ô[pic]images/newstitle.png', 'side' => '5', 'weight' => '9', 'visible' => '0');
 //¦Û­q­¶­±
-$new_data[7] = array('options' => '0|160|11pt', 'title' => '¦Û­q­¶­±-¾Ç®ÕÂ²¤¶[hide]', 'side' => '0', 'weight' => '1', 'visible' => '1');
+$new_data[7] = array('options' => '0|160|11pt', 'title' => '¦Û­q­¶­±-¾Ç®ÕÂ²¤¶[hide]', 'side' => '0', 'weight' => '1', 'visible' => '0');
 //µJÂI·s»D
 $new_data[8] = array('options' => '|full', 'title' => 'µJÂI·s»D', 'side' => '5', 'weight' => '10', 'visible' => '0');
 //¦Û¿ï¤å³¹
@@ -29,5 +29,11 @@ $new_data[13] = array('options' => '5|90|ResponsiveSlides|', 'title' => '¦Û°ÊÁY©
 $new_data[14] = array('options' => '5|0|up|5000|height:10em;|', 'title' => '¶]°¨¿O°Ï¶ô[hide]', 'side' => '0', 'weight' => '4', 'visible' => '1');
 //¹Ï¤å¶°°Ï¶ô
 $new_data[15] = array('options' => '3|2|66|font-size:13px ;color: gray; line-height: 1.5; font-family:·s²Ó©úÅé;|', 'title' => '¹Ï¤å¶°°Ï¶ô[pic]images/newstitle.png', 'side' => '5', 'weight' => '3', 'visible' => '1');
+//¦Û­q­¶­±¿ï³æ
+$new_data[16] = array('options' => '|info|1', 'title' => '¾Ç®ÕÂ²¤¶[hide]', 'side' => '0', 'weight' => '1', 'visible' => '1');
+//­¶ÅÒ·s»D°Ï¶ô
+$new_data[17] = array('options' => '|10|default|#FFFFFF|#E0D9D9|#9C905C|#9C905C|0', 'title' => '­¶ÅÒ·s»D[hide]', 'side' => '3', 'weight' => '3', 'visible' => '1');
+//¼ÐÅÒ·s»D°Ï¶ô
+$new_data[18] = array('options' => '|10|default|#FFFFFF|#E0D9D9|#9C905C|#9C905C|0', 'title' => '¼ÐÅÒ·s»D[hide]', 'side' => '3', 'weight' => '3', 'visible' => '0');
 
 //select CONCAT('//',`name`,'\\n\$new_data[',`func_num`,'] = array(\'options\' => \'',`options`,'\', \'title\' => \'',`title`,'\', \'side\' => \'',`side`,'\', \'weight\' => \'',`weight`,'\', \'visible\' => \'',`visible`,'\');')from `xx_newblocks` where `dirname`='tadnews' and `block_type`!='D' order by `func_num`

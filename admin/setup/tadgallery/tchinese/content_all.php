@@ -14,9 +14,9 @@ function tadgallery_content($cate_sn = "")
 
     $max_sort++;
     $sql = "INSERT INTO `" . $xoopsDB->prefix("tad_gallery_cate") . "`
-  (`of_csn`, `title`, `passwd`, `enable_group`, `enable_upload_group`, `sort`, `mode`, `show_mode`, `cover`, `no_hotlink`, `uid`)
+  (`of_csn`, `title`,  `content`, `passwd`, `enable_group`, `enable_upload_group`, `sort`, `mode`, `show_mode`, `cover`, `no_hotlink`, `uid`)
   VALUES
-  (0,'戶外教學', '', '', '1', '{$max_sort}', '', '', '', '', '1')";
+  (0,'戶外教學','期待已久的校外教學日子終於來臨了！9月14日這一天低年級及幼稚班到戶外體驗自然生態知性之旅，牧場保有土地與生態現況，可看見品種繁多、多姿多彩的各種鳳蝶飛舞其中，各式各樣活潑可愛的昆蟲遨遊期間，光是紀錄到的蜻蛉目昆蟲【蜻蜓及豆娘】即已超過20種。另外，還有可愛的乳牛、山羊及鴕鳥，可以體驗親自餵食的樂趣哦！實在是一戶外教學、生態觀察的寶庫。', '', '', '1', '{$max_sort}', '', '', '', '', '1')";
     $xoopsDB->queryF($sql) or die($sql);
     $insert_id = $xoopsDB->getInsertId();
 

@@ -12,7 +12,7 @@ $new_data[5] = array('options' => '10', 'title' => '電子報一覽', 'side' => 
 //分類新聞區塊
 $new_data[6] = array('options' => '|5|1|1|99|color: gray; font-size: 12px; margin: 6px 0px; line-height: 180%;', 'title' => '分類新聞區塊[pic]images/newstitle.png', 'side' => '5', 'weight' => '9', 'visible' => '0');
 //自訂頁面
-$new_data[7] = array('options' => '0|160|11pt', 'title' => '自訂頁面-學校簡介[hide]', 'side' => '0', 'weight' => '1', 'visible' => '1');
+$new_data[7] = array('options' => '0|160|11pt', 'title' => '自訂頁面-學校簡介[hide]', 'side' => '0', 'weight' => '1', 'visible' => '0');
 //焦點新聞
 $new_data[8] = array('options' => '|full', 'title' => '焦點新聞', 'side' => '5', 'weight' => '10', 'visible' => '0');
 //自選文章
@@ -29,5 +29,11 @@ $new_data[13] = array('options' => '5|90|ResponsiveSlides|', 'title' => '自動�
 $new_data[14] = array('options' => '5|0|up|5000|height:10em;|', 'title' => '跑馬燈區塊[hide]', 'side' => '0', 'weight' => '4', 'visible' => '1');
 //圖文集區塊
 $new_data[15] = array('options' => '3|2|66|font-size:13px ;color: gray; line-height: 1.5; font-family:新細明體;|', 'title' => '圖文集區塊[pic]images/newstitle.png', 'side' => '5', 'weight' => '3', 'visible' => '1');
+//自訂頁面選單
+$new_data[16] = array('options' => '|info|1', 'title' => '學校簡介[hide]', 'side' => '0', 'weight' => '1', 'visible' => '1');
+//頁籤新聞區塊
+$new_data[17] = array('options' => '|10|default|#FFFFFF|#E0D9D9|#9C905C|#9C905C|0', 'title' => '頁籤新聞[hide]', 'side' => '3', 'weight' => '3', 'visible' => '1');
+//標籤新聞區塊
+$new_data[18] = array('options' => '|10|default|#FFFFFF|#E0D9D9|#9C905C|#9C905C|0', 'title' => '標籤新聞[hide]', 'side' => '3', 'weight' => '3', 'visible' => '0');
 
 //select CONCAT('//',`name`,'\\n\$new_data[',`func_num`,'] = array(\'options\' => \'',`options`,'\', \'title\' => \'',`title`,'\', \'side\' => \'',`side`,'\', \'weight\' => \'',`weight`,'\', \'visible\' => \'',`visible`,'\');')from `xx_newblocks` where `dirname`='tadnews' and `block_type`!='D' order by `func_num`
