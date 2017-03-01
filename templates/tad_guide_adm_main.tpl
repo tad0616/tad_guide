@@ -4,26 +4,26 @@
   <{if $now_op=="login_form"}>
 
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-sm-6">
         <h2><{$smarty.const._MA_GUIDE_SSH_ID}></h2>
         <div class="well">
           <form action="main.php" method="post">
             <div class="row">
-              <label class="col-md-5 text-right"><{$smarty.const._MA_GUIDE_SSH_HOST}><{$smarty.const._TAD_FOR}></label>
-              <div class="col-md-7">
-                <input type="text" name="ssh_host" placeholder="<{$smarty.const._MA_GUIDE_SSH_HOST}>" value="<{$tad_adm_ssh_host}>" class="col-md-12">
+              <label class="col-sm-5 text-right"><{$smarty.const._MA_GUIDE_SSH_HOST}><{$smarty.const._TAD_FOR}></label>
+              <div class="col-sm-7">
+                <input type="text" name="ssh_host" placeholder="<{$smarty.const._MA_GUIDE_SSH_HOST}>" value="<{$tad_adm_ssh_host}>" class="col-sm-12">
               </div>
             </div>
             <div class="row">
-              <label class="col-md-5 text-right"><{$smarty.const._MA_GUIDE_SSH_ID}><{$smarty.const._TAD_FOR}></label>
-              <div class="col-md-7">
-                <input type="text" name="ssh_id" placeholder="<{$smarty.const._MA_GUIDE_SSH_ID}>" class="col-md-12" value="<{$tad_adm_ssh_id}>">
+              <label class="col-sm-5 text-right"><{$smarty.const._MA_GUIDE_SSH_ID}><{$smarty.const._TAD_FOR}></label>
+              <div class="col-sm-7">
+                <input type="text" name="ssh_id" placeholder="<{$smarty.const._MA_GUIDE_SSH_ID}>" class="col-sm-12" value="<{$tad_adm_ssh_id}>">
               </div>
             </div>
             <div class="row">
-              <label class="col-md-5 text-right"><{$smarty.const._MA_GUIDE_SSH_PASS}><{$smarty.const._TAD_FOR}></label>
-              <div class="col-md-7">
-                <input type="password" name="ssh_passwd" placeholder="<{$smarty.const._MA_GUIDE_SSH_PASS}>" class="col-md-12" value="<{$tad_adm_ssh_passwd}>">
+              <label class="col-sm-5 text-right"><{$smarty.const._MA_GUIDE_SSH_PASS}><{$smarty.const._TAD_FOR}></label>
+              <div class="col-sm-7">
+                <input type="password" name="ssh_passwd" placeholder="<{$smarty.const._MA_GUIDE_SSH_PASS}>" class="col-sm-12" value="<{$tad_adm_ssh_passwd}>">
               </div>
             </div>
 
@@ -40,26 +40,26 @@
         </div>
       </div>
 
-      <div class="col-md-6">
+      <div class="col-sm-6">
         <h2><{$smarty.const._MA_GUIDE_FTP_ID}></h2>
         <div class="well">
           <form action="main.php" method="post">
             <div class="row">
-              <label class="col-md-5 text-right"><{$smarty.const._MA_GUIDE_FTP_HOST}><{$smarty.const._TAD_FOR}></label>
-              <div class="col-md-7">
-                <input type="text" name="ftp_host" placeholder="<{$smarty.const._MA_GUIDE_FTP_HOST}>" value="<{$tad_adm_ftp_host}>" class="col-md-12">
+              <label class="col-sm-5 text-right"><{$smarty.const._MA_GUIDE_FTP_HOST}><{$smarty.const._TAD_FOR}></label>
+              <div class="col-sm-7">
+                <input type="text" name="ftp_host" placeholder="<{$smarty.const._MA_GUIDE_FTP_HOST}>" value="<{$tad_adm_ftp_host}>" class="col-sm-12">
               </div>
             </div>
             <div class="row">
-              <label class="col-md-5 text-right"><{$smarty.const._MA_GUIDE_FTP_ID}><{$smarty.const._TAD_FOR}></label>
-              <div class="col-md-7">
-                <input type="text" name="ftp_id" placeholder="<{$smarty.const._MA_GUIDE_FTP_ID}>" class="col-md-12" value="<{$tad_adm_ftp_id}>">
+              <label class="col-sm-5 text-right"><{$smarty.const._MA_GUIDE_FTP_ID}><{$smarty.const._TAD_FOR}></label>
+              <div class="col-sm-7">
+                <input type="text" name="ftp_id" placeholder="<{$smarty.const._MA_GUIDE_FTP_ID}>" class="col-sm-12" value="<{$tad_adm_ftp_id}>">
               </div>
             </div>
             <div class="row">
-              <label class="col-md-5 text-right"><{$smarty.const._MA_GUIDE_FTP_PASS}><{$smarty.const._TAD_FOR}></label>
-              <div class="col-md-7">
-                <input type="password" name="ftp_passwd" placeholder="<{$smarty.const._MA_GUIDE_FTP_PASS}>" class="col-md-12" value="<{$tad_adm_ftp_passwd}>">
+              <label class="col-sm-5 text-right"><{$smarty.const._MA_GUIDE_FTP_PASS}><{$smarty.const._TAD_FOR}></label>
+              <div class="col-sm-7">
+                <input type="password" name="ftp_passwd" placeholder="<{$smarty.const._MA_GUIDE_FTP_PASS}>" class="col-sm-12" value="<{$tad_adm_ftp_passwd}>">
                 <{$smarty.const._MA_GUIDE_FTP_NOTE}>
               </div>
             </div>
@@ -109,7 +109,7 @@
     </script>
     <form action="main.php" method="post" class="form-horizontal" role="form">
       <div class="form-group">
-        <div class="col-md-2 control-label">
+        <div class="col-sm-2 control-label">
           <select id="group_kind" class="form-control">
             <option value="custom"><{$smarty.const._MA_GUIDE_CUSTOM}></option>
             <option value="es12_school"><{$smarty.const._MA_GUIDE_ES12_SCHOOL}></option>
@@ -119,11 +119,11 @@
             <option value="jh7_school"><{$smarty.const._MA_GUIDE_JH7_SCHOOL}></option>
           </select>
         </div>
-        <div class="col-md-9">
+        <div class="col-sm-9">
           <input type="text" name="create_group" id="create_group" value="" class="form-control" placeholder="<{$smarty.const._MA_GUIDE_CREATE_GROUP_PLACEHOLDER}>">
           <input type="hidden" name="op" value="to_create_group">
         </div>
-        <div class="col-md-1">
+        <div class="col-sm-1">
           <button type="submit" class="btn btn-primary"><{$smarty.const._MA_GUIDE_CREATE}></button>
         </div>
       </div>

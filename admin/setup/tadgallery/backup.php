@@ -20,6 +20,7 @@ CREATE TABLE `" . $xoopsDB->prefix("tad_gallery_gbak") . "` (
   `tag` varchar(255) NOT NULL default '',
   `good` enum('0','1') NOT NULL default '0',
   `photo_sort` smallint(5) unsigned NOT NULL,
+  `is360` enum('0','1') NOT NULL default '0',
   PRIMARY KEY  (`sn`),
   FULLTEXT KEY `tag` (`tag`)
 ) ENGINE=MyISAM;

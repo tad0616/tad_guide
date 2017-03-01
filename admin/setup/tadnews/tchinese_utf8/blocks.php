@@ -32,8 +32,8 @@ $new_data[15] = array('options' => '3|2|66|font-size:13px ;color: gray; line-hei
 //自訂頁面選單
 $new_data[16] = array('options' => '|info|1', 'title' => '學校簡介[hide]', 'side' => '0', 'weight' => '1', 'visible' => '1');
 //頁籤新聞區塊
-$new_data[17] = array('options' => '|10|default|#FFFFFF|#E0D9D9|#9C905C|#9C905C|0', 'title' => '頁籤新聞[hide]', 'side' => '3', 'weight' => '3', 'visible' => '1');
+$new_data[17] = array('options' => '|10|default|#FFFFFF|#E0D9D9|#9C905C|#9C905C|0', 'title' => '頁籤新聞[hide]', 'side' => '5', 'weight' => '3', 'visible' => '1');
 //標籤新聞區塊
-$new_data[18] = array('options' => '|10|default|#FFFFFF|#E0D9D9|#9C905C|#9C905C|0', 'title' => '標籤新聞[hide]', 'side' => '3', 'weight' => '3', 'visible' => '0');
+$new_data[18] = array('options' => '|10|default|#FFFFFF|#E0D9D9|#9C905C|#9C905C|0', 'title' => '標籤新聞[hide]', 'side' => '5', 'weight' => '3', 'visible' => '0');
 
 //select CONCAT('//',`name`,'\\n\$new_data[',`func_num`,'] = array(\'options\' => \'',`options`,'\', \'title\' => \'',`title`,'\', \'side\' => \'',`side`,'\', \'weight\' => \'',`weight`,'\', \'visible\' => \'',`visible`,'\');')from `xx_newblocks` where `dirname`='tadnews' and `block_type`!='D' order by `func_num`

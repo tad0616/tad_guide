@@ -136,7 +136,7 @@ function one_key($dirname, $mid)
 
     if ($log['config_exists']) {
         $main .= "
-        <div class='col-md-4'>
+        <div class='col-sm-4'>
           <label class='checkbox'>
             <input type='checkbox' name='act_kind[]' value='config' checked>
             <h4>" . _MA_GUIDE_IMPORT_CONFIG . "</h4>
@@ -159,7 +159,7 @@ function one_key($dirname, $mid)
         }
 
         $main .= "
-        <div class='col-md-4'>
+        <div class='col-sm-4'>
           <label class='checkbox'>
             <h4><input type='checkbox' id='clickAll'>" . _MA_GUIDE_BLOCKS_COL . "</h4>
             <input type='hidden' name='act_kind[]' value='my_blocks'>
@@ -206,7 +206,7 @@ function one_key($dirname, $mid)
 
         if (!empty($groups_setup)) {
             $main .= "
-              <div class='col-md-4'>
+              <div class='col-sm-4'>
                 <label class='checkbox'>
                   <h4>" . _MA_GUIDE_CREATE_GROUP . "</h4>
                   <input type='hidden' name='act_kind[]' value='create_group'>

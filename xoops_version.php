@@ -3,7 +3,7 @@ $modversion = array();
 
 //---模組基本資訊---//
 $modversion['name']        = _MI_TADGUIDE_NAME;
-$modversion['version']     = '1.42';
+$modversion['version']     = '1.44';
 $modversion['description'] = _MI_TADGUIDE_DESC;
 $modversion['author']      = _MI_TADGUIDE_AUTHOR;
 $modversion['credits']     = _MI_TADGUIDE_CREDITS;
@@ -13,7 +13,7 @@ $modversion['image']       = "images/logo.png";
 $modversion['dirname']     = basename(dirname(__FILE__));
 
 //---模組狀態資訊---//
-$modversion['release_date']        = '2016/07/12';
+$modversion['release_date']        = '2017-01-08';
 $modversion['module_website_url']  = 'http://tad0616.net';
 $modversion['module_website_name'] = _MI_TADGUIDE_AUTHOR_WEB;
 $modversion['module_status']       = 'release';
