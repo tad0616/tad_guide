@@ -15,3 +15,5 @@ define('_MI_TADGUIDE_BACK_2_ADMIN', '管理');
 
 //help
 define('_MI_TADGUIDE_HELP_OVERVIEW', '概要');
+define('_MI_TADGUIDE_SSH_PORT', '設定 SSH 的連線 port');
+define('_MI_TADGUIDE_SSH_PORT_DESC', '請根據網站主機使用的SSH port來設定');

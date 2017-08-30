@@ -1,6 +1,6 @@
 <?php
 //相片捲軸
-$new_data[0] = array('options' => '12|0|1|rand|desc|s|0|140|105|0|1000|3|0|5000', 'title' => '相片捲軸[hide]', 'side' => '9', 'weight' => '1', 'visible' => '0');
+$new_data[0] = array('options' => '12|0|1|rand|desc|s|0|140|105|0|1000|3|0|5000|1', 'title' => '相片捲軸[hide]', 'side' => '9', 'weight' => '1', 'visible' => '0');
 //抽取相片
 $new_data[1] = array('options' => '12|0|1|post_date|desc|m|0|200|160', 'title' => '抽取相片[hide]', 'side' => '0', 'weight' => '1', 'visible' => '0');
 //相片投影秀
@@ -12,7 +12,7 @@ $new_data[4] = array('options' => '12|0|1|post_date|desc|m|0|100%|240|jscroller2
 //相片最新回應
 $new_data[5] = array('options' => '10|1|1', 'title' => '相片最新回應', 'side' => '9', 'weight' => '4', 'visible' => '0');
 //縮圖列表
-$new_data[6] = array('options' => '12|0|1|post_date|desc|m|0|130|130|0|0|font-size:11px;font-weight:normal;overflow:hidden;', 'title' => '縮圖列表[hide]', 'side' => '9', 'weight' => '0', 'visible' => '0');
+$new_data[6] = array('options' => '12|0|1|post_date|desc|m|0|130|130|0|0|font-size:11px;font-weight:normal;overflow:hidden;|1', 'title' => '縮圖列表[hide]', 'side' => '9', 'weight' => '0', 'visible' => '0');
 //無縫跑馬燈
 $new_data[7] = array('options' => '12|0|1|rand|desc|m|0|100%|150|20', 'title' => '無縫跑馬燈[hide]', 'side' => '9', 'weight' => '3', 'visible' => '1');
 //相簿一覽

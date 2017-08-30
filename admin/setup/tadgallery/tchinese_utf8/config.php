@@ -11,6 +11,7 @@ $new_config['use_pda']                 = '0';
 $new_config['use_social_tools']        = '0';
 $new_config['thumb_slider']            = '1';
 $new_config['random_photo']            = '1';
+$new_config['model360']                = 'LG-R105;RICOH THETA S';
 
 $new_config['com_rule']     = '0';
 $new_config['com_anonpost'] = '0';

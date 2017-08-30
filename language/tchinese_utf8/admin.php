@@ -108,3 +108,4 @@ define('_MA_GUIDE_BS_7', '下中左');
 define('_MA_GUIDE_BS_8', '下中右');
 define('_MA_GUIDE_BS_9', '下中');
 define('_MA_GUIDE_BLOCK_INSTALLED', '已啟動');
+define('_MA_GUIDE_MOD_CLOSED', '模組關閉中');

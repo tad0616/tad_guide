@@ -18,9 +18,9 @@ $new_data[8] = array('options' => '|full', 'title' => '焦點新聞', 'side' => 
 //自選文章
 $new_data[9] = array('options' => '', 'title' => '自選文章', 'side' => '9', 'weight' => '0', 'visible' => '0');
 //條列式新聞
-$new_data[10] = array('options' => '5|0|color:gray;font-size:12px;margin-top:6px;line-height:180%;|0|1|width:60px;height:30px;float:left;border:0px solid #9999CC;margin:0px 4px 4px 0px;overflow:hidden;background-size:cover;|0|list|table|1', 'title' => '條列式新聞[pic]images/newstitle.png', 'side' => '5', 'weight' => '12', 'visible' => '0');
+$new_data[10] = array('options' => '5|0|color:gray;font-size:12px;margin-top:6px;line-height:180%;|0|1|width:60px;height:30px;float:left;border:0px solid #9999CC;margin:0px 4px 4px 0px;overflow:hidden;background-size:cover;|0|list|table|1|0', 'title' => '條列式新聞[pic]images/newstitle.png', 'side' => '5', 'weight' => '12', 'visible' => '0');
 //表格式新聞
-$new_data[11] = array('options' => '6|1|start_day|news_title|uid|ncsn|counter|0|', 'title' => '表格式新聞[pic]images/newstitle.png', 'side' => '5', 'weight' => '13', 'visible' => '0');
+$new_data[11] = array('options' => '6|1|start_day|news_title|uid|ncsn|counter|0||0', 'title' => '表格式新聞[pic]images/newstitle.png', 'side' => '5', 'weight' => '13', 'visible' => '0');
 //滑動新聞
 $new_data[12] = array('options' => '670|250|5|90|', 'title' => '滑動新聞[hide]', 'side' => '5', 'weight' => '7', 'visible' => '0');
 //自動縮放的滑動新聞
