@@ -127,12 +127,12 @@
                   <a id="view_well<{$mod.module_sn}>" class="btn btn-xs btn-warning" href="javascript:alert('<{$mod.descript}>')"><{$smarty.const._MA_GUIDE_FIX}></a>
                 <{/if}>
 
-                <a href="http://120.115.2.90/modules/tad_modules/index.php?module_sn=<{$mod.module_sn}>" target="_blank"><{$mod.name}></a>
+                <a href="https://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=<{$mod.module_sn}>" target="_blank"><{$mod.name}></a>
 
                 <{if $mod.function!='install' and $mod.function!='install_theme'}>
-                  <a href="http://120.115.2.90/modules/tad_modules/index.php?module_sn=<{$mod.module_sn}>" target="_blank"><{$mod.dirname}> <{$mod.version}></a>
+                  <a href="https://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=<{$mod.module_sn}>" target="_blank"><{$mod.dirname}> <{$mod.version}></a>
                 <{else}>
-                  <a href="http://120.115.2.90/modules/tad_modules/index.php?module_sn=<{$mod.module_sn}>" target="_blank"><{$mod.new_version}></a>
+                  <a href="https://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=<{$mod.module_sn}>" target="_blank"><{$mod.new_version}></a>
                 <{/if}>
               </td>
 

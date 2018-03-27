@@ -15,6 +15,3 @@ define('_MI_TADGUIDE_BACK_2_ADMIN', 'Back to Administration of ');
 
 //help
 define('_MI_TADGUIDE_HELP_OVERVIEW', 'Overview');
-
-define('_MI_TADGUIDE_SSH_PORT', 'SSH port');
-define('_MI_TADGUIDE_SSH_PORT_DESC', 'Setup SSH port');

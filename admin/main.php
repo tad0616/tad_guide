@@ -4,7 +4,7 @@ $xoopsOption['template_main'] = "tad_guide_adm_main.tpl";
 include_once "header.php";
 include_once "../function.php";
 
-include_once XOOPS_ROOT_PATH . "/modules/tad_adm/admin/adm_function.php";
+require_once XOOPS_ROOT_PATH . "/modules/tad_adm/admin/adm_function.php";
 /*-----------功能函數區--------------*/
 
 $mod_arr = array('tadnews', 'tadgallery', 'tad_player', 'tad_uploader', 'tad_cal', 'tad_discuss', 'tad_faq', 'tad_link', 'tad_book3');

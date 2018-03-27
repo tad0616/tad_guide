@@ -3,7 +3,7 @@ $modversion = array();
 
 //---模組基本資訊---//
 $modversion['name']        = _MI_TADGUIDE_NAME;
-$modversion['version']     = '1.45';
+$modversion['version']     = '1.46';
 $modversion['description'] = _MI_TADGUIDE_DESC;
 $modversion['author']      = _MI_TADGUIDE_AUTHOR;
 $modversion['credits']     = _MI_TADGUIDE_CREDITS;
@@ -13,7 +13,7 @@ $modversion['image']       = "images/logo.png";
 $modversion['dirname']     = basename(dirname(__FILE__));
 
 //---模組狀態資訊---//
-$modversion['release_date']        = '2017-06-16';
+$modversion['release_date']        = '2017-10-11';
 $modversion['module_website_url']  = 'http://tad0616.net';
 $modversion['module_website_name'] = _MI_TADGUIDE_AUTHOR_WEB;
 $modversion['module_status']       = 'release';
@@ -56,10 +56,10 @@ $modversion['templates'][$i]['description'] = 'tad_guide_adm_main.tpl';
 
 //---區塊設定---//
 $i = 0;
-$i++;
-$modversion['config'][$i]['name']        = 'ssh_port';
-$modversion['config'][$i]['title']       = '_MI_TADGUIDE_SSH_PORT';
-$modversion['config'][$i]['description'] = '_MI_TADGUIDE_SSH_PORT_DESC';
-$modversion['config'][$i]['formtype']    = 'textbox';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = '22';
+// $i++;
+// $modversion['config'][$i]['name']        = 'ssh_port';
+// $modversion['config'][$i]['title']       = '_MI_TADGUIDE_SSH_PORT';
+// $modversion['config'][$i]['description'] = '_MI_TADGUIDE_SSH_PORT_DESC';
+// $modversion['config'][$i]['formtype']    = 'textbox';
+// $modversion['config'][$i]['valuetype']   = 'int';
+// $modversion['config'][$i]['default']     = '22';

@@ -1,3 +1,8 @@
+Tad gudie 1.4.6 (2017-10-11 released)
+================================================
+1.Fixed link
+
+
 Tad gudie 1.4.5 (2017-06-16  released)
 ================================================
 1. Fix the problem that can not be installed
