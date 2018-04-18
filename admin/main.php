@@ -20,7 +20,7 @@ function list_all_modules()
     $xoopsTpl->assign('group', $group);
 
     $all_data = list_modules("return");
-    //die(var_export($all_data));
+
     $sql    = "select `act_kind`, `kind_title`, `act_name`, `act_date`, `cate_sn` from `" . $xoopsDB->prefix("tad_guide") . "` order by `kind_title`";
     $result = $xoopsDB->queryF($sql) or die($sql);
     $i      = 0;
@@ -34,24 +34,32 @@ function list_all_modules()
         $log[$dirname][$act_kind][$cate_sn] = $act_date;
     }
 
-    foreach ($all_data as $i => $mod) {
-        $dirname = $mod['dirname'];
-        if (!in_array($dirname, $school_mod_arr)) {
-            continue;
+    // $dir = XOOPS_ROOT_PATH."/modules/tad_guide/admin/setup/{$dirname}/{$xoopsConfig['language']}/";
+    // $log[$dirname]['blocks_file_exists']=file_exists("{$dir}/blocks.php");
+    // $log[$dirname]['blocks_all_file_exists']=file_exists("{$dir}/blocks_all.php");
+    // $log[$dirname]['config_exists']=file_exists("{$dir}/config.php");
+    // $log[$dirname]['content_exists']=file_exists("{$dir}/content.php");
+    // $log[$dirname]['content_all_exists']=file_exists("{$dir}/content_all.php");
+    // $log[$dirname]['cates']=group_cate($dirname,$mod['mid']);
+
+    $all_mod_data=array();
+    foreach ($all_data as $is_active=> $data) {
+        foreach ($data as $status => $mods) {
+            foreach ($mods as $i => $mod) {
+                // die(var_export($mod));
+                $dirname = $mod['dirname'];
+                if (!in_array($dirname, $school_mod_arr)) {
+                    continue;
+                }
+                $all_mod_data[$mod['module_sn']]=$mod;
+                $log[$dirname] = get_dir_log($dirname, $mod['mid']);
+            }
         }
-
-        $log[$dirname] = get_dir_log($dirname, $mod['mid']);
-
-        // $dir = XOOPS_ROOT_PATH."/modules/tad_guide/admin/setup/{$dirname}/{$xoopsConfig['language']}/";
-        // $log[$dirname]['blocks_file_exists']=file_exists("{$dir}/blocks.php");
-        // $log[$dirname]['blocks_all_file_exists']=file_exists("{$dir}/blocks_all.php");
-        // $log[$dirname]['config_exists']=file_exists("{$dir}/config.php");
-        // $log[$dirname]['content_exists']=file_exists("{$dir}/content.php");
-        // $log[$dirname]['content_all_exists']=file_exists("{$dir}/content_all.php");
-        // $log[$dirname]['cates']=group_cate($dirname,$mod['mid']);
     }
 
-    $xoopsTpl->assign('all_data', $all_data);
+    ksort($all_mod_data);
+    
+    $xoopsTpl->assign('all_data', $all_mod_data);
     $xoopsTpl->assign('log', $log);
     $xoopsTpl->assign('now_op', 'list_all_modules');
     $xoopsTpl->assign('school_mod_arr', $school_mod_arr);
@@ -707,13 +715,6 @@ function import_data($dirname, $act_kind, $mid = "", $cate_sn = "")
         $xoopsDB->queryF($sql) or die($sql);
     }
 
-    // if($act_kind=="blocks"){
-    //   $sql="delete from `".$xoopsDB->prefix("tad_guide")."` where `act_kind`='blocks_all' and `kind_title`='{$dirname}' and `act_name`='{$act_name}'";
-    //   $xoopsDB->queryF($sql) or die($sql);
-    // }elseif($act_kind=="blocks_all"){
-    //   $sql="delete from `".$xoopsDB->prefix("tad_guide")."` where `act_kind`='blocks' and `kind_title`='{$dirname}' and `act_name`='{$act_name}'";
-    //   $xoopsDB->queryF($sql) or die($sql);
-    // }
 }
 
 //建立分類
@@ -752,31 +753,6 @@ function add_perm($groupid = '', $insert_id = '', $mid = '', $perm_name = '')
     return $gperm_id;
 }
 
-//刪除目錄
-function delete_directory($dirname)
-{
-    if (is_dir($dirname)) {
-        $dir_handle = opendir($dirname);
-    }
-
-    if (!$dir_handle) {
-        return false;
-    }
-
-    while ($file = readdir($dir_handle)) {
-        if ($file != "." && $file != "..") {
-            if (!is_dir($dirname . "/" . $file)) {
-                unlink($dirname . "/" . $file);
-            } else {
-                delete_directory($dirname . '/' . $file);
-            }
-
-        }
-    }
-    closedir($dir_handle);
-    rmdir($dirname);
-    return true;
-}
 
 //檢查是否有資料
 function content_get_backup($tbl = "")
@@ -791,29 +767,7 @@ function content_get_backup($tbl = "")
     return false;
 }
 
-//拷貝目錄
-function full_copy($source = "", $target = "")
-{
-    if (is_dir($source)) {
-        @mkdir($target);
-        $d = dir($source);
-        while (false !== ($entry = $d->read())) {
-            if ($entry == '.' || $entry == '..') {
-                continue;
-            }
 
-            $Entry = $source . '/' . $entry;
-            if (is_dir($Entry)) {
-                full_copy($Entry, $target . '/' . $entry);
-                continue;
-            }
-            copy($Entry, $target . '/' . $entry);
-        }
-        $d->close();
-    } else {
-        copy($source, $target);
-    }
-}
 
 function content_backup($dirname = "", $bak_table = array())
 {

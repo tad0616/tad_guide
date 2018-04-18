@@ -2,46 +2,41 @@
 <link href="<{xoAppUrl modules/tadtools/css/font-awesome/css/font-awesome.css}>" rel="stylesheet">
 <div class="container-fluid">
   <{if $now_op=="login_form"}>
-
-    <div class="row">
-      <div class="col-sm-12">
-        <h2><{$smarty.const._MA_GUIDE_SSH_ID}></h2>
-        <div class="well">
-          <form action="main.php" method="post" class="form-horizontal" role="form">
-            <div class="form-group">
-              <label class="col-sm-3 control-label">
-                <{$smarty.const._MA_GUIDE_SSH_ID}><{$smarty.const._TAD_FOR}>
-              </label>
-              <div class="col-sm-9">
-                <input type="text" name="ssh_id" placeholder="<{$smarty.const._MA_GUIDE_SSH_ID}>" class="form-control" value="<{$tad_adm_ssh_id}>">
-              </div>
+      <h2><{$smarty.const._MA_GUIDE_SSH_ID}></h2>
+      <div class="well">
+        <form action="main.php" method="post" class="form-horizontal" role="form">
+          <div class="form-group">
+            <label class="col-sm-3 control-label">
+              <{$smarty.const._MA_GUIDE_SSH_ID}><{$smarty.const._TAD_FOR}>
+            </label>
+            <div class="col-sm-9">
+              <input type="text" name="ssh_id" placeholder="<{$smarty.const._MA_GUIDE_SSH_ID}>" class="form-control" value="<{$tad_adm_ssh_id}>">
             </div>
-            <div class="form-group">
-              <label class="col-sm-3 control-label">
-                <{$smarty.const._MA_GUIDE_SSH_PASS}><{$smarty.const._TAD_FOR}>
-              </label>
-              <div class="col-sm-9">
-                <input type="password" name="ssh_passwd" placeholder="<{$smarty.const._MA_GUIDE_SSH_PASS}>" class="form-control" value="<{$tad_adm_ssh_passwd}>">
-              </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">
+              <{$smarty.const._MA_GUIDE_SSH_PASS}><{$smarty.const._TAD_FOR}>
+            </label>
+            <div class="col-sm-9">
+              <input type="password" name="ssh_passwd" placeholder="<{$smarty.const._MA_GUIDE_SSH_PASS}>" class="form-control" value="<{$tad_adm_ssh_passwd}>">
             </div>
+          </div>
 
 
-            <div class="text-center">
+          <div class="text-center">
 
-              <input type="hidden" name="ssh_host" value="127.0.0.1" class="col-sm-12">
-              <input type="hidden" name="file_link" value="<{$file_link}>">
-              <input type="hidden" name="dirname" value="<{$dirname}>">
-              <input type="hidden" name="act" value="<{$act}>">
-              <input type="hidden" name="kind_dir" value="<{$kind_dir}>">
-              <input type="hidden" name="update_sn" value="<{$update_sn}>">
-              <input type="hidden" name="tad_adm_tpl" value="clean">
-              <input type="hidden" name="op" value="ssh_login">
-              <button type="submit" class="btn btn-primary"><{$smarty.const._MA_GUIDE_LOGIN}>SSH</button>
-            </div>
-          </form>
-        </div>
+            <input type="hidden" name="ssh_host" value="127.0.0.1" class="col-sm-12">
+            <input type="hidden" name="file_link" value="<{$file_link}>">
+            <input type="hidden" name="dirname" value="<{$dirname}>">
+            <input type="hidden" name="act" value="<{$act}>">
+            <input type="hidden" name="kind_dir" value="<{$kind_dir}>">
+            <input type="hidden" name="update_sn" value="<{$update_sn}>">
+            <input type="hidden" name="tad_adm_tpl" value="clean">
+            <input type="hidden" name="op" value="ssh_login">
+            <button type="submit" class="btn btn-primary"><{$smarty.const._MA_GUIDE_LOGIN}>SSH</button>
+          </div>
+        </form>
       </div>
-    </div>
   <{else}>
 
     <{$fancybox_code}>
@@ -114,19 +109,13 @@
       <tbody>
         <{foreach from=$all_data item=mod}>
           <{assign var="mod_dirname" value=$mod.dirname}>
-          <{if $mod.dirname|in_array:$school_mod_arr}>
+          <{if $mod_dirname|in_array:$school_mod_arr and $mod.isactive=='1'}>
             <tr <{if $mod.dirname==$hl and $hl!=""}>style="background-color:yellow;"<{/if}>>
 
               <td nowrap>
                 <a name="<{$mod.dirname}>"> </a>
-                <{if $mod.kind=="module"}>
-                  <a id="view_well<{$mod.module_sn}>" class="btn btn-xs btn-info" href="javascript:alert('<{$mod.descript}>')"><{$smarty.const._MA_GUIDE_MODULE}></a>
-                <{elseif $mod.kind=="theme"}>
-                  <a id="view_well<{$mod.module_sn}>" class="btn btn-xs btn-success" href="javascript:alert('<{$mod.descript}>')"><{$smarty.const._MA_GUIDE_THEME}></a>
-                <{elseif $mod.kind=="fix"}>
-                  <a id="view_well<{$mod.module_sn}>" class="btn btn-xs btn-warning" href="javascript:alert('<{$mod.descript}>')"><{$smarty.const._MA_GUIDE_FIX}></a>
-                <{/if}>
-
+                  <a id="view_well<{$mod.module_sn}>" class="btn btn-xs btn-info" href="javascript:alert('<{$mod.descript}>')"><{$mod.module_sn}></a>
+ 
                 <a href="https://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=<{$mod.module_sn}>" target="_blank"><{$mod.name}></a>
 
                 <{if $mod.function!='install' and $mod.function!='install_theme'}>
@@ -137,23 +126,12 @@
               </td>
 
               <td nowrap>
-                <{if $mod.isactive=='0'}>
-                  <a href="<{$xoops_url}>/modules/<{$mod.dirname}>" class="btn btn-xs btn-danger" target="_blank" alt="<{$smarty.const._MA_GUIDE_TO_MODULE}>" title="<{$smarty.const._MA_GUIDE_TO_MODULE}>"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
-                  <a href="main.php?op=update_module&dirname=<{$mod.dirname}>&file_link=<{$mod.file_link}>&update_sn=<{$mod.update_sn}>&tad_adm_tpl=clean" class="modulesadmin"  data-fancybox-type="iframe" style="color: #934949;"><{$smarty.const._MA_GUIDE_MOD_CLOSED}></a>
-                <{elseif $mod.function=='install'}>
-                  <a href="main.php?op=install_module&dirname=<{$mod.dirname}>&file_link=<{$mod.file_link}>&update_sn=<{$mod.update_sn}>&tad_adm_tpl=clean" class="btn btn-xs btn-primary modulesadmin" data-fancybox-type="iframe"><{$smarty.const._MA_GUIDE_MOD_INSTALL_MODULE}></a>
-                <{elseif $mod.function=='update'}>
+                <{if $mod.function=='update'}>
                   <a href="<{$xoops_url}>/modules/<{$mod.dirname}>" class="btn btn-xs btn-info" target="_blank" alt="<{$smarty.const._MA_GUIDE_TO_MODULE}>" title="<{$smarty.const._MA_GUIDE_TO_MODULE}>"><i class="fa fa-arrow-right"></i></a>
                   <a href="main.php?op=update_module&dirname=<{$mod.dirname}>&file_link=<{$mod.file_link}>&update_sn=<{$mod.update_sn}>&tad_adm_tpl=clean" class="btn btn-xs btn-danger modulesadmin"  data-fancybox-type="iframe"><{$smarty.const._MA_GUIDE_MOD_UPDATE_MODULE}> <{$mod.new_version}></a>
-                <{elseif $mod.function=='update_theme'}>
-                    <a href="main.php?op=update_theme&dirname=<{$mod.dirname}>&file_link=<{$mod.file_link}>&update_sn=<{$mod.update_sn}>&tad_adm_tpl=clean" class="btn btn-xs btn-danger" ><{$smarty.const._MA_GUIDE_MOD_UPDATE_THEME}> <{$mod.new_version}></a>
-                <{elseif $mod.function=='install_theme'}>
-                    <a href="main.php?op=install_theme&dirname=<{$mod.dirname}>&file_link=<{$mod.file_link}>&update_sn=<{$mod.update_sn}>&tad_adm_tpl=clean" class="btn btn-xs btn-primary" ><{$smarty.const._MA_GUIDE_MOD_INSTALL_THEME}></a>
                 <{elseif $mod.function=='last_mod'}>
                   <a href="<{$xoops_url}>/modules/<{$mod.dirname}>" class="btn btn-xs btn-info" target="_blank" alt="<{$smarty.const._MA_GUIDE_TO_MODULE}>" title="<{$smarty.const._MA_GUIDE_TO_MODULE}>"><i class="fa fa-arrow-right"></i></a>
                   <a href="main.php?op=update_module&dirname=<{$mod.dirname}>&file_link=<{$mod.file_link}>&update_sn=<{$mod.update_sn}>&tad_adm_tpl=clean" class="modulesadmin"  data-fancybox-type="iframe"><{$smarty.const._MA_GUIDE_MOD_LATEST}></a>
-                <{elseif $mod.function=='last_theme'}>
-                    <a href="main.php?op=update_theme&dirname=<{$mod.dirname}>&file_link=<{$mod.file_link}>&update_sn=<{$mod.update_sn}>&tad_adm_tpl=clean" ><{$smarty.const._MA_GUIDE_MOD_LATEST}></a>
                 <{elseif $mod.new_last_update}>
                   <{$smarty.const._MA_GUIDE_MOD_LATEST}>
                 <{/if}>
