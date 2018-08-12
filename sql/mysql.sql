@@ -5,7 +5,7 @@ CREATE TABLE `tad_guide` (
   `act_date` datetime NOT NULL COMMENT '執行時間',
   `cate_sn` smallint(5) UNSIGNED NOT NULL COMMENT '分類編號',
 PRIMARY KEY (`act_kind`,`kind_title`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE `tad_guide_backup` (

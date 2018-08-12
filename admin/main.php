@@ -7,32 +7,72 @@ include_once "../function.php";
 require_once XOOPS_ROOT_PATH . "/modules/tad_adm/admin/adm_function.php";
 /*-----------功能函數區--------------*/
 
+//可開群組的模組
 $mod_arr = array('tadnews', 'tadgallery', 'tad_player', 'tad_uploader', 'tad_cal', 'tad_discuss', 'tad_faq', 'tad_link', 'tad_book3');
 
-$school_mod_arr = array('tad_adm', 'tadtools', 'tad_themes', 'tadnews', 'tadgallery', 'tad_player', 'tad_login', 'tad_uploader', 'tad_cal', 'tad_discuss', 'tad_faq', 'tad_link', 'tad_lunch2', 'tad_repair', 'tad_assignment', 'tad_form', 'ugm_table', 'tad_book3', 'tad_idioms', 'tad_evaluation', 'tad_web', 'logcounterx', 'tad_rss', 'randomquote', 'mytabs', 'ugm_contact_us');
+$school_mod_arr = array('tad_adm', 'tadtools', 'tad_themes', 'tadnews', 'tadgallery', 'tad_player', 'tad_login', 'tad_uploader', 'tad_cal', 'tad_discuss', 'tad_faq', 'tad_link', 'tad_repair', 'tad_assignment', 'tad_form', 'tad_lunch3', 'tad_book3', 'tad_idioms', 'tad_evaluation', 'tad_web', 'logcounterx', 'tad_rss', 'randomquote');
 
 //步驟1，安裝模組
 function list_all_modules()
 {
     global $xoopsDB, $xoopsTpl, $mod_arr, $school_mod_arr, $xoopsConfig;
 
+    //取得群組
     $group = get_group();
     $xoopsTpl->assign('group', $group);
 
-    $all_data = list_modules("return");
+    //取得遠端的模組資訊
+    $mod = get_tad_modules_info();
+    // die(var_export($mod['tadtools']['module']));
+    //         $mod[$dirname]['module']['module_title']       = $module_title;
+    //         $mod[$dirname]['module']['update_sn']          = $update_sn;
+    //         $mod[$dirname]['module']['new_version']        = $new_version;
+    //         $mod[$dirname]['module']['new_status']         = $new_status;
+    //         $mod[$dirname]['module']['new_status_version'] = $new_status_version;
+    //         $mod[$dirname]['module']['new_last_update']    = $new_last_update;
+    //         $mod[$dirname]['module']['update_descript']    = str_replace("\n", "\\n", $update_descript);
+    //         $mod[$dirname]['module']['module_sn']          = $module_sn;
+    //         $mod[$dirname]['module']['module_descript']    = str_replace("\n", "\\n", $module_descript);
+    //         $mod[$dirname]['module']['file_link']          = $file_link;
+    //         $mod[$dirname]['module']['kind']               = $kind;
+    //抓出現有模組
+    $sql    = "SELECT * FROM " . $xoopsDB->prefix("modules") . " ORDER BY hasmain DESC, weight";
+    $result = $xoopsDB->query($sql) or web_error($sql);
 
-    $sql    = "select `act_kind`, `kind_title`, `act_name`, `act_date`, `cate_sn` from `" . $xoopsDB->prefix("tad_guide") . "` order by `kind_title`";
-    $result = $xoopsDB->queryF($sql) or die($sql);
-    $i      = 0;
-    while (list($act_kind, $dirname, $act_name, $act_date, $cate_sn) = $xoopsDB->fetchRow($result)) {
-        $last_update = get_last_update($dirname);
-        $last_import = strtotime($act_date);
-        if ($last_update > $last_import) {
-            $act_date = "";
+    //模組部份
+    while ($data = $xoopsDB->fetchArray($result)) {
+        foreach ($data as $k => $v) {
+            $$k = $v;
+        }
+        if (!isset($mod[$dirname])) {
+            continue;
+        }
+        if ($mod[$dirname]['module']['kind'] == "module") {
+            $ok['module'][] = $dirname;
+        } else {
+            continue;
         }
 
-        $log[$dirname][$act_kind][$cate_sn] = $act_date;
+        $version     = intval($version);
+        $new_version = $mod[$dirname]['module']['new_version'] * 100;
+        $new_version = intval($new_version);
+
+        $last_update     = filemtime(XOOPS_ROOT_PATH . "/modules/{$dirname}/xoops_version.php");
+        $new_last_update = $mod[$dirname]['module']['new_last_update'];
+
+        $mod[$dirname]['module']['function'] = (($new_version > $version) or ($new_last_update > $last_update)) ? 'update' : 'last_mod';
+        $mod[$dirname]['module']['mid']      = $mid;
     }
+
+    //找出目前的更新紀錄
+    $act_log = $log = array();
+    $sql     = "select `act_kind`, `kind_title`, `act_name`, `act_date`, `cate_sn` from `" . $xoopsDB->prefix("tad_guide") . "` order by `kind_title`";
+    $result  = $xoopsDB->queryF($sql) or web_error($sql);
+    while (list($act_kind, $dirname, $act_name, $act_date, $cate_sn) = $xoopsDB->fetchRow($result)) {
+        $act_log[$dirname][$act_kind] = $act_date;
+    }
+
+    // die(var_export($log));
 
     // $dir = XOOPS_ROOT_PATH."/modules/tad_guide/admin/setup/{$dirname}/{$xoopsConfig['language']}/";
     // $log[$dirname]['blocks_file_exists']=file_exists("{$dir}/blocks.php");
@@ -42,25 +82,24 @@ function list_all_modules()
     // $log[$dirname]['content_all_exists']=file_exists("{$dir}/content_all.php");
     // $log[$dirname]['cates']=group_cate($dirname,$mod['mid']);
 
-    $all_mod_data=array();
-    foreach ($all_data as $is_active=> $data) {
-        foreach ($data as $status => $mods) {
-            foreach ($mods as $i => $mod) {
-                // die(var_export($mod));
-                $dirname = $mod['dirname'];
-                if (!in_array($dirname, $school_mod_arr)) {
-                    continue;
-                }
-                $all_mod_data[$mod['module_sn']]=$mod;
-                $log[$dirname] = get_dir_log($dirname, $mod['mid']);
-            }
+    $all_data = array();
+    foreach ($school_mod_arr as $dirname) {
+        if (empty($mod[$dirname]['module']['function'])) {
+            $mod[$dirname]['module']['function'] = 'install';
+            $mod[$dirname]['module']['mid']      = 0;
         }
+        $all_data[$dirname] = $mod[$dirname]['module'];
+
+        //取得各個模組是否有相對應的設定檔
+        $log[$dirname] = get_dir_log($dirname, $mod['mid']);
     }
 
+
     ksort($all_mod_data);
-    
-    $xoopsTpl->assign('all_data', $all_mod_data);
+
+    $xoopsTpl->assign('all_data', $all_data);
     $xoopsTpl->assign('log', $log);
+    $xoopsTpl->assign('act_log', $act_log);
     $xoopsTpl->assign('now_op', 'list_all_modules');
     $xoopsTpl->assign('school_mod_arr', $school_mod_arr);
 
@@ -69,22 +108,37 @@ function list_all_modules()
     }
     include_once XOOPS_ROOT_PATH . "/modules/tadtools/fancybox.php";
 
-    $fancybox      = new fancybox('.modulesadmin', '800px', null, false);
-    $fancybox_code = $fancybox->render();
-    $xoopsTpl->assign('fancybox_code', $fancybox_code);
+    $fancybox = new fancybox('.modulesadmin', '800px', null, false);
+    $fancybox->render();
 
-    $onekey_fancybox      = new fancybox('.onekey', '90%', '100%', false, false);
-    $onekey_fancybox_code = $onekey_fancybox->render(true);
-    $xoopsTpl->assign('onekey_fancybox_code', $onekey_fancybox_code);
+    $onekey_fancybox = new fancybox('.onekey', '90%', '100%', false, false);
+    $onekey_fancybox->render(true);
     //加在連結中：class="edit_dropdown" rel="group"（圖） data-fancybox-type="iframe"（HTML）
 
     if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/stickytableheaders.php")) {
         redirect_header("index.php", 3, _MA_NEED_TADTOOLS);
     }
     include_once XOOPS_ROOT_PATH . "/modules/tadtools/stickytableheaders.php";
-    $stickytableheaders      = new stickytableheaders(false);
-    $stickytableheaders_code = $stickytableheaders->render('#list_modules');
-    $xoopsTpl->assign('stickytableheaders_code', $stickytableheaders_code);
+    $stickytableheaders = new stickytableheaders(false);
+    $stickytableheaders->render('#list_modules');
+}
+
+//取得模組的安裝精靈設定檔
+function get_dir_log($dirname, $mid)
+{
+    global $school_mod_arr, $xoopsConfig;
+    if (!in_array($dirname, $school_mod_arr)) {
+        return;
+    }
+
+    $dir                       = XOOPS_ROOT_PATH . "/modules/tad_guide/admin/setup/{$dirname}/{$xoopsConfig['language']}/";
+    $log['blocks_file_exists'] = file_exists("{$dir}/blocks.php");
+    //$log['blocks_all_file_exists']=file_exists("{$dir}/blocks_all.php");
+    $log['config_exists']      = file_exists("{$dir}/config.php");
+    $log['content_exists']     = file_exists("{$dir}/content.php");
+    $log['content_all_exists'] = file_exists("{$dir}/content_all.php");
+    $log['cates']              = group_cate($dirname, $mid);
+    return $log;
 }
 
 //一鍵安裝
@@ -136,7 +190,7 @@ function one_key($dirname, $mid)
     if ($log['content_all_exists']) {
         $import_content = "
         <label class='checkbox'>
-          <input type='checkbox' name='act_kind[]' value='content_all' checked>
+          <input type='checkbox' name='act_kind_arr[]' value='content_all' checked>
           <h4>" . _MA_GUIDE_CONTENT_COL . "</h4>
         </label>
         ";
@@ -146,7 +200,7 @@ function one_key($dirname, $mid)
         $main .= "
         <div class='col-sm-4'>
           <label class='checkbox'>
-            <input type='checkbox' name='act_kind[]' value='config' checked>
+            <input type='checkbox' name='act_kind_arr[]' value='config' checked>
             <h4>" . _MA_GUIDE_IMPORT_CONFIG . "</h4>
           </label>
           $import_content
@@ -170,7 +224,7 @@ function one_key($dirname, $mid)
         <div class='col-sm-4'>
           <label class='checkbox'>
             <h4><input type='checkbox' id='clickAll'>" . _MA_GUIDE_BLOCKS_COL . "</h4>
-            <input type='hidden' name='act_kind[]' value='my_blocks'>
+            <input type='hidden' name='act_kind_arr[]' value='blocks'>
           </label>";
 
         $dir = XOOPS_ROOT_PATH . "/modules/tad_guide/admin/setup/{$dirname}/{$xoopsConfig['language']}/";
@@ -217,7 +271,7 @@ function one_key($dirname, $mid)
               <div class='col-sm-4'>
                 <label class='checkbox'>
                   <h4>" . _MA_GUIDE_CREATE_GROUP . "</h4>
-                  <input type='hidden' name='act_kind[]' value='create_group'>
+                  <input type='hidden' name='act_kind_arr[]' value='create_group'>
                 </label>
                 $groups_setup
               </div>";
@@ -231,24 +285,6 @@ function one_key($dirname, $mid)
 </html>";
 
     die($main);
-}
-
-//取得模組的安裝精靈設定檔
-function get_dir_log($dirname, $mid)
-{
-    global $school_mod_arr, $xoopsConfig;
-    if (!in_array($dirname, $school_mod_arr)) {
-        return;
-    }
-
-    $dir                       = XOOPS_ROOT_PATH . "/modules/tad_guide/admin/setup/{$dirname}/{$xoopsConfig['language']}/";
-    $log['blocks_file_exists'] = file_exists("{$dir}/blocks.php");
-    //$log['blocks_all_file_exists']=file_exists("{$dir}/blocks_all.php");
-    $log['config_exists']      = file_exists("{$dir}/config.php");
-    $log['content_exists']     = file_exists("{$dir}/content.php");
-    $log['content_all_exists'] = file_exists("{$dir}/content_all.php");
-    $log['cates']              = group_cate($dirname, $mid);
-    return $log;
 }
 
 //取得最後更新時間
@@ -304,7 +340,7 @@ function get_group()
 
     $sql    = "select `groupid`, `name` from " . $xoopsDB->prefix("groups") . " order by groupid";
     $result = $xoopsDB->query($sql) or web_error($sql);
-    $group  = "";
+    $group  = array();
     $i      = 0;
     while (list($groupid, $name) = $xoopsDB->fetchRow($result)) {
         $group[$i]['groupid'] = $groupid;
@@ -392,9 +428,9 @@ function backup_config($dirname = "", $mid = "")
         //撈取預設偏好設定
         $sql            = "select * from `" . $xoopsDB->prefix("config") . "` where `conf_modid`='{$mid}'";
         $result         = $xoopsDB->queryF($sql) or die($sql);
-        $backup_content = "";
+        $backup_content = array();
         while ($col = $xoopsDB->fetchArray($result)) {
-            $syntax = "";
+            $syntax = array();
             foreach ($col as $k => $v) {
                 $syntax[] = "`{$k}`='{$v}'";
             }
@@ -462,7 +498,7 @@ function backup_blocks($dirname = "", $mid = "")
         $result         = $xoopsDB->queryF($sql) or die($sql);
         $backup_content = "";
         while ($col = $xoopsDB->fetchArray($result)) {
-            $syntax = "";
+            $syntax = array();
             foreach ($col as $k => $v) {
                 $syntax[] = "`{$k}`='{$v}'";
             }
@@ -532,8 +568,7 @@ function import_data($dirname, $act_kind, $mid = "", $cate_sn = "")
 {
     global $xoopsDB, $xoopsConfig;
 
-    //if($act_kind=="blocks" or $act_kind=="blocks_all" or $act_kind=="my_blocks"){
-    if ($act_kind == "blocks" or $act_kind == "my_blocks") {
+    if ($act_kind == "blocks") {
         include "setup/{$dirname}/{$xoopsConfig['language']}/blocks.php";
 
         backup_blocks($dirname, $mid);
@@ -547,11 +582,11 @@ function import_data($dirname, $act_kind, $mid = "", $cate_sn = "")
                 $$k = $v;
             }
 
-            if ($act_kind == "my_blocks") {
-                $visible = in_array($func_num, $_POST['ok_blocks']) ? 1 : 0;
-            } else {
+            // if ($act_kind == "my_blocks") {
+            //     $visible = in_array($func_num, $_POST['ok_blocks']) ? 1 : 0;
+            // } else {
                 $visible = $new_data[$func_num]['visible'];
-            }
+            // }
 
             //更新區塊的資訊（匯入自訂值）
             $sql = "update `" . $xoopsDB->prefix("newblocks") . "` set `options`='{$new_data[$func_num]['options']}' , `title`='{$new_data[$func_num]['title']}' , `side`='{$new_data[$func_num]['side']}' , `weight`='{$new_data[$func_num]['weight']}' , `visible`='{$visible}' where `bid`='$bid'";
@@ -753,7 +788,6 @@ function add_perm($groupid = '', $insert_id = '', $mid = '', $perm_name = '')
     return $gperm_id;
 }
 
-
 //檢查是否有資料
 function content_get_backup($tbl = "")
 {
@@ -766,8 +800,6 @@ function content_get_backup($tbl = "")
     }
     return false;
 }
-
-
 
 function content_backup($dirname = "", $bak_table = array())
 {
@@ -791,23 +823,25 @@ function content_backup($dirname = "", $bak_table = array())
 }
 
 /*-----------執行動作判斷區----------*/
-$op         = empty($_REQUEST['op']) ? "" : $_REQUEST['op'];
-$update_sn  = empty($_REQUEST['update_sn']) ? "" : intval($_REQUEST['update_sn']);
-$file_link  = empty($_REQUEST['file_link']) ? "" : $_REQUEST['file_link'];
-$dirname    = empty($_REQUEST['dirname']) ? "" : $_REQUEST['dirname'];
-$act        = empty($_REQUEST['act']) ? "" : $_REQUEST['act'];
-$kind_dir   = empty($_REQUEST['kind_dir']) ? "" : $_REQUEST['kind_dir'];
-$ssh_id     = empty($_POST['ssh_id']) ? "" : $_POST['ssh_id'];
-$ssh_passwd = empty($_POST['ssh_passwd']) ? "" : $_POST['ssh_passwd'];
-$ssh_host   = empty($_POST['ssh_host']) ? "" : $_POST['ssh_host'];
-$ftp_id     = empty($_POST['ftp_id']) ? "" : $_POST['ftp_id'];
-$ftp_passwd = empty($_POST['ftp_passwd']) ? "" : $_POST['ftp_passwd'];
-$ftp_host   = empty($_POST['ftp_host']) ? "" : $_POST['ftp_host'];
-$act_kind   = empty($_REQUEST['act_kind']) ? "" : $_REQUEST['act_kind'];
-$mid        = empty($_REQUEST['mid']) ? "" : intval($_REQUEST['mid']);
-$groupid    = empty($_REQUEST['groupid']) ? "" : intval($_REQUEST['groupid']);
-$cate_sn    = empty($_REQUEST['cate_sn']) ? "" : intval($_REQUEST['cate_sn']);
-$hl         = empty($_REQUEST['hl']) ? "" : $_REQUEST['hl'];
+include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+$op           = system_CleanVars($_REQUEST, 'op', '', 'string');
+$update_sn    = system_CleanVars($_REQUEST, 'update_sn', 0, 'int');
+$file_link    = system_CleanVars($_REQUEST, 'file_link', '', 'string');
+$dirname      = system_CleanVars($_REQUEST, 'dirname', '', 'string');
+$act          = system_CleanVars($_REQUEST, 'act', '', 'string');
+$kind_dir     = system_CleanVars($_REQUEST, 'kind_dir', '', 'string');
+$ssh_id       = system_CleanVars($_REQUEST, 'ssh_id', '', 'string');
+$ssh_passwd   = system_CleanVars($_REQUEST, 'ssh_passwd', '', 'string');
+$ssh_host     = system_CleanVars($_REQUEST, 'ssh_host', '', 'string');
+$ftp_id       = system_CleanVars($_REQUEST, 'ftp_id', '', 'string');
+$ftp_passwd   = system_CleanVars($_REQUEST, 'ftp_passwd', '', 'string');
+$ftp_host     = system_CleanVars($_REQUEST, 'ftp_host', '', 'string');
+$act_kind     = system_CleanVars($_REQUEST, 'act_kind', '', 'string');
+$act_kind_arr = system_CleanVars($_REQUEST, 'act_kind_arr', '', 'array');
+$hl           = system_CleanVars($_REQUEST, 'hl', '', 'string');
+$mid          = system_CleanVars($_REQUEST, 'mid', 0, 'int');
+$groupid      = system_CleanVars($_REQUEST, 'groupid', 0, 'int');
+$cate_sn      = system_CleanVars($_REQUEST, 'cate_sn', 0, 'int');
 
 switch ($op) {
     /*---判斷動作請貼在下方---*/
@@ -817,19 +851,15 @@ switch ($op) {
         break;
 
     case "install_module":
-        install_module($file_link, $dirname, "install", $update_sn, 'modules');
+        to_do($file_link, $dirname, "install_module", $update_sn);
         break;
 
     case "update_module":
-        install_module($file_link, $dirname, "update", $update_sn, 'modules');
+        to_do($file_link, $dirname, "update_module", $update_sn);
         break;
 
     case "ssh_login":
-        ssh_login($ssh_host, $ssh_id, $ssh_passwd, $file_link, $dirname, $act, $update_sn, $kind_dir);
-        break;
-
-    case "ftp_login":
-        ftp_log_in($ftp_host, $ftp_id, $ftp_passwd, $file_link, $dirname, $act, $update_sn, $kind_dir);
+        ssh_login($ssh_host, $ssh_id, $ssh_passwd, $file_link, $dirname, $act, $update_sn);
         break;
 
     case "install_theme":
@@ -855,7 +885,7 @@ switch ($op) {
         break;
 
     case "import_all_data":
-        import_all_data($dirname, $act_kind, $mid);
+        import_all_data($dirname, $act_kind_arr, $mid);
         header("location:main.php?op=done");
         break;
 
@@ -872,6 +902,5 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign("isAdmin", true);
-$xoopsTpl->assign("jquery", get_jquery());
 $xoopsTpl->assign("hl", $hl);
 include_once 'footer.php';
