@@ -91,7 +91,7 @@ function list_all_modules()
         $all_data[$dirname] = $mod[$dirname]['module'];
 
         //取得各個模組是否有相對應的設定檔
-        $log[$dirname] = get_dir_log($dirname, $mod['mid']);
+        $log[$dirname] = get_dir_log($dirname, $mod[$dirname]['module']['mid']);
     }
 
 
@@ -235,12 +235,12 @@ function one_key($dirname, $mid)
             $checked = $block['visible'] == 1 ? "checked" : "";
             $place   = constant("_MA_GUIDE_BS_{$block['side']}");
 
-            $visible = $b[$func_num]['visible'] == 1 ? "<span class='label label-warning'>" . _MA_GUIDE_BLOCK_INSTALLED . "</span>" : "";
+            $visible = $b[$func_num]['visible'] == 1 ? "<span class='badge badge-warning'>" . _MA_GUIDE_BLOCK_INSTALLED . "</span>" : "";
             $main .= "
               <label class='checkbox'>
                 <input type='checkbox' name='ok_blocks[]' value='{$func_num}' $checked class='ok_blocks'>
                 {$block['title']}
-                <span class='label label-info'>{$place}</span>
+                <span class='badge badge-info'>{$place}</span>
                 {$visible}
               </label>";
         }

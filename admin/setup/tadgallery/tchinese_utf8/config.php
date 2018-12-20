@@ -1,7 +1,7 @@
 <?php
 $new_config['index_mode']              = 'normal';
 $new_config['thumbnail_s_width']       = '140';
-$new_config['thumbnail_m_width']       = '500';
+$new_config['thumbnail_m_width']       = '640';
 $new_config['thumbnail_b_width']       = '1600';
 $new_config['show_copy_pic']           = '1';
 $new_config['only_thumb']              = '0';

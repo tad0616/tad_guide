@@ -6,9 +6,9 @@ $new_data[2] = array('options' => '5|99|color:gray; font-size:12px; margin-top:3
 //最新回應
 $new_data[3] = array('options' => '10|160', 'title' => '最新回應', 'side' => '9', 'weight' => '1', 'visible' => '0');
 //訂閱 / 取消電子報
-$new_data[4] = array('options' => '', 'title' => '訂閱 / 取消電子報', 'side' => '0', 'weight' => '2', 'visible' => '1');
+$new_data[4] = array('options' => '', 'title' => '訂閱 / 取消電子報', 'side' => '0', 'weight' => '2', 'visible' => '0');
 //電子報一覽
-$new_data[5] = array('options' => '10', 'title' => '電子報一覽', 'side' => '0', 'weight' => '3', 'visible' => '1');
+$new_data[5] = array('options' => '10', 'title' => '電子報一覽', 'side' => '0', 'weight' => '3', 'visible' => '0');
 //分類新聞區塊
 $new_data[6] = array('options' => '|5|1|1|99|color: gray; font-size: 12px; margin: 6px 0px; line-height: 180%;', 'title' => '分類新聞區塊[pic]images/newstitle.png', 'side' => '5', 'weight' => '9', 'visible' => '0');
 //自訂頁面
@@ -32,7 +32,7 @@ $new_data[15] = array('options' => '3|2|66|font-size:13px ;color: gray; line-hei
 //自訂頁面選單
 $new_data[16] = array('options' => '|info|1', 'title' => '學校簡介[hide]', 'side' => '0', 'weight' => '1', 'visible' => '1');
 //頁籤新聞區塊
-$new_data[17] = array('options' => '|10|default|#FFFFFF|#E0D9D9|#9C905C|#9C905C|0', 'title' => '頁籤新聞[hide]', 'side' => '5', 'weight' => '3', 'visible' => '1');
+$new_data[17] = array('options' => '|10|default|#FFFFFF|#E0D9D9|#9C905C|#9C905C|1', 'title' => '頁籤新聞[hide]', 'side' => '5', 'weight' => '3', 'visible' => '1');
 //標籤新聞區塊
 $new_data[18] = array('options' => '|10|default|#FFFFFF|#E0D9D9|#9C905C|#9C905C|0', 'title' => '標籤新聞[hide]', 'side' => '5', 'weight' => '3', 'visible' => '0');
 
