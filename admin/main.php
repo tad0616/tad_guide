@@ -158,13 +158,13 @@ function one_key($dirname, $mid)
           <script type='text/javascript'>
             $().ready(function(){
               $('#clickAll').click(function() {
-                if($('#clickAll').attr('checked')){
+                if($('#clickAll').prop('checked')){
                   $('input.ok_blocks').each(function() {
-                    $(this).attr('checked', true);
+                    $(this).prop('checked', true);
                   });
                 }else{
                   $('input.ok_blocks').each(function() {
-                    $(this).attr('checked', false);
+                    $(this).prop('checked', false);
                   });
                 }
               });
