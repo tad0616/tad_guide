@@ -5,7 +5,7 @@ function get_tad_player_cate($group_name)
     //`pcsn`, `of_csn`, `title`, `enable_group`, `enable_upload_group`, `sort`, `width`, `height`
 
     $sql                                      = "select pcsn , title , enable_upload_group from " . $xoopsDB->prefix("tad_player_cate") . " where title like '%{$group_name}%'";
-    $result                                   = $xoopsDB->query($sql) or web_error($sql);
+    $result                                   = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
     list($pcsn, $title, $enable_upload_group) = $xoopsDB->fetchRow($result);
     $cate['sn']                               = $pcsn;
     $cate['title']                            = $title;

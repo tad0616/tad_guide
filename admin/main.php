@@ -37,7 +37,7 @@ function list_all_modules()
     //         $mod[$dirname]['module']['kind']               = $kind;
     //抓出現有模組
     $sql    = "SELECT * FROM " . $xoopsDB->prefix("modules") . " ORDER BY hasmain DESC, weight";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
 
     //模組部份
     while ($data = $xoopsDB->fetchArray($result)) {
@@ -67,7 +67,7 @@ function list_all_modules()
     //找出目前的更新紀錄
     $act_log = $log = array();
     $sql     = "select `act_kind`, `kind_title`, `act_name`, `act_date`, `cate_sn` from `" . $xoopsDB->prefix("tad_guide") . "` order by `kind_title`";
-    $result  = $xoopsDB->queryF($sql) or web_error($sql);
+    $result  = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
     while (list($act_kind, $dirname, $act_name, $act_date, $cate_sn) = $xoopsDB->fetchRow($result)) {
         $act_log[$dirname][$act_kind] = $act_date;
     }
@@ -283,7 +283,7 @@ function get_last_update($dirname = "")
 {
     global $xoopsDB;
     $sql               = "select last_update from " . $xoopsDB->prefix("modules") . " where dirname='$dirname'";
-    $result            = $xoopsDB->query($sql) or web_error($sql);
+    $result            = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
     list($last_update) = $xoopsDB->fetchRow($result);
     return $last_update;
 }
@@ -294,7 +294,7 @@ function group_cate($dirname, $mid = 0)
     global $xoopsDB, $xoopsTpl, $mod_arr;
 
     $sql    = "select `groupid`, `name` from " . $xoopsDB->prefix("groups") . " order by groupid";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
 
     while (list($groupid, $name) = $xoopsDB->fetchRow($result)) {
         //以下會產生這些變數： `groupid`, `name`, `description`, `group_type`
@@ -330,7 +330,7 @@ function get_group()
     global $xoopsDB, $xoopsTpl, $mod_arr;
 
     $sql    = "select `groupid`, `name` from " . $xoopsDB->prefix("groups") . " order by groupid";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
     $group  = array();
     $i      = 0;
     while (list($groupid, $name) = $xoopsDB->fetchRow($result)) {
@@ -350,7 +350,7 @@ function to_create_group($create_group = "")
     $new_group = explode(';', $create_group);
 
     // $sql = "select groupid,name from ".$xoopsDB->prefix("groups")." order by groupid";
-    // $result = $xoopsDB->query($sql) or web_error($sql);
+    // $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
     // while(list($groupid,$name)=$xoopsDB->fetchRow($result)){
     //   $old_group[$groupid]=$name;
     // }
@@ -367,12 +367,12 @@ function mk_group($name = "")
 {
     global $xoopsDB;
     $sql           = "select groupid from " . $xoopsDB->prefix("groups") . " where `name`='$name'";
-    $result        = $xoopsDB->query($sql) or web_error($sql);
+    $result        = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
     list($groupid) = $xoopsDB->fetchRow($result);
 
     if (empty($groupid)) {
         $sql = "insert into " . $xoopsDB->prefix("groups") . " (`name`) values('{$name}')";
-        $xoopsDB->queryF($sql) or web_error($sql);
+        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
 
         //取得最後新增資料的流水編號
         $groupid = $xoopsDB->getInsertId();
@@ -462,7 +462,7 @@ function restore_config($dirname = "", $mid = "")
         $restroe_sql = explode("##", $backup_content);
         foreach ($restroe_sql as $sql) {
             if (!empty($sql)) {
-                $xoopsDB->queryF($sql) or web_error($sql);
+                $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
             }
 
         }
@@ -763,7 +763,7 @@ function create_one_cate($mid = "", $groupid = "", $dirname = "")
     if (file_exists(XOOPS_ROOT_PATH . "/modules/tad_guide/admin/setup/{$dirname}/{$xoopsConfig['language']}/cate.php")) {
 
         $sql        = "select `name` from " . $xoopsDB->prefix("groups") . " where groupid='{$groupid}'";
-        $result     = $xoopsDB->query($sql) or web_error($sql);
+        $result     = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
         list($name) = $xoopsDB->fetchRow($result);
 
         $create_cate[$groupid] = $name;
@@ -815,13 +815,13 @@ function content_backup($dirname = "", $bak_table = array())
     foreach ($bak_table as $bak) {
         if (!content_get_backup($bak['name'])) {
             $sql = $bak['sql'];
-            $xoopsDB->queryF($sql) or web_error($sql);
+            $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
 
             $sql = "
       INSERT INTO `" . $xoopsDB->prefix("{$bak['name']}_gbak") . "`
       SELECT * from `" . $xoopsDB->prefix($bak['name']) . "`;
       ";
-            $xoopsDB->queryF($sql) or web_error($sql);
+            $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
         }
     }
 }

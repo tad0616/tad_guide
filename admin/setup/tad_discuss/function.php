@@ -5,7 +5,7 @@ function get_tad_discuss_cate($group_name)
     //`BoardID`, `ofBoardID`, `BoardTitle`, `BoardDesc`, `BoardManager`, `BoardSort`, `BoardEnable`
 
     $sql                        = "select BoardID , BoardTitle from " . $xoopsDB->prefix("tad_discuss_board") . " where BoardTitle like '%{$group_name}%'";
-    $result                     = $xoopsDB->query($sql) or web_error($sql);
+    $result                     = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
     list($BoardID, $BoardTitle) = $xoopsDB->fetchRow($result);
     $cate['sn']                 = $BoardID;
     $cate['title']              = $BoardTitle;
