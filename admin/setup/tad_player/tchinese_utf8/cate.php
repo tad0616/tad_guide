@@ -23,7 +23,7 @@ foreach ($create_cate as $groupid => $cate_name) {
   (`of_csn`, `title`, `enable_group`, `enable_upload_group`, `sort`, `width`, `height`)
   VALUES
   (0,'{$prefix}{$cate_name}{$suffix}', '', '1,$groupid', '{$max_sort}', '640', '480')";
-    $xoopsDB->queryF($sql) or die($sql);
+    $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
     $insert_id = $xoopsDB->getInsertId();
 
     if (!empty($read_perm_name)) {

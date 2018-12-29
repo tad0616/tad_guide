@@ -7,7 +7,7 @@ function tadnews_content($insert_id = "")
     $now = date("Y-m-d H:i:s");
 
     $sql = "delete from `" . $xoopsDB->prefix("tad_news_tags") . "`";
-    $xoopsDB->queryF($sql) or die($sql);
+    $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
 
     $sql = "INSERT INTO `" . $xoopsDB->prefix("tad_news_tags") . "` (`tag_sn`, `tag`, `font_color`, `color`, `enable`) VALUES
   (1, '公告', '#FFFFFF',  'blue', '1'),
@@ -19,10 +19,10 @@ function tadnews_content($insert_id = "")
   (7, '研習', '#FFFFFF', '#006600',  '1'),
   (8, '宣導', '#FFFFFF', '#FF0099',  '1'),
   (9, '狂賀', '#FFFFFF', '#990000',  '1');";
-    $xoopsDB->queryF($sql) or die($sql);
+    $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
 
     // $sql="delete from `".$xoopsDB->prefix("tad_news")."` where `ncsn`='{$insert_id}'";
-    // $xoopsDB->queryF($sql) or die($sql);
+    // $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
 
     $sql            = "select max(sort) from `" . $xoopsDB->prefix("tad_news_cate") . "` where not_news='0'";
     $result         = $xoopsDB->query($sql);
@@ -33,7 +33,7 @@ function tadnews_content($insert_id = "")
   (`of_ncsn`, `nc_title`, `enable_group`, `enable_post_group`, `sort`, `cate_pic`, `not_news`, `setup`)
   VALUES
   (0,'教育新知', '', '1', '{$max_sort}', '', '0','')";
-    $xoopsDB->queryF($sql) or die($sql);
+    $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
     $insert_id = $xoopsDB->getInsertId();
 
     $sql = "INSERT INTO `" . $xoopsDB->prefix("tad_news") . "` (`ncsn`, `news_title`, `news_content`, `start_day`, `end_day`, `enable`, `uid`, `passwd`, `enable_group`, `counter`, `prefix_tag`, `always_top`, `always_top_date`, `have_read_group`, `page_sort`) VALUES
@@ -53,7 +53,7 @@ function tadnews_content($insert_id = "")
 
   ('{$insert_id}',  '會考時代，學生非閱讀不可！',  '<div class=\"dpMain\" id=\"content\">\r\n<div class=\"cp\" id=\"cp\">\r\n<p>明年十二年國教正式上路後，基測轉型成會考。在未來幾年中，會考成績仍將是決定超額比序的重要關鍵。</p>\r\n\r\n<p>三月底剛剛考完的會考試測，題型和基測類似，但也預告著轉變，從會考試測命題的趨勢來看，未來中學生的學習策略應該要有以下的轉變。</p>\r\n\r\n<p><span style=\"color: #ff6600\"><strong>1. 閱讀、閱讀、閱讀！</strong></span></p>\r\n\r\n<p>《親 子天下》在四月初會考試測一結束，採訪每一科的資深國中老師分析本次試測題目的特色。聽到老師們不斷重複的共同關鍵字就是「閱讀力」。會考難度比基測難， 最顯而易見的差異之一就是題幹加長。這一次的國文科出了一篇一千一百字長的羅蘭散文。學生必須對於閱讀長文不恐懼，且能在很短的時間內抓到重點。台北市教 育局局長丁亞雯也說：「看到會考試測的題目，名師的結論都是：『國中生非閱讀不可！』」</p>\r\n\r\n<p><span style=\"color: #ff6600\"><strong>2. 記憶少，思考和理解才是關鍵</strong></span></p>\r\n\r\n<p>綜觀專家的分析「會考沒有看一眼」就能答的題目。譬如，國文科的閱讀測驗，不考可以直接在文本中找到答案的題目。考的是學生能否和作者「對話」，也就是，從文本推敲寫作動機和作者想說沒說的言外之意。</p>\r\n\r\n<p>數 學科這一次加考的非選擇題更是必須從提供的題目條件中，分析判斷後，提出支持性理由，才能拿到滿分。第一次會考試測的非選擇題考了兩題，在全體考生中平均 每一題能夠拿到滿分三分的比率都不到六％。兩題各拿零分的比率更是高得驚人，分別是七七．六％和八七．七％。雖然很難預估，這次參加試測的考生是真的不會 寫？還是懶得寫？但是，可以看到數學非選擇題，這種重視思考過程的學習，會是未來必須加強的方向。</p>\r\n\r\n<div class=\"dpMain\" id=\"content\">\r\n<div class=\"cp\" id=\"cp\">\r\n<p><span style=\"color: #ff6600\"><strong>3. 加強整合和跨科學習的能力</strong></span></p>\r\n\r\n<p>這次在社會科當中，有好幾題是跨科的題目。譬如，社會科第四題出現《天工開物》的書名，這是歷史科，但是用這個題目要測驗的是關於台灣國家公園的特色，是地理科的範圍。第四十九題，則以九世紀海上絲路為題（歷史科），來測驗盛行風向（地理科）。</p>\r\n\r\n<p>自然科和數學科則考很多整合了兩個觀念以上的題目。打破學習中科目和單元的疆界。</p>\r\n\r\n<p>學生不需要練習太多繁複的計算和花時間背誦，但是學習時必須非常專心，徹底弄懂基礎概念。</p>\r\n\r\n<p><span style=\"color: #ff6600\"><strong>4. 重視生活經驗</strong></span></p>\r\n\r\n<p>會考試測的題目和生活連結的程度很高。國文科的閱讀測驗還考了金庸作品的序文。社會科更是多題取材自生活，時事的題目包含了民法修訂和高齡化社會等重大議題。</p>\r\n\r\n<p><span style=\"color: #ff6600\"><strong>5. 英語的英聽簡單但雙峰現象明顯</strong></span></p>\r\n\r\n<p>同 樣第一次出現的英聽題目，這一次總共考了二十題，但是全體考生平均答對十六題。心測中心分析英聽的題目對一般考生並不困難，只要依據課本正常學習是容易拿 分。但是英語科的基礎級考生比率是全科中最低五五．六％，最高是社會科六八．二％。英語科考生待加強比率最高，精熟的比率也偏高，有明顯的雙峰現象。</p>\r\n\r\n<p><span style=\"color: #ff6600\"><strong>6. 作文不計分，卻是比序關鍵</strong></span></p>\r\n\r\n<p>作 文雖然在會考中不計分，但是好幾個就學區在比序碰到同分時，作文卻是比序的最重要關鍵。這一次試測，作文能夠拿到六級分的只有稀少的二．二％比率。考生普 遍集中在四級分的五三．三％，和五級分的二一．六％。因此，若是在競爭激烈的學區，當同分時，作文是高分群一定有絕對的優勢。</p>\r\n\r\n<p>對於關心十二年國教和會考趨勢的父母來說，改變是混亂和不安的。但是，掌握新的趨勢、用對的觀念陪伴孩子，將有可能事半功倍。</p>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n', '{$now}',  '0000-00-00 00:00:00',  '1',  '{$uid}',  '', '', 2,  '8',  '0',  '0000-00-00 00:00:00',  '', 0);
   ";
-    $xoopsDB->queryF($sql) or die($sql);
+    $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
 
     $sql            = "select max(sort) from `" . $xoopsDB->prefix("tad_news_cate") . "` where not_news='1'";
     $result         = $xoopsDB->query($sql);
@@ -64,7 +64,7 @@ function tadnews_content($insert_id = "")
   (`of_ncsn`, `nc_title`, `enable_group`, `enable_post_group`, `sort`, `cate_pic`, `not_news`, `setup`)
   VALUES
   (0,'學校簡介', '', '1', '{$max_sort}', '', '1','title=1;tool=0;comm=0;nav=1')";
-    $xoopsDB->queryF($sql) or die($sql);
+    $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
     $insert_id = $xoopsDB->getInsertId();
 
     $sql = "INSERT INTO `" . $xoopsDB->prefix("tad_news") . "` (`ncsn`, `news_title`, `news_content`, `start_day`, `end_day`, `enable`, `uid`, `passwd`, `enable_group`, `counter`, `prefix_tag`, `always_top`, `always_top_date`, `have_read_group`, `page_sort`) VALUES
@@ -80,7 +80,7 @@ function tadnews_content($insert_id = "")
   (`of_ncsn`, `nc_title`, `enable_group`, `enable_post_group`, `sort`, `cate_pic`, `not_news`, `setup`)
   VALUES
   ('{$insert_id}','行政單位', '', '1', '{$max_sort}', '', '1','title=1;tool=0;comm=0;nav=1')";
-    $xoopsDB->queryF($sql) or die($sql);
+    $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
     $insert_id = $xoopsDB->getInsertId();
 
     $sql    = "select `groupid`,`name` from " . $xoopsDB->prefix("groups") . " where groupid > 3";
@@ -91,7 +91,7 @@ function tadnews_content($insert_id = "")
         $sql = "INSERT INTO `" . $xoopsDB->prefix("tad_news") . "` (`ncsn`, `news_title`, `news_content`, `start_day`, `end_day`, `enable`, `uid`, `passwd`, `enable_group`, `counter`, `prefix_tag`, `always_top`, `always_top_date`, `have_read_group`, `page_sort`) VALUES
     ('{$insert_id}', '{$name}', '<p>{$name}內容製作中～</p>', '{$now}', '0000-00-00 00:00:00', '1', '{$uid}', '', '', 2, '', '0', '0000-00-00 00:00:00', '', $i)
      ";
-        $xoopsDB->queryF($sql) or die($sql);
+        $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
         $i++;
     }
 }

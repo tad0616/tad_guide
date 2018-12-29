@@ -140,7 +140,7 @@
                   <{if ($act_log.$mod_dirname.config=='' and $log.$mod_dirname.config_exists) or ($act_log.$mod_dirname.content_all=='' and $log.$mod_dirname.content_all_exists) or ($act_log.$mod_dirname.blocks=='' and $log.$mod_dirname.blocks_file_exists)}>
                       <a href="main.php?op=one_key&dirname=<{$mod_dirname}>&mid=<{$mod.mid}>" alt="<{$smarty.const._MA_GUIDE_ONE_KEY}>" title="<{$smarty.const._MA_GUIDE_ONE_KEY}>" class="btn btn-sm btn-primary onekey" data-fancybox-type="iframe"><i class="fa fa-hand-o-up"></i></a>
                   <{else}>
-                    <a href="#" alt="<{$smarty.const._MA_GUIDE_ONE_KEY}>" title="<{$smarty.const._MA_GUIDE_ONE_KEY}>" class="btn btn-sm btn-primary onekey" disabled><i class="fa fa-hand-o-up"></i></a>
+                    <a href="#" alt="<{$smarty.const._MA_GUIDE_ONE_KEY}>" title="<{$smarty.const._MA_GUIDE_ONE_KEY}>" class="btn btn-sm btn-primary onekey disabled" disabled><i class="fa fa-hand-o-up"></i></a>
                   <{/if}>
                 <{/if}>
               </td>

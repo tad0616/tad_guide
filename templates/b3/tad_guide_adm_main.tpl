@@ -85,7 +85,7 @@
         </div>
       </div>
     </form>
-    
+
     <table id="list_modules" class="table table-bordered table-hover" style="width:auto;">
       <thead>
         <tr>
@@ -130,7 +130,7 @@
                 <{elseif $mod.function=='install'}>
                   <a href="main.php?op=install_module&dirname=<{$mod_dirname}>&file_link=<{$mod.file_link}>&update_sn=<{$mod.update_sn}>&tad_adm_tpl=clean" class="btn btn-success btn-xs btn-block modulesadmin" data-fancybox-type="iframe">
                   <i class="fa fa-cloud-download" aria-hidden="true"></i>
-                  <{$smarty.const._MA_GUIDE_MOD_INSTALL_MODULE}> <{$mod_dirname}> <{$mod.new_version}></a>  
+                  <{$smarty.const._MA_GUIDE_MOD_INSTALL_MODULE}> <{$mod_dirname}> <{$mod.new_version}></a>
                 <{/if}>
               </td>
 
@@ -140,7 +140,7 @@
                   <{if ($act_log.$mod_dirname.config=='' and $log.$mod_dirname.config_exists) or ($act_log.$mod_dirname.content_all=='' and $log.$mod_dirname.content_all_exists) or ($act_log.$mod_dirname.blocks=='' and $log.$mod_dirname.blocks_file_exists)}>
                       <a href="main.php?op=one_key&dirname=<{$mod_dirname}>&mid=<{$mod.mid}>" alt="<{$smarty.const._MA_GUIDE_ONE_KEY}>" title="<{$smarty.const._MA_GUIDE_ONE_KEY}>" class="btn btn-primary onekey" data-fancybox-type="iframe"><i class="fa fa-hand-o-up"></i></a>
                   <{else}>
-                    <a href="#" alt="<{$smarty.const._MA_GUIDE_ONE_KEY}>" title="<{$smarty.const._MA_GUIDE_ONE_KEY}>" class="btn btn-primary onekey" disabled><i class="fa fa-hand-o-up"></i></a>
+                    <a href="#" alt="<{$smarty.const._MA_GUIDE_ONE_KEY}>" title="<{$smarty.const._MA_GUIDE_ONE_KEY}>" class="btn btn-primary onekey disabled" disabled><i class="fa fa-hand-o-up"></i></a>
                   <{/if}>
                 <{/if}>
               </td>

@@ -4,7 +4,7 @@ function tad_book3_content($cate_sn = "")
     global $xoopsDB, $xoopsUser;
 
     $sql = "delete from `" . $xoopsDB->prefix("tad_book3") . "` where tbcsn='$cate_sn'";
-    $xoopsDB->queryF($sql) or die($sql);
+    $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
 
     $uid = $xoopsUser->uid();
 
@@ -13,13 +13,13 @@ function tad_book3_content($cate_sn = "")
   ('$cate_sn', 1, 'XOOPS輕鬆架快速上手', '<p>XOOPS輕鬆架使用手冊，這本只要是針對校園使用，一般網站亦可參考，請自行融會貫通即可。</p>\r\n', '$uid', '', '', '1', '', 0, '2014-01-25 17:15:47')
   ";
 
-    $xoopsDB->queryF($sql) or die($sql);
+    $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
 
     //取得最後新增資料的流水編號
     $tbsn = $xoopsDB->getInsertId();
 
     $sql = "delete from `" . $xoopsDB->prefix("tad_book3_docs") . "` where  tbsn='$tbsn'";
-    $xoopsDB->queryF($sql) or die($sql);
+    $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
 
     $sql = "INSERT INTO `" . $xoopsDB->prefix("tad_book3_docs") . "` (`tbsn`, `category`, `page`, `paragraph`, `sort`, `title`, `content`, `add_date`, `last_modify_date`, `uid`, `count`, `enable`) VALUES
 

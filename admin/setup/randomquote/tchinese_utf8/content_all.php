@@ -4,7 +4,7 @@ function randomquote_content($cate_sn = "")
     global $xoopsDB;
 
     // $sql="delete from `".$xoopsDB->prefix("citas")."`";
-    // $xoopsDB->queryF($sql) or die($sql);
+    // $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
 
     $sql = "INSERT INTO `" . $xoopsDB->prefix("citas") . "` (`texto`, `autor`) VALUES
   ('◎ 脾氣嘴巴不好，心地再好也不能算好人。', '證嚴法師'),
@@ -46,5 +46,5 @@ function randomquote_content($cate_sn = "")
   ('◎ 有智慧才能分辨善惡邪正；有謙虛才能建造美滿人生。', '證嚴法師');
   ";
 
-    $xoopsDB->queryF($sql) or die($sql);
+    $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
 }

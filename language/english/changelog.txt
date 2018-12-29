@@ -1,6 +1,8 @@
 Tad gudie 1.4.9 (2019-01-01 released)
 ================================================
 1.Support BootStrap4
+2.Support PHP 7.3
+3.Support MySQL Database strict mode
 
 
 Tad gudie 1.4.8 (2018-08-22 released)
