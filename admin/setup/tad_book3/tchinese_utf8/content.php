@@ -79,7 +79,7 @@ function tad_book3_content($cate_sn = "")
   ('{$tbsn}', 1, 3, 3, 0, '自己加上檔案類型 mime type', '<p>電子相簿中的3D牆需要載入主機裡面的rss檔，但預設的雲端主機並不認識 .rss 這種檔案類型，或者上傳影片時，主機也不認識mp4這種格式，所以，我們必須自己告訴主機</p>\r\n\r\n<p>請上載此 <a href=\"https://campus-xoops.tn.edu.tw/uploads/tad_book3/file/web.config\">web.config</a> 設定檔至 /site/wwwroot/ 底下即可！其內容為：</p>\r\n\r\n<pre class=\"brush:xml;\">\r\n&lt;configuration&gt;\r\n    &lt;system.webServer&gt;\r\n        &lt;staticContent&gt;            \r\n            &lt;mimeMap fileExtension=\".rss\" mimeType=\"application/rss+xml\" /&gt;\r\n            &lt;mimeMap fileExtension=\".mp4\" mimeType=\"video/mp4\" /&gt;\r\n     &lt;/staticContent&gt;\r\n    &lt;/system.webServer&gt;\r\n&lt;/configuration&gt;</pre>\r\n', '1397101045', '1401438791', 1, 160, '1');
 
   ";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
     //uzip_file();
 }
 
