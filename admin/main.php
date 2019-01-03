@@ -22,7 +22,7 @@ function list_all_modules()
     $xoopsTpl->assign('group', $group);
 
     //取得遠端的模組資訊
-    $mod = get_tad_modules_info();
+    $mod = get_tad_json_info();
     // die(var_export($mod['tadtools']['module']));
     //         $mod[$dirname]['module']['module_title']       = $module_title;
     //         $mod[$dirname]['module']['update_sn']          = $update_sn;
