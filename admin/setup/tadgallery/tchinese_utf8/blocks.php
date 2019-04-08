@@ -16,6 +16,6 @@ $new_data[6] = array('options' => '12|0|1|post_date|desc|m|0|130|130|0|0|font-si
 //無縫跑馬燈
 $new_data[7] = array('options' => '12|0|1|rand|desc|m|0|100%|150|20|1', 'title' => '無縫跑馬燈[hide]', 'side' => '9', 'weight' => '3', 'visible' => '1');
 //相簿一覽
-$new_data[8] = array('options' => '4|content|rand()||300|line-height:1.8;|0', 'title' => '相簿一覽[hide]', 'side' => '5', 'weight' => '4', 'visible' => '1');
+$new_data[8] = array('options' => '4|content|rand()||300|line-height:1.8;|0||4', 'title' => '相簿一覽[hide]', 'side' => '5', 'weight' => '4', 'visible' => '1');
 
 //select CONCAT('//',`name`,'\\n\$new_data[',`func_num`,'] = array(\'options\' => \'',`options`,'\', \'title\' => \'',`title`,'\', \'side\' => \'',`side`,'\', \'weight\' => \'',`weight`,'\', \'visible\' => \'',`visible`,'\');')from `xx_newblocks` where `dirname`='tadgallery' and `block_type`!='D' order by `func_num`
