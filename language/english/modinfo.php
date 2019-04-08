@@ -10,7 +10,7 @@ define('_MI_TADGUIDE_ADMENU1', 'Manager View');
 define('_MI_TADGUIDE_ADMENU1_DESC', 'Master Management Interface');
 
 define('_MI_TADGUIDE_DIRNAME', basename(dirname(dirname(__DIR__))));
-define('_MI_TADGUIDE_HELP_HEADER', __DIR__ . '/help/helpheader.html');
+define('_MI_TADGUIDE_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_TADGUIDE_BACK_2_ADMIN', 'Back to Administration of ');
 
 //help
