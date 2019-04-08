@@ -23,7 +23,7 @@ foreach ($create_cate as $groupid => $cate_name) {
   (`cat_title`, `cat_desc`, `cat_enable`, `uid`, `of_cat_sn`, `cat_share`, `cat_sort`, `cat_count`)
   VALUES
   ('{$prefix}{$cate_name}{$suffix}', '{$cate_name}的常用檔案及文件下載', '1', '1' , '0', '1', '{$max_sort}', '0')";
-    $xoopsDB->queryF($sql) or die($sql);
+    $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
     $insert_id = $xoopsDB->getInsertId();
 
     if (!empty($read_perm_name)) {

@@ -97,3 +97,4 @@ define('_MA_GUIDE_IMPORT_OK', 'Operation completed!');
 define('_MA_GUIDE_RESTORE_CONFIG', 'Restore Default Preferences');
 define('_MA_GUIDE_RESTORE_BLOCKS', 'Restore default setting Block');
 define('_MA_GUIDE_RESTORE_CONTENT', 'Restore Default Content');
+define('_MA_GUIDE_MOD_CLOSED', 'Module closed');
