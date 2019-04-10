@@ -1,5 +1,8 @@
 <?php
 /*
+
+use XoopsModules\Tad_guide\Utility;
+
 function xoops_module_uninstall_模組目錄(&$module) {
   GLOBAL $xoopsDB;
   $date=date("Ymd");

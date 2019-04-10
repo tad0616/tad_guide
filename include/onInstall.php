@@ -1,5 +1,9 @@
 <?php
+
 /*
+
+use XoopsModules\Tad_guide\Utility;
+
 function xoops_module_install_模組目錄(&$module) {
 
   mk_dir(XOOPS_ROOT_PATH."/uploads/模組目錄");
