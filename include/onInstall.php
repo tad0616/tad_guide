@@ -19,4 +19,3 @@ function mk_dir($dir=""){
   }
 }
 */
-?>
