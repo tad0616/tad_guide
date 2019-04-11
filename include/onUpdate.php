@@ -1,15 +1,18 @@
 <?php
 /*
+
+use XoopsModules\Tad_guide\Utility;
+
 function xoops_module_update_模組目錄(&$module, $old_version) {
 GLOBAL $xoopsDB;
 
-//if(!chk_chk1()) go_update1();
+//if(!tad_guide_chk_chk1()) tad_guide_go_update1();
 
 return true;
 }
 
 //檢查某欄位是否存在
-function chk_chk1(){
+function tad_guide_chk_chk1(){
 global $xoopsDB;
 $sql="select count(`欄位`) from ".$xoopsDB->prefix("資料表");
 $result=$xoopsDB->query($sql);
@@ -18,7 +21,7 @@ return true;
 }
 
 //執行更新
-function go_update1(){
+function tad_guide_go_update1(){
 global $xoopsDB;
 $sql="ALTER TABLE ".$xoopsDB->prefix("資料表")." ADD `欄位` smallint(5) NOT NULL";
 $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  mysql_error());
@@ -86,8 +89,8 @@ if (!function_exists('rename_win')) {
     }
 }
 
-if (!function_exists('delete_directory')) {
-    function delete_directory($dirname)
+if (!function_exists('tad_guide_delete_directory')) {
+    function tad_guide_delete_directory($dirname)
     {
         if (is_dir($dirname)) {
             $dir_handle = opendir($dirname);
@@ -102,7 +105,7 @@ if (!function_exists('delete_directory')) {
                 if (!is_dir($dirname . "/" . $file)) {
                     unlink($dirname . "/" . $file);
                 } else {
-                    delete_directory($dirname . '/' . $file);
+                    tad_guide_delete_directory($dirname . '/' . $file);
                 }
             }
         }
