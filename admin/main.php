@@ -8,9 +8,9 @@ require_once XOOPS_ROOT_PATH . "/modules/tad_adm/admin/adm_function.php";
 /*-----------功能函數區--------------*/
 
 //可開群組的模組
-$mod_arr = array('tadnews', 'tadgallery', 'tad_player', 'tad_uploader', 'tad_cal', 'tad_discuss', 'tad_faq', 'tad_link', 'tad_book3');
+$mod_arr = ['tadnews', 'tadgallery', 'tad_player', 'tad_uploader', 'tad_cal', 'tad_discuss', 'tad_faq', 'tad_link', 'tad_book3'];
 
-$school_mod_arr = array('tad_adm', 'tadtools', 'tad_themes', 'tadnews', 'tadgallery', 'tad_player', 'tad_login', 'tad_uploader', 'tad_cal', 'tad_discuss', 'tad_faq', 'tad_link', 'tad_repair', 'tad_assignment', 'tad_form', 'tad_lunch3', 'tad_book3', 'tad_idioms', 'tad_evaluation', 'tad_web', 'logcounterx', 'tad_rss', 'randomquote');
+$school_mod_arr = ['tad_adm', 'tadtools', 'tad_themes', 'tadnews', 'tadgallery', 'tad_player', 'tad_login', 'tad_uploader', 'tad_cal', 'tad_discuss', 'tad_faq', 'tad_link', 'tad_repair', 'tad_assignment', 'tad_form', 'tad_lunch3', 'tad_book3', 'tad_idioms', 'tad_evaluation', 'tad_web', 'logcounterx', 'tad_rss', 'randomquote'];
 
 //步驟1，安裝模組
 function list_all_modules()
@@ -65,7 +65,7 @@ function list_all_modules()
     }
 
     //找出目前的更新紀錄
-    $act_log = $log = array();
+    $act_log = $log = [];
     $sql     = "select `act_kind`, `kind_title`, `act_name`, `act_date`, `cate_sn` from `" . $xoopsDB->prefix("tad_guide") . "` order by `kind_title`";
     $result  = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
     while (list($act_kind, $dirname, $act_name, $act_date, $cate_sn) = $xoopsDB->fetchRow($result)) {
@@ -82,7 +82,7 @@ function list_all_modules()
     // $log[$dirname]['content_all_exists']=file_exists("{$dir}/content_all.php");
     // $log[$dirname]['cates']=group_cate($dirname,$mod['mid']);
 
-    $all_data = array();
+    $all_data = [];
     foreach ($school_mod_arr as $dirname) {
         if (empty($mod[$dirname]['module']['function'])) {
             $mod[$dirname]['module']['function'] = 'install';
@@ -331,7 +331,7 @@ function get_group()
 
     $sql    = "select `groupid`, `name` from " . $xoopsDB->prefix("groups") . " order by groupid";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    $group  = array();
+    $group  = [];
     $i      = 0;
     while (list($groupid, $name) = $xoopsDB->fetchRow($result)) {
         $group[$i]['groupid'] = $groupid;
@@ -419,9 +419,9 @@ function backup_config($dirname = "", $mid = "")
         //撈取預設偏好設定
         $sql            = "select * from `" . $xoopsDB->prefix("config") . "` where `conf_modid`='{$mid}'";
         $result         = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
-        $backup_content = array();
+        $backup_content = [];
         while ($col = $xoopsDB->fetchArray($result)) {
-            $syntax = array();
+            $syntax = [];
             foreach ($col as $k => $v) {
                 $syntax[] = "`{$k}`='{$v}'";
             }
@@ -489,7 +489,7 @@ function backup_blocks($dirname = "", $mid = "")
         $result         = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
         $backup_content = "";
         while ($col = $xoopsDB->fetchArray($result)) {
-            $syntax = array();
+            $syntax = [];
             foreach ($col as $k => $v) {
                 $syntax[] = "`{$k}`='{$v}'";
             }
@@ -536,7 +536,7 @@ function restore_blocks($dirname = "", $mid = "")
 }
 
 //內容還原
-function restore_content($dirname = "", $bak_table = array())
+function restore_content($dirname = "", $bak_table = [])
 {
     global $xoopsDB;
     if (is_dir(XOOPS_ROOT_PATH . "/uploads/{$dirname}")) {
@@ -807,7 +807,7 @@ function content_get_backup($tbl = "")
     return false;
 }
 
-function content_backup($dirname = "", $bak_table = array())
+function content_backup($dirname = "", $bak_table = [])
 {
     global $xoopsDB;
     if (is_dir(XOOPS_ROOT_PATH . "/uploads/{$dirname}")) {

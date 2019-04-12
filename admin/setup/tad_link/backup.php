@@ -1,5 +1,5 @@
 <?php
-$bak_table            = array();
+$bak_table            = [];
 $bak_table[1]['name'] = "tad_link";
 $bak_table[1]['sql']  = "
 CREATE TABLE `" . $xoopsDB->prefix("tad_link_gbak") . "` (

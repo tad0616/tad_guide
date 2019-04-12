@@ -115,9 +115,9 @@ $new_config['schedule_template'] = '<table class="table table-bordered schedule_
     </tbody>
 </table>';
 $new_config['schedule_subjects'] = '國語;數學;社會;自然;音樂;體育;美勞;團體活動;輔導活動;鄉土教學;道德與健康';
-$new_config['aboutus_cols']      = array('counter', 'web', 'schedule', 'homework');
+$new_config['aboutus_cols']      = ['counter', 'web', 'schedule', 'homework'];
 
-$new_config['cal_cols']         = array('all', 'web', 'news', 'homework');
+$new_config['cal_cols']         = ['all', 'web', 'news', 'homework'];
 $new_config['user_space_quota'] = '500';
 $new_config['list_web_order']   = 'WebSort';
 
