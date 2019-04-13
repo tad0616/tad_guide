@@ -1069,7 +1069,7 @@ class Crypt_RSA
                 20:d=2  hl=2 l=   0 prim:   NULL
                 22:d=1  hl=4 l= 609 prim:  OCTET STRING */
 
-                if (CRYPT_RSA_ASN1_INTEGER == $tag && "\x01\x00\x30" == mb_substr($key, 0, 3)) {
+                if (CRYPT_RSA_ASN1_INTEGER == $tag && "\x01\x00\x30" === mb_substr($key, 0, 3)) {
                     $this->_string_shift($key, 3);
                     $tag = CRYPT_RSA_ASN1_SEQUENCE;
                 }
@@ -1173,7 +1173,7 @@ class Crypt_RSA
 
                 $comment = isset($parts[2]) ? $parts[2] : false;
 
-                $cleanup = "\0\0\0\7ssh-rsa" == mb_substr($key, 0, 11);
+                $cleanup = "\0\0\0\7ssh-rsa" === mb_substr($key, 0, 11);
 
                 if (mb_strlen($key) <= 4) {
                     return false;
@@ -1227,7 +1227,7 @@ class Crypt_RSA
                 $components = [];
                 $key = preg_split('#\r\n|\r|\n#', $key);
                 $type = trim(preg_replace('#PuTTY-User-Key-File-2: (.+)#', '$1', $key[0]));
-                if ('ssh-rsa' != $type) {
+                if ('ssh-rsa' !== $type) {
                     return false;
                 }
                 $encryption = trim(preg_replace('#Encryption: (.+)#', '$1', $key[1]));
@@ -1259,7 +1259,7 @@ class Crypt_RSA
                         $crypto = new Crypt_AES();
                 }
 
-                if ('none' != $encryption) {
+                if ('none' !== $encryption) {
                     $crypto->setKey($symkey);
                     $crypto->disablePadding();
                     $private = $crypto->decrypt($private);
@@ -1368,7 +1368,7 @@ class Crypt_RSA
     public function _stop_element_handler($parser, $name)
     {
         //$name = strtoupper($name);
-        if ('RSAKEYVALUE' == $name) {
+        if ('RSAKEYVALUE' === $name) {
             return;
         }
         $this->current = new Math_BigInteger(base64_decode($this->current, true), 256);

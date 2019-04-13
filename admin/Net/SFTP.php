@@ -606,7 +606,7 @@ class Net_SFTP extends Net_SSH2
             }
         }
 
-        if ('/' != $path[0]) {
+        if ('/' !== $path[0]) {
             $path = $this->pwd . '/' . $path;
         }
 
@@ -643,7 +643,7 @@ class Net_SFTP extends Net_SSH2
             return false;
         }
 
-        if ('/' != $dir[mb_strlen($dir) - 1]) {
+        if ('/' !== $dir[mb_strlen($dir) - 1]) {
             $dir .= '/';
         }
 
@@ -810,7 +810,7 @@ class Net_SFTP extends Net_SSH2
                             $contents[$shortname] = $attributes;
                         }
 
-                        if (isset($attributes['type']) && NET_SFTP_TYPE_DIRECTORY == $attributes['type'] && ('.' != $shortname && '..' != $shortname)) {
+                        if (isset($attributes['type']) && NET_SFTP_TYPE_DIRECTORY == $attributes['type'] && ('.' !== $shortname && '..' !== $shortname)) {
                             $this->_save_dir($dir . '/' . $shortname);
                         }
                         // SFTPv6 has an optional boolean end-of-list field, but we'll ignore that, since the
@@ -1345,7 +1345,7 @@ class Net_SFTP extends Net_SSH2
         }
 
         foreach ($entries as $filename => $props) {
-            if ('.' == $filename || '..' == $filename) {
+            if ('.' === $filename || '..' === $filename) {
                 continue;
             }
 
@@ -1890,7 +1890,7 @@ class Net_SFTP extends Net_SSH2
         }
 
         foreach ($entries as $filename => $props) {
-            if ('.' == $filename || '..' == $filename) {
+            if ('.' === $filename || '..' === $filename) {
                 continue;
             }
 

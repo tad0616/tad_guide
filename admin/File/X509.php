@@ -1568,7 +1568,7 @@ class File_X509
                     $mapped = $asn1->asn1map($decoded[0], $map);
                     $value = false === $mapped ? $decoded[0] : $mapped;
 
-                    if ('id-ce-certificatePolicies' == $id) {
+                    if ('id-ce-certificatePolicies' === $id) {
                         for ($j = 0; $j < count($value); $j++) {
                             if (!isset($value[$j]['policyQualifiers'])) {
                                 continue;
@@ -1683,7 +1683,7 @@ class File_X509
                             if (false !== $mapped) {
                                 $values[$j] = $mapped;
                             }
-                            if ('pkcs-9-at-extensionRequest' == $id) {
+                            if ('pkcs-9-at-extensionRequest' === $id) {
                                 $this->_mapInExtensions($values, $j, $asn1);
                             }
                         } elseif ($map) {
@@ -3513,7 +3513,7 @@ class File_X509
 
         -- http://tools.ietf.org/html/rfc5280#section-4.1.2.5
          */
-        if ('lifetime' == mb_strtolower($date)) {
+        if ('lifetime' === mb_strtolower($date)) {
             $temp = '99991231235959Z';
             $asn1 = new File_ASN1();
             $temp = chr(FILE_ASN1_TYPE_GENERALIZED_TIME) . $asn1->_encodeLength(mb_strlen($temp)) . $temp;
@@ -3612,7 +3612,7 @@ class File_X509
 
                 if (is_array($attributes)) {
                     foreach ($attributes as $key => $value) {
-                        if ('pkcs-9-at-extensionRequest' == $value['type']) {
+                        if ('pkcs-9-at-extensionRequest' === $value['type']) {
                             $path = "$pth/$key/value/0";
                             break 2;
                         }
@@ -4034,7 +4034,7 @@ class File_X509
                 return $this->computeKeyIdentifier($key['certificationRequestInfo']['subjectPKInfo']['subjectPublicKey'], $method);
             case !is_object($key):
                 return false;
-            case 'file_asn1_element' == mb_strtolower(get_class($key)):
+            case 'file_asn1_element' === mb_strtolower(get_class($key)):
                 // Assume the element is a bitstring-packed key.
                 $asn1 = new File_ASN1();
                 $decoded = $asn1->decodeBER($key->element);
@@ -4060,7 +4060,7 @@ class File_X509
                 }
                 $key = $raw; // Is a public key.
                 break;
-            case 'file_x509' == mb_strtolower(get_class($key)):
+            case 'file_x509' === mb_strtolower(get_class($key)):
                 if (isset($key->publicKey)) {
                     return $this->computeKeyIdentifier($key->publicKey, $method);
                 }

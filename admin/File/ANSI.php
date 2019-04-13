@@ -286,7 +286,7 @@ class File_ANSI
                 // http://en.wikipedia.org/wiki/ANSI_escape_code#Sequence_elements
                 // single character CSI's not currently supported
                 switch (true) {
-                    case "\x1B=" == $this->ansi:
+                    case "\x1B=" === $this->ansi:
                         $this->ansi = '';
                         continue 2;
                     case 2 == mb_strlen($this->ansi) && $chr >= 64 && $chr <= 95 && $chr != ord('['):

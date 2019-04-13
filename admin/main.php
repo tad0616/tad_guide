@@ -47,7 +47,7 @@ function list_all_modules()
         if (!isset($mod[$dirname])) {
             continue;
         }
-        if ('module' == $mod[$dirname]['module']['kind']) {
+        if ('module' === $mod[$dirname]['module']['kind']) {
             $ok['module'][] = $dirname;
         } else {
             continue;
@@ -570,7 +570,7 @@ function import_data($dirname, $act_kind, $mid = '0', $cate_sn = '0', $mode = ''
     $cate_sn = (int) $cate_sn;
 
     $myts = MyTextSanitizer::getInstance();
-    if ('blocks' == $act_kind) {
+    if ('blocks' === $act_kind) {
         include "setup/{$dirname}/{$xoopsConfig['language']}/blocks.php";
 
         backup_blocks($dirname, $mid);
@@ -584,7 +584,7 @@ function import_data($dirname, $act_kind, $mid = '0', $cate_sn = '0', $mode = ''
                 $$k = $v;
             }
 
-            if ('batch' == $mode) {
+            if ('batch' === $mode) {
                 $visible = in_array($func_num, $_POST['ok_blocks'], true) ? 1 : 0;
             } else {
                 $visible = $new_data[$func_num]['visible'];
@@ -680,7 +680,7 @@ function import_data($dirname, $act_kind, $mid = '0', $cate_sn = '0', $mode = ''
         }
 
         $act_name = _MA_GUIDE_IMPORT_BLOCK;
-    } elseif ('config' == $act_kind) {
+    } elseif ('config' === $act_kind) {
         include "setup/{$dirname}/{$xoopsConfig['language']}/config.php";
 
         backup_config($dirname, $mid);
@@ -701,7 +701,7 @@ function import_data($dirname, $act_kind, $mid = '0', $cate_sn = '0', $mode = ''
             $sql = 'update `' . $xoopsDB->prefix('modules') . "` set name='{$mod_config['name']}',weight='{$mod_config['weight']}' where `mid`='{$mid}'";
             $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
         }
-    } elseif ('content_all' == $act_kind) {
+    } elseif ('content_all' === $act_kind) {
         if (file_exists("setup/{$dirname}/backup.php")) {
             $bak_table = '';
             include "setup/{$dirname}/backup.php";
@@ -712,7 +712,7 @@ function import_data($dirname, $act_kind, $mid = '0', $cate_sn = '0', $mode = ''
         $act_name = _MA_GUIDE_IMPORT_CONTENT;
 
         call_user_func("{$dirname}_content");
-    } elseif ('content' == $act_kind) {
+    } elseif ('content' === $act_kind) {
         if (file_exists("setup/{$dirname}/backup.php")) {
             $bak_table = '';
             include "setup/{$dirname}/backup.php";
@@ -723,15 +723,15 @@ function import_data($dirname, $act_kind, $mid = '0', $cate_sn = '0', $mode = ''
         $act_name = _MA_GUIDE_IMPORT_CONTENT;
 
         call_user_func("{$dirname}_content", $cate_sn);
-    } elseif ('restore_config' == $act_kind) {
+    } elseif ('restore_config' === $act_kind) {
         restore_config($dirname, $mid);
         $sql = 'delete from `' . $xoopsDB->prefix('tad_guide') . "` where `kind_title`='{$dirname}' and `act_kind` like 'config'";
         $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
-    } elseif ('restore_blocks' == $act_kind) {
+    } elseif ('restore_blocks' === $act_kind) {
         restore_blocks($dirname, $mid);
         $sql = 'delete from `' . $xoopsDB->prefix('tad_guide') . "` where `kind_title`='{$dirname}' and `act_kind` like 'blocks%'";
         $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
-    } elseif ('restore' == $act_kind) {
+    } elseif ('restore' === $act_kind) {
         if (file_exists("setup/{$dirname}/backup.php")) {
             $bak_table = '';
             include "setup/{$dirname}/backup.php";
@@ -739,7 +739,7 @@ function import_data($dirname, $act_kind, $mid = '0', $cate_sn = '0', $mode = ''
             $sql = 'delete from `' . $xoopsDB->prefix('tad_guide') . "` where `kind_title`='{$dirname}' and `act_kind` like 'content%'";
             $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
         }
-    } elseif ('create_group' == $act_kind) {
+    } elseif ('create_group' === $act_kind) {
         foreach ($_POST['groupid'] as $groupid) {
             create_one_cate($mid, $groupid, $dirname);
         }

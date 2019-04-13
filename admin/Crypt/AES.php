@@ -296,7 +296,7 @@ class Crypt_AES extends Crypt_Rijndael
             // re: http://phpseclib.sourceforge.net/cfb-demo.phps
             // using mcrypt's default handing of CFB the above would output two different things.  using phpseclib's
             // rewritten CFB implementation the above outputs the same thing twice.
-            if ('ncfb' == $this->mode && $this->continuousBuffer) {
+            if ('ncfb' === $this->mode && $this->continuousBuffer) {
                 $iv = &$this->encryptIV;
                 $pos = &$this->enbuffer['pos'];
                 $len = mb_strlen($plaintext);
@@ -378,7 +378,7 @@ class Crypt_AES extends Crypt_Rijndael
         if (CRYPT_AES_MODE == CRYPT_AES_MODE_MCRYPT) {
             $this->_mcryptSetup();
 
-            if ('ncfb' == $this->mode && $this->continuousBuffer) {
+            if ('ncfb' === $this->mode && $this->continuousBuffer) {
                 $iv = &$this->decryptIV;
                 $pos = &$this->debuffer['pos'];
                 $len = mb_strlen($ciphertext);
@@ -482,7 +482,7 @@ class Crypt_AES extends Crypt_Rijndael
             $this->demcrypt = mcrypt_module_open(MCRYPT_RIJNDAEL_128, '', $mode, '');
             $this->enmcrypt = mcrypt_module_open(MCRYPT_RIJNDAEL_128, '', $mode, '');
 
-            if ('ncfb' == $mode) {
+            if ('ncfb' === $mode) {
                 $this->ecb = mcrypt_module_open(MCRYPT_RIJNDAEL_128, '', MCRYPT_MODE_ECB, '');
             }
         } // else should mcrypt_generic_deinit be called?
@@ -490,7 +490,7 @@ class Crypt_AES extends Crypt_Rijndael
         mcrypt_generic_init($this->demcrypt, $this->key, $this->iv);
         mcrypt_generic_init($this->enmcrypt, $this->key, $this->iv);
 
-        if ('ncfb' == $this->mode) {
+        if ('ncfb' === $this->mode) {
             mcrypt_generic_init($this->ecb, $this->key, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0");
         }
 

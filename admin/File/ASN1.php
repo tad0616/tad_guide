@@ -270,7 +270,7 @@ class File_ASN1
      */
     public function decodeBER($encoded)
     {
-        if (is_object($encoded) && 'file_asn1_element' == mb_strtolower(get_class($encoded))) {
+        if (is_object($encoded) && 'file_asn1_element' === mb_strtolower(get_class($encoded))) {
             $encoded = $encoded->element;
         }
 
@@ -806,7 +806,7 @@ class File_ASN1
      */
     public function _encode_der($source, $mapping, $idx = null)
     {
-        if (is_object($source) && 'file_asn1_element' == mb_strtolower(get_class($source))) {
+        if (is_object($source) && 'file_asn1_element' === mb_strtolower(get_class($source))) {
             return $source->element;
         }
 
@@ -1016,7 +1016,7 @@ class File_ASN1
                     case !isset($source):
                         return $this->_encode_der(null, ['type' => FILE_ASN1_TYPE_NULL] + $mapping);
                     case is_int($source):
-                    case is_object($source) && 'math_biginteger' == mb_strtolower(get_class($source)):
+                    case is_object($source) && 'math_biginteger' === mb_strtolower(get_class($source)):
                         return $this->_encode_der($source, ['type' => FILE_ASN1_TYPE_INTEGER] + $mapping);
                     case is_float($source):
                         return $this->_encode_der($source, ['type' => FILE_ASN1_TYPE_REAL] + $mapping);
@@ -1134,7 +1134,7 @@ class File_ASN1
             $year = $year >= 50 ? "19$year" : "20$year";
         }
 
-        if ('Z' == $timezone) {
+        if ('Z' === $timezone) {
             $mktime = 'gmmktime';
             $timezone = 0;
         } elseif (preg_match('#([+-])(\d\d)(\d\d)#', $timezone, $matches)) {

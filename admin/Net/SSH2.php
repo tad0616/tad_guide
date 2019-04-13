@@ -869,7 +869,7 @@ class Net_SSH2
         $temp = '';
         $extra = '';
         while (!feof($this->fsock) && !preg_match('#^SSH-(\d\.\d+)#', $temp, $matches)) {
-            if ("\r\n" == mb_substr($temp, -2)) {
+            if ("\r\n" === mb_substr($temp, -2)) {
                 $extra .= $temp;
                 $temp = '';
             }
@@ -906,7 +906,7 @@ class Net_SSH2
             $this->errors[] = utf8_decode($extra);
         }
 
-        if ('1.99' != $matches[1] && '2.0' != $matches[1]) {
+        if ('1.99' !== $matches[1] && '2.0' !== $matches[1]) {
             trigger_error("Cannot connect to SSH $matches[1] servers");
 
             return;
@@ -1543,10 +1543,10 @@ class Net_SSH2
         keystream.
 
         -- http://tools.ietf.org/html/rfc4345#section-4 */
-        if ('arcfour128' == $encrypt || 'arcfour256' == $encrypt) {
+        if ('arcfour128' === $encrypt || 'arcfour256' === $encrypt) {
             $this->encrypt->encrypt(str_repeat("\0", 1536));
         }
-        if ('arcfour128' == $decrypt || 'arcfour256' == $decrypt) {
+        if ('arcfour128' === $decrypt || 'arcfour256' === $decrypt) {
             $this->decrypt->decrypt(str_repeat("\0", 1536));
         }
 
@@ -1625,7 +1625,7 @@ class Net_SSH2
 
             return $this->_disconnect(NET_SSH2_DISCONNECT_KEY_EXCHANGE_FAILED);
         }
-        $this->decompress = 'zlib' == $compression_algorithms[$i];
+        $this->decompress = 'zlib' === $compression_algorithms[$i];
 
         for ($i = 0; $i < count($compression_algorithms) && !in_array($compression_algorithms[$i], $this->compression_algorithms_client_to_server, true); $i++);
         if ($i == count($compression_algorithms)) {
@@ -1633,7 +1633,7 @@ class Net_SSH2
 
             return $this->_disconnect(NET_SSH2_DISCONNECT_KEY_EXCHANGE_FAILED);
         }
-        $this->compress = 'zlib' == $compression_algorithms[$i];
+        $this->compress = 'zlib' === $compression_algorithms[$i];
 
         return true;
     }
@@ -1714,7 +1714,7 @@ class Net_SSH2
         }
 
         // although PHP5's get_class() preserves the case, PHP4's does not
-        if (is_object($password) && 'crypt_rsa' == mb_strtolower(get_class($password))) {
+        if (is_object($password) && 'crypt_rsa' === mb_strtolower(get_class($password))) {
             return $this->_privatekey_login($username, $password);
         }
 

@@ -311,7 +311,7 @@ class Math_BigInteger
 
         switch (MATH_BIGINTEGER_MODE) {
             case MATH_BIGINTEGER_MODE_GMP:
-                if (is_resource($x) && 'GMP integer' == get_resource_type($x)) {
+                if (is_resource($x) && 'GMP integer' === get_resource_type($x)) {
                     $this->value = $x;
 
                     return;
@@ -773,7 +773,7 @@ class Math_BigInteger
     {
         $this->hex = $this->toHex(true);
         $vars = ['hex'];
-        if ('mt_rand' != $this->generator) {
+        if ('mt_rand' !== $this->generator) {
             $vars[] = 'generator';
         }
         if ($this->precision > 0) {

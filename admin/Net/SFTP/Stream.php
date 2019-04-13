@@ -165,10 +165,10 @@ class Net_SFTP_Stream
             $this->notification = $context['notification'];
         }
 
-        if ('$' == $host[0]) {
+        if ('$' === $host[0]) {
             $host = mb_substr($host, 1);
             global $$host;
-            if (!is_object($$host) || 'Net_sFTP' != get_class($$host)) {
+            if (!is_object($$host) || 'Net_sFTP' !== get_class($$host)) {
                 return false;
             }
             $this->sftp = $$host;
@@ -180,7 +180,7 @@ class Net_SFTP_Stream
             if (isset($context['sftp']['sftp'])) {
                 $sftp = $context['sftp']['sftp'];
             }
-            if (isset($sftp) && is_object($sftp) && 'Net_SFTP' == get_class($sftp)) {
+            if (isset($sftp) && is_object($sftp) && 'Net_SFTP' === get_class($sftp)) {
                 $this->sftp = $sftp;
 
                 return $path;
@@ -191,7 +191,7 @@ class Net_SFTP_Stream
             if (isset($context['sftp']['password'])) {
                 $pass = $context['sftp']['password'];
             }
-            if (isset($context['sftp']['privkey']) && is_object($context['sftp']['privkey']) && 'Crypt_RSA' == get_class($context['sftp']['privkey'])) {
+            if (isset($context['sftp']['privkey']) && is_object($context['sftp']['privkey']) && 'Crypt_RSA' === get_class($context['sftp']['privkey'])) {
                 $pass = $context['sftp']['privkey'];
             }
 
@@ -257,7 +257,7 @@ class Net_SFTP_Stream
         $this->mode = preg_replace('#[bt]$#', '', $mode);
 
         if (false === $this->size) {
-            if ('r' == $this->mode[0]) {
+            if ('r' === $this->mode[0]) {
                 return false;
             }
         } else {
@@ -270,7 +270,7 @@ class Net_SFTP_Stream
             }
         }
 
-        $this->pos = 'a' != $this->mode[0] ? 0 : $this->size;
+        $this->pos = 'a' !== $this->mode[0] ? 0 : $this->size;
 
         return true;
     }
