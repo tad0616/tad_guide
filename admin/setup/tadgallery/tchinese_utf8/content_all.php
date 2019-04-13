@@ -1,23 +1,23 @@
 <?php
-function tadgallery_content($cate_sn = "")
+function tadgallery_content($cate_sn = '')
 {
     global $xoopsDB, $xoopsUser;
 
     // $sql="delete from `".$xoopsDB->prefix("tad_gallery")."`";
     // $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
 
-    $now = date("Y-m-d H:i:s");
+    $now = date('Y-m-d H:i:s');
 
-    $sql            = "select max(sort) from `" . $xoopsDB->prefix("tad_gallery_cate") . "`";
-    $result         = $xoopsDB->query($sql);
+    $sql = 'select max(sort) from `' . $xoopsDB->prefix('tad_gallery_cate') . '`';
+    $result = $xoopsDB->query($sql);
     list($max_sort) = $xoopsDB->fetchRow($result);
 
     $max_sort++;
-    $sql = "INSERT INTO `" . $xoopsDB->prefix("tad_gallery_cate") . "`
+    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_gallery_cate') . "`
   (`of_csn`, `title`,  `content`, `passwd`, `enable_group`, `enable_upload_group`, `sort`, `mode`, `show_mode`, `cover`, `no_hotlink`, `uid`)
   VALUES
   (0,'戶外教學','期待已久的校外教學日子終於來臨了！9月14日這一天低年級及幼稚班到戶外體驗自然生態知性之旅，牧場保有土地與生態現況，可看見品種繁多、多姿多彩的各種鳳蝶飛舞其中，各式各樣活潑可愛的昆蟲遨遊期間，光是紀錄到的蜻蛉目昆蟲【蜻蜓及豆娘】即已超過20種。另外，還有可愛的乳牛、山羊及鴕鳥，可以體驗親自餵食的樂趣哦！實在是一戶外教學、生態觀察的寶庫。', '', '', '1', '{$max_sort}', '', '', '', '', '1')";
-    $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
     $insert_id = $xoopsDB->getInsertId();
 
     $uid = $xoopsUser->uid();
@@ -57,36 +57,34 @@ function tadgallery_content($cate_sn = "")
     import_mod_data(16, "'{$insert_id}', '', '', 'photo16.jpg', 187147, 'image/jpeg', 768, 1024, '2013_07_17', '{$uid}', '{$now}', 0, '[FILE][FileName]=php799nvf||[FILE][FileType]=2||[FILE][MimeType]=image/jpeg||[FILE][FileSize]=187147||[COMPUTED][Width]=768||[COMPUTED][Height]=1024||[IFD0][Make]=                               ||[IFD0][Model]=                               ||[IFD0][DateTime]=2013:07:17 07:32:10||[IFD0][Orientation]=1||[EXIF][ExposureTime]=952/1000000||[EXIF][ISOSpeedRatings]=119||[COMPUTED][ApertureFNumber]=f/2.4||[EXIF][Flash]=0||[EXIF][FocalLength]=350/100mm||[EXIF][ExposureBiasValue]=0/10EV||[GPS][latitude]=38.706829055556||[GPS][longitude]=34.842933638889', '', '0', 0");
 
     import_mod_data(17, "'{$insert_id}', '', '', 'photo17.jpg', 144781, 'image/jpeg', 1024, 768, '2013_07_17', '{$uid}', '{$now}', 0, '[FILE][FileName]=phpJ0eFJY||[FILE][FileType]=2||[FILE][MimeType]=image/jpeg||[FILE][FileSize]=144781||[COMPUTED][Width]=1024||[COMPUTED][Height]=768||[IFD0][Make]=                               ||[IFD0][Model]=                               ||[IFD0][DateTime]=2013:07:17 07:32:25||[IFD0][Orientation]=1||[EXIF][ExposureTime]=504/1000000||[EXIF][ISOSpeedRatings]=120||[COMPUTED][ApertureFNumber]=f/2.4||[EXIF][Flash]=0||[EXIF][FocalLength]=350/100mm||[EXIF][ExposureBiasValue]=0/10EV||[GPS][latitude]=38.706829055556||[GPS][longitude]=34.842933638889', '', '0', 0");
-
 }
 
 //上傳壓縮圖檔
 function uzip_file()
 {
     global $xoopsDB, $xoopsUser, $xoopsModule, $xoopsModuleConfig, $type_to_mime;
-    mk_dir(XOOPS_ROOT_PATH . "/uploads/tadgallery/");
+    mk_dir(XOOPS_ROOT_PATH . '/uploads/tadgallery/');
     //取消上傳時間限制
     set_time_limit(0);
 
     //設置上傳大小
     ini_set('memory_limit', '100M');
 
-    require_once XOOPS_ROOT_PATH . "/modules/tad_guide/class/dunzip2/dUnzip2.inc.php";
-    require_once XOOPS_ROOT_PATH . "/modules/tad_guide/class/dunzip2/dZip.inc.php";
-    copy(XOOPS_ROOT_PATH . "/modules/tad_guide/admin/setup/tadgallery/tadgallery.zip", XOOPS_ROOT_PATH . "/uploads/tadgallery/tadgallery.zip");
-    $zip = new dUnzip2(XOOPS_ROOT_PATH . "/uploads/tadgallery/tadgallery.zip");
+    require_once XOOPS_ROOT_PATH . '/modules/tad_guide/class/dunzip2/dUnzip2.inc.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tad_guide/class/dunzip2/dZip.inc.php';
+    copy(XOOPS_ROOT_PATH . '/modules/tad_guide/admin/setup/tadgallery/tadgallery.zip', XOOPS_ROOT_PATH . '/uploads/tadgallery/tadgallery.zip');
+    $zip = new dUnzip2(XOOPS_ROOT_PATH . '/uploads/tadgallery/tadgallery.zip');
     $zip->getList();
-    $zip->unzipAll(XOOPS_ROOT_PATH . "/uploads/tadgallery/");
-
+    $zip->unzipAll(XOOPS_ROOT_PATH . '/uploads/tadgallery/');
 }
 
 //寫入資料
 function import_mod_data($i, $data)
 {
     global $xoopsDB;
-    $sql = "INSERT INTO `" . $xoopsDB->prefix("tad_gallery") . "` (`csn`, `title`, `description`, `filename`, `size`, `type`, `width`, `height`, `dir`, `uid`, `post_date`, `counter`, `exif`, `tag`, `good`, `photo_sort`) VALUES
+    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_gallery') . "` (`csn`, `title`, `description`, `filename`, `size`, `type`, `width`, `height`, `dir`, `uid`, `post_date`, `counter`, `exif`, `tag`, `good`, `photo_sort`) VALUES
   ($data)";
-    $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
     $file_id = $xoopsDB->getInsertId();
     rename(XOOPS_ROOT_PATH . "/uploads/tadgallery/2013_07_17/f{$file_id}_photo{$i}.jpg", XOOPS_ROOT_PATH . "/uploads/tadgallery/2013_07_17/{$file_id}_photo{$i}.jpg");
     rename(XOOPS_ROOT_PATH . "/uploads/tadgallery/small/2013_07_17/f{$file_id}_s_photo{$i}.jpg", XOOPS_ROOT_PATH . "/uploads/tadgallery/small/2013_07_17/{$file_id}_s_photo{$i}.jpg");

@@ -1,15 +1,15 @@
 <?php
-function tadnews_content($insert_id = "")
+function tadnews_content($insert_id = '')
 {
     global $xoopsDB, $xoopsUser;
 
     $uid = $xoopsUser->uid();
-    $now = date("Y-m-d H:i:s");
+    $now = date('Y-m-d H:i:s');
 
-    $sql = "delete from `" . $xoopsDB->prefix("tad_news_tags") . "`";
-    $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
+    $sql = 'delete from `' . $xoopsDB->prefix('tad_news_tags') . '`';
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 
-    $sql = "INSERT INTO `" . $xoopsDB->prefix("tad_news_tags") . "` (`tag_sn`, `tag`, `font_color`, `color`, `enable`) VALUES
+    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news_tags') . "` (`tag_sn`, `tag`, `font_color`, `color`, `enable`) VALUES
   (1, '公告', '#FFFFFF',  'blue', '1'),
   (2, '緊急', '#FFFFFF',  'red',  '1'),
   (3, '調查', '', '#663300',  '1'),
@@ -19,24 +19,24 @@ function tadnews_content($insert_id = "")
   (7, '研習', '#FFFFFF', '#006600',  '1'),
   (8, '宣導', '#FFFFFF', '#FF0099',  '1'),
   (9, '狂賀', '#FFFFFF', '#990000',  '1');";
-    $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 
     // $sql="delete from `".$xoopsDB->prefix("tad_news")."` where `ncsn`='{$insert_id}'";
     // $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
 
-    $sql            = "select max(sort) from `" . $xoopsDB->prefix("tad_news_cate") . "` where not_news='0'";
-    $result         = $xoopsDB->query($sql);
+    $sql = 'select max(sort) from `' . $xoopsDB->prefix('tad_news_cate') . "` where not_news='0'";
+    $result = $xoopsDB->query($sql);
     list($max_sort) = $xoopsDB->fetchRow($result);
 
     $max_sort++;
-    $sql = "INSERT INTO `" . $xoopsDB->prefix("tad_news_cate") . "`
+    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news_cate') . "`
   (`of_ncsn`, `nc_title`, `enable_group`, `enable_post_group`, `sort`, `cate_pic`, `not_news`, `setup`)
   VALUES
   (0,'教育新知', '', '1', '{$max_sort}', '', '0','')";
-    $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
     $insert_id = $xoopsDB->getInsertId();
 
-    $sql = "INSERT INTO `" . $xoopsDB->prefix("tad_news") . "` (`ncsn`, `news_title`, `news_content`, `start_day`, `end_day`, `enable`, `uid`, `passwd`, `enable_group`, `counter`, `prefix_tag`, `always_top`, `always_top_date`, `have_read_group`, `page_sort`) VALUES
+    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news') . "` (`ncsn`, `news_title`, `news_content`, `start_day`, `end_day`, `enable`, `uid`, `passwd`, `enable_group`, `counter`, `prefix_tag`, `always_top`, `always_top_date`, `have_read_group`, `page_sort`) VALUES
   ('{$insert_id}',  '網站建置中',  '<p>歡迎蒞臨本網站，網站目前尚在建置中，資料會陸續上線，若有找不到的資料，歡迎留言或跟網站管理者聯繫，也歡迎您提供建議，讓本網站更為完整並符合需求。</p>\r\n',  '{$now}' ,  '0000-00-00 00:00:00',  '1',  '{$uid}',  '', '', 1, '1',  '0',  '0000-00-00 00:00:00',  '', 0),
 
   ('{$insert_id}',  '大腦愈開心，學得愈好！高效學習６個祕密',  '<div class=\"dpMain\" id=\"content\">\r\n<div class=\"cp\" id=\"cp\">\r\n<p>據研究，人僅僅意識到自身認知活動的5％，大部份的情感、行動是怎麼發生的，我們並不知所以然，例如為何對某人一見鍾情、心情不好就亂買東西、或聽到一首歌突然流下眼淚。</p>\r\n\r\n<p>直到20世紀，科學家才有辦法觀測大腦活動狀態，發現重量不過1公斤多一點的大腦，掌握著人類命運的鑰匙，人會變得更好或更壞，關鍵都在大腦裡，「大腦產生觀念，觀念產生行為，行為產生結果，結果又改變大腦，」中央大學認知神經科學研究所所長洪蘭指出大腦塑造的循環。</p>\r\n\r\n<p>數百萬年來，人類祖先克服無數險惡的環境與挑戰生存下來。現代人的大腦，可說是經過無數次升級改良的精品，足以適應各種各樣的狀況，也具有解決問題的無窮潛力。</p>\r\n\r\n<p>歸納整理對於大腦最新的研究與發現，你必須掌握幾個重點：正確理解大腦的運作趨向→善用啟發心智的方法→強化個人優勢，大腦就能幫助你發光發熱，成就最好的自己。</p>\r\n\r\n<p><strong>別再用錯你的腦</strong></p>\r\n\r\n<p><strong>腦細胞會死，神經可塑性卻持續一生</strong></p>\r\n\r\n<p>人們常以為，聰明靈巧是天才的專利，事實上可能是你誤解自己的腦，它才無法盡情發揮。「成年人的大腦不能改變」這觀念其實大錯特錯。害得很多家長忙著在孩子連話都不會說時就送去「開發大腦」，以為這樣能確保孩子的聰明才智。</p>\r\n\r\n<p>愈來愈多研究證明，成人的大腦依然具有可塑性，能因應環境改變及獲取新的訊息，所有的生活經驗都會改變大腦神經迴路的設定，不管是認識新朋友還是發明回家的新路徑。</p>\r\n\r\n<div class=\"dpMain\" id=\"content\">\r\n<div class=\"cp\" id=\"cp\">\r\n<p>美國腦神經科學家莫山尼克（Michael Merzenich）便是神經可塑性領域的頂尖翹楚之一，他研發的訓練軟體Fast ForWorld成功幫助學習障礙的孩子改進認知功能，針對銀髮族鍛鍊大腦的軟體Brain Fitness Program Classic及InSight，則能改善老人衰退的記憶力、思考力和提高資訊的處理速度。</p>\r\n\r\n<p>就算無法使用這些神奇的軟體，也可以磨利自己的大腦：記住，人的大腦非常害怕無聊。要去學完全嶄新的、需要全神貫注才學得會的東西，啟動大腦可塑性的控制系統。如果你每天走同樣的路線上班、工作早已駕輕就熟，社交圈裡只有老朋友……很遺憾，你的大腦可塑性系統已經僵化了。</p>\r\n\r\n<p>「我們的大腦就是來演化對新奇的東西起反應的，如果要充分感受到自己活著，就必須不斷地學習，」這是《改變是大腦的天性》作者多吉醫師（Norman Doidge）的忠告。努力幫大腦找新鮮的樂子吧！它會用心智年輕來感謝你。</p>\r\n\r\n<p><strong>大腦隨時在活化自己，要多挑戰它</strong></p>\r\n\r\n<p>「人終其一生90％的腦細胞都在沉睡，真正運用的不到10％」，這句廣告詞其實是一則沒有證據（甚至連來源都不清楚）的偽科學神話，卻誤導人類幾十年。</p>\r\n\r\n<p>腦部掃描的研究顯示，大腦幾乎時時處於整體活化的狀態，例如你能邊讀這篇文章邊吃東西，就是大腦各個區域互相協調工作的結果。人的大腦為了生存絕不浪費任何能量，閒閒沒事幹的神經元馬上會被修剪取代，依據用進廢退的鐵則，大腦裡根本不會留著沒開發的腦細胞佔用空間。</p>\r\n\r\n<div class=\"dpMain\" id=\"content\">\r\n<div class=\"cp\" id=\"cp\">\r\n<p>多挑戰自己的心智，讓大腦神經元網路連結得更密集，才是真正的全腦開發。</p>\r\n\r\n<p><strong>兩個半腦要合作，不可能單獨開發右腦</strong></p>\r\n\r\n<p>「左腦重理性，右腦重感性，人類未知的潛能都蘊藏在右腦中，開發右腦可以大幅提升所有能力」這種強調右腦的優越性，似是而非的教養迷思，讓許多父母心甘情願把錢掏出來讓孩子去「右腦開發」。</p>\r\n\r\n<p>但精密的腦部造影技術證實在嬰兒發展時期，大腦兩邊已能同時處理訊息，沒有所謂3歲前是右腦主導大腦，可用某種方法激發右腦活力，或6歲後優勢從右腦切換到左腦的說法。</p>\r\n\r\n<p>大 腦雖然的確分成左右腦，卻不是獨立運作，「將左右腦分開討論是很誘人的做法，但它們實際上是兩個半腦，原本就設計在一起工作，成就一個柔軟、單一、整合型 的完整大腦，」倫敦大學學院心理學與醫學教育系教授，《左手、右手：探索不對稱的起源》作者麥克麥納斯（Chris McManus）指出。</p>\r\n\r\n<p>兩 半腦間以胼胝體相連，協助左右半腦溝通協調，大腦的每項功能都需要兩個半腦通力合作。例如很多人以為欣賞音樂是右腦在主導，「右腦是對旋律很靈敏。但理解 音樂結構變化（樂理）的能力，卻是左腦比較強，」中研院院士、行政院政務委員曾志朗教授解釋，左右半腦各有相對優勢，分工合作才能處理好任務。</p>\r\n\r\n<p>胼胝體正常相連的狀況下，左右半腦訊息交流的速度非常快，「千分之一秒就傳過去了，」洪蘭指出，不可能單獨訓練左腦或右腦，「也沒有用左手寫字鍛練右腦這回事，」她強調。</p>\r\n\r\n<div class=\"dpMain\" id=\"content\">\r\n<div class=\"cp\" id=\"cp\">\r\n<p><span style=\"color: #800000\"><strong>高效學習6個祕密</strong></span></p>\r\n\r\n<p>在腦科學定義裡，學習並非發生在固定的時間、場所或限於某些知識。當神經元受到刺激而連結重組，形成新的迴路使行為發生變化，就是學習。因此女孩子研究怎麼化美美的妝是學習，業務員想辦法提升業績是學習，甚至「在正確的時機說該說的話」都是學習。</p>\r\n\r\n<p>學習深深影響人生各個面向，順著大腦特性栽培，神經元網路將更建構得更完善，宛如不斷開發擴建的新興城市。</p>\r\n\r\n<p><strong>1.大腦愈開心，學得愈好</strong></p>\r\n\r\n<p>近 50年，科學家發現腦內的化學傳導物質，和建立神經細胞迴路密切相關。有些傳導物質能活化或抑制神經細胞，有些則能促進腦內特定的生化反應，加快學習的速 度。化學傳導物質是否平衡，會影響學習的速度、記憶的穩固，「神經傳導物質分泌不正常，大腦運作就會失靈，」曾志朗指出。</p>\r\n\r\n<p>帶來快樂感覺的神經傳導物質多巴胺，便是提升學習效能的要角之一。當達成目標時，多巴胺會大量分泌令人欣喜莫名，同時也讓達成目標那個行為的神經迴路連結得更緊。</p>\r\n\r\n<p>而負責愈高層次任務的皮質區，神經細胞的多巴胺接受器愈多，「學會新事物、成功解決問題，都會讓多巴胺釋放，」曾志朗解釋，如此人才會積極突破困境、精益求精，不斷演化下去。</p>\r\n\r\n<p>研究證實多巴胺會刺激大腦可塑性改變：行為開始→經過嘗試錯誤終於成功→得到成就感和報酬→多巴胺釋放快感湧出→固化達成該行為的神經迴路→增強嘗試的動機→再次做該行為。</p>\r\n\r\n<div class=\"dpMain\" id=\"content\">\r\n<div class=\"cp\" id=\"cp\">\r\n<p>善用這個學習的良性循環，不分年齡、性格或際遇，誰都可以強化學習，重塑大腦。</p>\r\n\r\n<p>■ 保持動機：達成目標、得到報酬的欲望，是促使人前進的動力。失去鬥志時，「尋找心中憧憬的前輩，效法他的一舉一動，可以幫助自己振作起來，」腦科學者、東 京工業大學大學院知能系統科學協力教授茂木健一郎認為，模仿是大腦重要的學習方式，僅僅只是觀察他人的動作，前額葉運動區的鏡像神經元也會活化，特別是愈 欣賞的對象，愈能夠激勵自己見賢思齊。</p>\r\n\r\n<p>而從小課題開始累積快樂的成功經驗，稱讚自己，會更有自信和動力克服難關。</p>\r\n\r\n<p>■樂觀的威力：當人對未來有美好想像時，大腦負責情緒判斷處理的杏仁核及吻側前扣帶皮質（rACC）會活化，覺得好事就在不遠處，更勇於行動。</p>\r\n\r\n<p>專 門製造巨大石油化學設備的日本日揮公司建設現場所長高橋直夫，30年來在世界各地負責建造石化設施，聞名全球石化界。目前在沙烏地阿拉伯現場管理高達 7000多位各國員工，每天都有各式各樣的麻煩，「笑著工作」卻一直是他的原則，「無論發生什麼困難，領導者都要像太陽一樣的開朗明亮，」他說。</p>\r\n\r\n<p>笑不是逃避現實，而是無所畏懼、絕不放棄的宣示，不但穩定軍心，「更容易釐清事情的脈絡，綜觀全局解決問題，」高橋直夫的經驗中，笑的作用不可小覷。</p>\r\n\r\n<div class=\"dpMain\" id=\"content\">\r\n<div class=\"cp\" id=\"cp\">\r\n<p>「裝笑也有相同的效果，」茂木健一郎指出，口角上揚做出笑的表情，和真心發笑活化的大腦區域相同，一樣能增加抗壓性，減少負面想法。</p>\r\n\r\n<p><strong>2.愛運動，頭腦更聰明</strong></p>\r\n\r\n<p>當你了解運動和心智功能的關聯，可能會怨恨過去常蹺掉體育課，「大腦是在走路運動時發展出來的，」發展生子生物學家、《大腦當家》作者麥迪納（John Medina）指出，人類祖先平均一天要走20公里，支持大腦不斷演化的，「是奧林匹克比賽標準的身體。」</p>\r\n\r\n<p>運動會使腦細胞得到更多氧氣和養分，還能增加神經生長因子BDNF的濃度，幫助神經元生長。常運動的兒童和青少年，能運用更多的認知資源做作業，持續力較好。一項英國研究顯示，兒童在上課前做5分鐘基本運動如手臂畫圈擺動，學習動機及效率都會提升。</p>\r\n\r\n<p>麥迪納在辦公室放了一台跑步機，休息時不是喝咖啡而是走路，他甚至在跑步機上邊走路邊回電子郵件。也許你沒辦法像他做得這麼徹底，至少多利用午休時間散散步，幫助大腦新陳代謝順暢。在學習的空檔安排肢體活動，不但能紓解壓力，更可以活化身體狀態，不容易分心。</p>\r\n\r\n<p><strong>3.努力、好奇、放鬆有助創意</strong></p>\r\n\r\n<p>發 明紅光二極體（LED），擁有多項專利的發明家侯隆雅克（Nick Holonnyak），有天躺在浴缸裡泡著熱水澡，扭著捲髮想實驗時，覺得天花板的燈太亮了，讓他眼睛不舒服，想把光線調暗一點賓果！隔天他就開始研 究調光器的組合配件。靈光一閃並不是天才的專利，人人都有潛力變成創意人：</p>\r\n\r\n<div class=\"dpMain\" id=\"content\">\r\n<div class=\"cp\" id=\"cp\">\r\n<p>■充分準備與練習：創造力不是一步登天，牛頓看到蘋果落下時，發現了萬有引力定律，但他在頓悟之前，已孜孜不倦研究物理學，經常思考許多問題。</p>\r\n\r\n<p>「基礎要先打好，」曾志朗認為，就像打棒球，練習愈熟練，身體各部位協調愈好，執行系統愈快達成自動化，監控系統才有時間思考、調整，舉一反三，處理球場上各種突發狀況。</p>\r\n\r\n<p>「大腦每個單位時間的認知能量是有限制的，」曾志朗說，如果執行一般任務就佔去大部份資源，大腦就只會因循過去的做法，變不出新把戲。</p>\r\n\r\n<p>■強烈探索的欲望：當發現新鮮有趣的訊息時，前扣帶迴（ACC）會將情報傳到前額葉大腦皮質（LPFC），由相當於總司令的前額葉大腦皮質，決定這時該活化哪一種神經細胞作出回應。「靈光乍現」就經常發生在這個過程中。</p>\r\n\r\n<p>好奇心強、求知慾旺盛的人，前扣帶迴和前額葉皮質間的聯繫迴路強壯，因此能儲備豐富的資訊激發創意，反之事事習以為常，懶得一探究竟的人迴路便會弱化，自然沒有足夠的電力發光。</p>\r\n\r\n<p>「要發揮創造力，必須不斷對世界發出疑問，」茂木健一郎建議，例如「真的是這樣嗎？」「這樣就夠好了嗎？」「自己還有什麼不足之處？」持續這樣的思考習慣，「一定會出現『啊！就是這個』的答案。」</p>\r\n\r\n<p>■ 休息、放鬆讓好點子浮現：大腦持續處裡某個主題而過度使用時，會出現「饜足」的現象，「一直拚命想，神經系統反而被關住，想不出新東西，」曾志朗解釋，這 時候不能再鑽牛角尖，要暫時放下去做別的事，出去走走、睡一覺，釋放被關住的神經細胞重新連結整理，過一陣子再回來或隔天起床，往往就有新法。找出能單獨 放鬆、發想的場所也很重要，不管是浴室、計程車都好，「當大腦不會被太多不相關的情報干擾，好點子才容易浮現，」茂木健一郎提醒。</p>\r\n\r\n<div class=\"dpMain\" id=\"content\">\r\n<div class=\"cp\" id=\"cp\">\r\n<p><strong>4.三方法幫大腦專注</strong></p>\r\n\r\n<p>從小我們就被叮嚀上課要專心，不准偷看漫畫、傳紙條。但人的注意力原本就有極限，「大約過了10分鐘，人的注意力就會開始游離，」麥迪納博士指出。</p>\r\n\r\n<p>要幫助大腦集中精神，維持注意力，提高學習效果，可以試試：</p>\r\n\r\n<p>■分段落：不要貪心想把訊息一次囫圇吞棗，尤其對初次接觸的新知識，要有時間休息讓大腦消化。開會、簡報時如果不想看到台下昏沉打瞌睡，最好從基本的概念開始講解內容，循序漸進，效果會更好。</p>\r\n\r\n<p>■要專心、不要一心多用：邊吃飯邊聊天這種自動化作業，對大腦並非難事，但邊開車邊講手機這種雙方都需要注意力的任務，就很容易出錯。如果一個人的作業過程一直被打斷，不只花更多時間才能完成，錯誤率也會提高50％。</p>\r\n\r\n<p>■用情緒刺激當釣餌：大約每10分鐘左右，發現聽眾眼神渙散時，可以用和主題有關的故事或能引發情緒的事件，重新抓住他們的注意力。</p>\r\n\r\n<p><strong>5.理解、圖像，有助記憶力</strong></p>\r\n\r\n<p>英國音樂學者克萊夫是腦神經醫學上的知名病人：他因病失去記憶力，不但無法儲存新記憶，過去的記憶也被刪除一空。神奇的是，記憶只能維持幾秒鐘的他，仍能駕輕就熟演奏樂曲，保有個人的風格。</p>\r\n\r\n<p>人的記憶系統奧祕複雜，每個類型的記憶在大腦裡處理儲存的部位也不同，了解記憶系統特性，才能增加記憶壽命。</p>\r\n\r\n<div class=\"dpMain\" id=\"content\">\r\n<div class=\"cp\" id=\"cp\">\r\n<p>■分散比集中記得牢：例如一週後要考試，在一星期內10個不同的時段重複讀考試的內容，比起一口氣看10遍的效果更好。而需要記住的資訊，最好三不五時溫習一下，再加入新的相關資料一起思考，便不會學了新的卻忘了舊的。</p>\r\n\r\n<p>■搞清楚訊息的意義：不明就裡死背的知識很難被提取出來使用，愈了解學習主題的意義，多結合真實的經驗和具體例子，訊息會自動被儲存且持續較久。</p>\r\n\r\n<p>■善用圖片優勢效應：圖片的學習速度與記憶效果，比口語或文字更強。將需要記憶的內容視覺化、想像這些物體，或讓它們彼此產生互動關係（愈滑稽愈有用），會更容易回想起來。</p>\r\n\r\n<p>■多練習：研究證實，將學習到的資訊反覆輸出練習，更有助大腦迴路的定著。抱著參考書猛讀，不如大量解題；對銷售員來說，要熟悉產品的專業知識，比起猛背資料，多向顧客做簡報能更快上手。</p>\r\n\r\n<p><strong>6.睡得好睡得夠，才學得會</strong></p>\r\n\r\n<p>對身體肌肉來說，睡覺等於休息，但對大腦來說，睡眠時依然有許多任務要做。在快速眼動睡眠（佔睡眠週期80％），大腦裡的神經元送出各種電流訊號彼此交談，忙碌程度不下於清醒。睡眠會影響人習得和保持新技能的方式，睡眠被剝奪的人，創造力和決策能力都會變差。</p>\r\n\r\n<p>愈來愈多研究發現，睡眠對「記憶的整序和強固化」很重要。學習、訓練之後睡一覺，可以讓作業的表現進步。熬夜K書雖然能暫時應付考試，知識卻無法進入長期記憶庫儲存，很快忘光光。</p>\r\n\r\n<p><strong>如何利用睡眠的力量？專家建議：</strong></p>\r\n\r\n<p>■小睡片刻：人在下午的一段時間，會經驗短暫的昏昏欲睡，「午睡時區（nap zone）很重要，我們的大腦在這個時段工作效率不好，」麥迪納博士指出，休息個30分鐘，可以提高午後的認知表現。</p>\r\n\r\n<p>■了解自己的作息型態：睡8小時只是通則，每個人還是有個別差異，也會隨年齡而變化。了解自己睡多久感覺最好，依照自己的睡眠需求安排行程，效率會更好。</p>\r\n\r\n<p>■讓大腦在睡夢中複習：例如為期兩天的教育訓練課各有主題，講者可以先在第一天把全部內容大略介紹一遍，讓學員透過睡眠強化記憶，隔天再深入講解。</p>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n', '{$now}',  '0000-00-00 00:00:00',  '1',  '{$uid}',  '', '', 3,  '8',  '0',  '0000-00-00 00:00:00',  '', 0),
@@ -53,21 +53,21 @@ function tadnews_content($insert_id = "")
 
   ('{$insert_id}',  '會考時代，學生非閱讀不可！',  '<div class=\"dpMain\" id=\"content\">\r\n<div class=\"cp\" id=\"cp\">\r\n<p>明年十二年國教正式上路後，基測轉型成會考。在未來幾年中，會考成績仍將是決定超額比序的重要關鍵。</p>\r\n\r\n<p>三月底剛剛考完的會考試測，題型和基測類似，但也預告著轉變，從會考試測命題的趨勢來看，未來中學生的學習策略應該要有以下的轉變。</p>\r\n\r\n<p><span style=\"color: #ff6600\"><strong>1. 閱讀、閱讀、閱讀！</strong></span></p>\r\n\r\n<p>《親 子天下》在四月初會考試測一結束，採訪每一科的資深國中老師分析本次試測題目的特色。聽到老師們不斷重複的共同關鍵字就是「閱讀力」。會考難度比基測難， 最顯而易見的差異之一就是題幹加長。這一次的國文科出了一篇一千一百字長的羅蘭散文。學生必須對於閱讀長文不恐懼，且能在很短的時間內抓到重點。台北市教 育局局長丁亞雯也說：「看到會考試測的題目，名師的結論都是：『國中生非閱讀不可！』」</p>\r\n\r\n<p><span style=\"color: #ff6600\"><strong>2. 記憶少，思考和理解才是關鍵</strong></span></p>\r\n\r\n<p>綜觀專家的分析「會考沒有看一眼」就能答的題目。譬如，國文科的閱讀測驗，不考可以直接在文本中找到答案的題目。考的是學生能否和作者「對話」，也就是，從文本推敲寫作動機和作者想說沒說的言外之意。</p>\r\n\r\n<p>數 學科這一次加考的非選擇題更是必須從提供的題目條件中，分析判斷後，提出支持性理由，才能拿到滿分。第一次會考試測的非選擇題考了兩題，在全體考生中平均 每一題能夠拿到滿分三分的比率都不到六％。兩題各拿零分的比率更是高得驚人，分別是七七．六％和八七．七％。雖然很難預估，這次參加試測的考生是真的不會 寫？還是懶得寫？但是，可以看到數學非選擇題，這種重視思考過程的學習，會是未來必須加強的方向。</p>\r\n\r\n<div class=\"dpMain\" id=\"content\">\r\n<div class=\"cp\" id=\"cp\">\r\n<p><span style=\"color: #ff6600\"><strong>3. 加強整合和跨科學習的能力</strong></span></p>\r\n\r\n<p>這次在社會科當中，有好幾題是跨科的題目。譬如，社會科第四題出現《天工開物》的書名，這是歷史科，但是用這個題目要測驗的是關於台灣國家公園的特色，是地理科的範圍。第四十九題，則以九世紀海上絲路為題（歷史科），來測驗盛行風向（地理科）。</p>\r\n\r\n<p>自然科和數學科則考很多整合了兩個觀念以上的題目。打破學習中科目和單元的疆界。</p>\r\n\r\n<p>學生不需要練習太多繁複的計算和花時間背誦，但是學習時必須非常專心，徹底弄懂基礎概念。</p>\r\n\r\n<p><span style=\"color: #ff6600\"><strong>4. 重視生活經驗</strong></span></p>\r\n\r\n<p>會考試測的題目和生活連結的程度很高。國文科的閱讀測驗還考了金庸作品的序文。社會科更是多題取材自生活，時事的題目包含了民法修訂和高齡化社會等重大議題。</p>\r\n\r\n<p><span style=\"color: #ff6600\"><strong>5. 英語的英聽簡單但雙峰現象明顯</strong></span></p>\r\n\r\n<p>同 樣第一次出現的英聽題目，這一次總共考了二十題，但是全體考生平均答對十六題。心測中心分析英聽的題目對一般考生並不困難，只要依據課本正常學習是容易拿 分。但是英語科的基礎級考生比率是全科中最低五五．六％，最高是社會科六八．二％。英語科考生待加強比率最高，精熟的比率也偏高，有明顯的雙峰現象。</p>\r\n\r\n<p><span style=\"color: #ff6600\"><strong>6. 作文不計分，卻是比序關鍵</strong></span></p>\r\n\r\n<p>作 文雖然在會考中不計分，但是好幾個就學區在比序碰到同分時，作文卻是比序的最重要關鍵。這一次試測，作文能夠拿到六級分的只有稀少的二．二％比率。考生普 遍集中在四級分的五三．三％，和五級分的二一．六％。因此，若是在競爭激烈的學區，當同分時，作文是高分群一定有絕對的優勢。</p>\r\n\r\n<p>對於關心十二年國教和會考趨勢的父母來說，改變是混亂和不安的。但是，掌握新的趨勢、用對的觀念陪伴孩子，將有可能事半功倍。</p>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n', '{$now}',  '0000-00-00 00:00:00',  '1',  '{$uid}',  '', '', 2,  '8',  '0',  '0000-00-00 00:00:00',  '', 0);
   ";
-    $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 
-    $sql            = "select max(sort) from `" . $xoopsDB->prefix("tad_news_cate") . "` where not_news='1'";
-    $result         = $xoopsDB->query($sql);
+    $sql = 'select max(sort) from `' . $xoopsDB->prefix('tad_news_cate') . "` where not_news='1'";
+    $result = $xoopsDB->query($sql);
     list($max_sort) = $xoopsDB->fetchRow($result);
 
     $max_sort++;
-    $sql = "INSERT INTO `" . $xoopsDB->prefix("tad_news_cate") . "`
+    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news_cate') . "`
   (`of_ncsn`, `nc_title`, `enable_group`, `enable_post_group`, `sort`, `cate_pic`, `not_news`, `setup`)
   VALUES
   (0,'學校簡介', '', '1', '{$max_sort}', '', '1','title=1;tool=0;comm=0;nav=1')";
-    $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
     $insert_id = $xoopsDB->getInsertId();
 
-    $sql = "INSERT INTO `" . $xoopsDB->prefix("tad_news") . "` (`ncsn`, `news_title`, `news_content`, `start_day`, `end_day`, `enable`, `uid`, `passwd`, `enable_group`, `counter`, `prefix_tag`, `always_top`, `always_top_date`, `have_read_group`, `page_sort`) VALUES
+    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news') . "` (`ncsn`, `news_title`, `news_content`, `start_day`, `end_day`, `enable`, `uid`, `passwd`, `enable_group`, `counter`, `prefix_tag`, `always_top`, `always_top_date`, `have_read_group`, `page_sort`) VALUES
   ('{$insert_id}', '學校沿革', '<p>學校沿革內容製作中～</p>', '{$now}', '0000-00-00 00:00:00', '1', '{$uid}', '', '', 9, '', '0', '0000-00-00 00:00:00', '', 1),
   ('{$insert_id}', '本校概況', '<p>本校概況內容製作中～</p>', '{$now}', '0000-00-00 00:00:00', '1', '{$uid}', '', '', 5, '', '0', '0000-00-00 00:00:00', '', 2),
   ('{$insert_id}', '歷任校長', '<p>歷任校長內容製作中</p>', '{$now}', '0000-00-00 00:00:00', '1', '{$uid}', '', '', 5, '', '0', '0000-00-00 00:00:00', '', 3),
@@ -76,22 +76,22 @@ function tadnews_content($insert_id = "")
     $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 
     $max_sort++;
-    $sql = "INSERT INTO `" . $xoopsDB->prefix("tad_news_cate") . "`
+    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news_cate') . "`
   (`of_ncsn`, `nc_title`, `enable_group`, `enable_post_group`, `sort`, `cate_pic`, `not_news`, `setup`)
   VALUES
   ('{$insert_id}','行政單位', '', '1', '{$max_sort}', '', '1','title=1;tool=0;comm=0;nav=1')";
-    $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
     $insert_id = $xoopsDB->getInsertId();
 
-    $sql    = "select `groupid`,`name` from " . $xoopsDB->prefix("groups") . " where groupid > 3";
+    $sql = 'select `groupid`,`name` from ' . $xoopsDB->prefix('groups') . ' where groupid > 3';
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
     $i = 1;
     while (list($groupid, $name) = $xoopsDB->fetchRow($result)) {
-        $sql = "INSERT INTO `" . $xoopsDB->prefix("tad_news") . "` (`ncsn`, `news_title`, `news_content`, `start_day`, `end_day`, `enable`, `uid`, `passwd`, `enable_group`, `counter`, `prefix_tag`, `always_top`, `always_top_date`, `have_read_group`, `page_sort`) VALUES
+        $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news') . "` (`ncsn`, `news_title`, `news_content`, `start_day`, `end_day`, `enable`, `uid`, `passwd`, `enable_group`, `counter`, `prefix_tag`, `always_top`, `always_top_date`, `have_read_group`, `page_sort`) VALUES
     ('{$insert_id}', '{$name}', '<p>{$name}內容製作中～</p>', '{$now}', '0000-00-00 00:00:00', '1', '{$uid}', '', '', 2, '', '0', '0000-00-00 00:00:00', '', $i)
      ";
-        $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
         $i++;
     }
 }
