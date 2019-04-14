@@ -55,4 +55,3 @@ function tad_guide_full_copy( $source="", $target=""){
   }
 }
 */
-?>

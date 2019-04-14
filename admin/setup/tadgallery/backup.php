@@ -1,8 +1,8 @@
 <?php
-$bak_table            = array();
-$bak_table[1]['name'] = "tad_gallery";
-$bak_table[1]['sql']  = "
-CREATE TABLE `" . $xoopsDB->prefix("tad_gallery_gbak") . "` (
+$bak_table = [];
+$bak_table[1]['name'] = 'tad_gallery';
+$bak_table[1]['sql'] = '
+CREATE TABLE `' . $xoopsDB->prefix('tad_gallery_gbak') . "` (
   `sn` smallint(5) unsigned NOT NULL auto_increment,
   `csn` smallint(5) unsigned NOT NULL,
   `title` varchar(255) NOT NULL default '',
@@ -26,9 +26,9 @@ CREATE TABLE `" . $xoopsDB->prefix("tad_gallery_gbak") . "` (
 ) ENGINE=MyISAM;
 ";
 
-$bak_table[2]['name'] = "tad_gallery_cate";
-$bak_table[2]['sql']  = "
-CREATE TABLE `" . $xoopsDB->prefix("tad_gallery_cate_gbak") . "` (
+$bak_table[2]['name'] = 'tad_gallery_cate';
+$bak_table[2]['sql'] = '
+CREATE TABLE `' . $xoopsDB->prefix('tad_gallery_cate_gbak') . "` (
   `csn` smallint(5) unsigned NOT NULL auto_increment,
   `of_csn` smallint(5) unsigned NOT NULL,
   `title` varchar(255) NOT NULL default '',

@@ -116,4 +116,3 @@ if (!function_exists('tad_guide_delete_directory')) {
 }
 
  */
-?>

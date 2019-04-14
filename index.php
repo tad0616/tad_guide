@@ -1,2 +1,2 @@
 <?php
-header("location:admin/main.php");
+header('location:admin/main.php');
