@@ -24,7 +24,7 @@ return true;
 function tad_guide_go_update1(){
 global $xoopsDB;
 $sql="ALTER TABLE ".$xoopsDB->prefix("資料表")." ADD `欄位` smallint(5) NOT NULL";
-$xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  mysql_error());
+$xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  $GLOBALS['xoopsDB']->error());
 
 return true;
 }
