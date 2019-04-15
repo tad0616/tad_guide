@@ -1,4 +1,7 @@
 <?php
+
+use XoopsModules\Tadtools\Utility;
+
 function tadgallery_content($cate_sn = '')
 {
     global $xoopsDB, $xoopsUser;
@@ -63,7 +66,7 @@ function tadgallery_content($cate_sn = '')
 function uzip_file()
 {
     global $xoopsDB, $xoopsUser, $xoopsModule, $xoopsModuleConfig, $type_to_mime;
-    mk_dir(XOOPS_ROOT_PATH . '/uploads/tadgallery/');
+    Utility::mk_dir(XOOPS_ROOT_PATH . '/uploads/tadgallery/');
     //取消上傳時間限制
     set_time_limit(0);
 
