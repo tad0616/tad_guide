@@ -53,9 +53,9 @@ function list_all_modules()
             continue;
         }
 
-        $version = (int)$version;
+        $version = (int) $version;
         $new_version = $mod[$dirname]['module']['new_version'] * 100;
-        $new_version = (int)$new_version;
+        $new_version = (int) $new_version;
 
         $last_update = filemtime(XOOPS_ROOT_PATH . "/modules/{$dirname}/xoops_version.php");
         $new_last_update = $mod[$dirname]['module']['new_last_update'];
@@ -126,7 +126,7 @@ function list_all_modules()
 function get_dir_log($dirname, $mid)
 {
     global $school_mod_arr, $xoopsConfig;
-    if (!in_array($dirname, $school_mod_arr, true)) {
+    if (!in_array($dirname, $school_mod_arr)) {
         return;
     }
 
@@ -303,8 +303,8 @@ function group_cate($dirname, $mid = 0)
         $mod_cate[$groupid]['mid'] = $mid;
         $mod_cate[$groupid]['groupid'] = $groupid;
         $mod_cate[$groupid]['groupname'] = $name;
-        $mod_cate[$groupid]['show_cate'] = in_array($dirname, $mod_arr, true);
-        if ($mid and in_array($dirname, $mod_arr, true)) {
+        $mod_cate[$groupid]['show_cate'] = in_array($dirname, $mod_arr);
+        if ($mid and in_array($dirname, $mod_arr)) {
             $cate = get_mod_cate($dirname, $name);
             $mod_cate[$groupid]['cate_sn'] = $cate['sn'];
             $mod_cate[$groupid]['cate_title'] = $cate['title'];
@@ -386,7 +386,7 @@ function get_mod_cate($dirname = '', $group_name = '')
 {
     global $xoopsDB, $mod_arr;
     //$mod_arr=array('tadnews','tadgallery','tad_player','tad_uploader','tad_cal','tad_discuss','tad_faq','tad_link');
-    if (!in_array($dirname, $mod_arr, true)) {
+    if (!in_array($dirname, $mod_arr)) {
         return;
     }
 
@@ -585,7 +585,7 @@ function import_data($dirname, $act_kind, $mid = '0', $cate_sn = '0', $mode = ''
             }
 
             if ('batch' === $mode) {
-                $visible = in_array($func_num, $_POST['ok_blocks'], true) ? 1 : 0;
+                $visible = in_array($func_num, $_POST['ok_blocks']) ? 1 : 0;
             } else {
                 $visible = $new_data[$func_num]['visible'];
             }
@@ -873,7 +873,7 @@ switch ($op) {
         create_one_cate($mid, $groupid, $dirname);
         redirect_header("main.php?hl={$dirname}", 3, _MA_GUIDE_CREATE_CATE_OK);
 
-        // no break
+    // no break
     case 'import_data':
         import_data($dirname, $act_kind, $mid, $cate_sn);
         redirect_header("main.php?hl={$dirname}", 3, _MA_GUIDE_IMPORT_OK);
