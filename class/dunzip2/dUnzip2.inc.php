@@ -1,4 +1,6 @@
 <?php
+namespace XoopsModules\Tad_guide\dunzip2;
+
 // 09/08/2010 (v2.662)
 // - unzipAll parameters fully reviewed and fixed. Thanks Ronny Dreschler and Conor Mac Aoidh.
 // 12/05/2010 (v2.661)
