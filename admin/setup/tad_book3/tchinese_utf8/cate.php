@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 $prefix = '';
 $suffix = '相關電子書';
 // $c1=mt_rand( 200, 255 );
@@ -18,12 +20,12 @@ $post_perm_name = '';
 foreach ($create_cate as $groupid => $cate_name) {
     $max_sort++;
 
-    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_book3_cate') . "`
-  (`sort`, `title`, `description`)
-  VALUES
-  ('$max_sort', '{$prefix}{$cate_name}{$suffix}',  '{$prefix}{$cate_name}{$suffix}');
-  ";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $sql = "INSERT INTO `" . $xoopsDB->prefix('tad_book3_cate') . "`
+    (`sort`, `title`, `description`)
+    VALUES
+    ('$max_sort', '{$prefix}{$cate_name}{$suffix}',  '{$prefix}{$cate_name}{$suffix}');
+    ";
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $insert_id = $xoopsDB->getInsertId();
 
     if (!empty($read_perm_name)) {

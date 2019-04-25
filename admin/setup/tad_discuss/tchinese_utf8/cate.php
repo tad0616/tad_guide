@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 $prefix = '';
 $suffix = '討論區';
 // $c1=mt_rand( 200, 255 );
@@ -22,7 +24,7 @@ foreach ($create_cate as $groupid => $cate_name) {
   (`ofBoardID`, `BoardTitle`, `BoardDesc`, `BoardManager`, `BoardSort`, `BoardEnable`)
   VALUES
   (0,'{$prefix}{$cate_name}{$suffix}',  '給{$cate_name}用的討論專區',  '1',  '{$max_sort}', '1')";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $insert_id = $xoopsDB->getInsertId();
 
     if (!empty($read_perm_name)) {

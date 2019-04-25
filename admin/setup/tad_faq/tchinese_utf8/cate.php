@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 $prefix = '';
 $suffix = '常見問題';
 // $c1=mt_rand( 200, 255 );
@@ -22,7 +24,7 @@ foreach ($create_cate as $groupid => $cate_name) {
   (`of_fcsn`, `title`, `description`, `sort`, `cate_pic`)
   VALUES
   (0,'{$prefix}{$cate_name}{$suffix}',  '{$cate_name}的常見問題', '{$max_sort}', '')";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $insert_id = $xoopsDB->getInsertId();
 
     if (!empty($read_perm_name)) {

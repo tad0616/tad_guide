@@ -1,10 +1,12 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 function tad_link_content($cate_sn = '')
 {
     global $xoopsDB, $xoopsUser;
 
     // $sql="delete from `".$xoopsDB->prefix("tad_link")."`";
-    // $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
+    // $xoopsDB->queryF($sql) or Utility::web_error($sql,  __FILE__, __LINE__);
 
     uzip_file();
 
@@ -17,7 +19,7 @@ function tad_link_content($cate_sn = '')
   (`of_cate_sn`, `cate_title`, `cate_sort`)
   VALUES
   (0,'宣導網站', '{$max_sort}')";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $insert_id = $xoopsDB->getInsertId();
 
     $uid = $xoopsUser->uid();
@@ -35,7 +37,7 @@ function tad_link_content($cate_sn = '')
   (`of_cate_sn`, `cate_title`, `cate_sort`)
   VALUES
   (0,'常用網站', '{$max_sort}')";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $insert_id = $xoopsDB->getInsertId();
 
     import_mod_data(7, "'{$insert_id}', 'Google', 'http://www.google.com.tw', '', 7, 1, '0000-00-00', '{$uid}', '{$now}', '1'");
@@ -47,7 +49,7 @@ function tad_link_content($cate_sn = '')
   (`of_cate_sn`, `cate_title`, `cate_sort`)
   VALUES
   (0,'教育網站', '{$max_sort}')";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $insert_id = $xoopsDB->getInsertId();
     import_mod_data(9, "'{$insert_id}', '均一教育平台', 'http://www.junyiacademy.org/', '由財團法人誠致教育基金會創辦。我們的目標是透過雲端平台提供免費的『均等、一流』的教育機會給每一個人。網站初期將以小學高年級（五、六年級）的數學教學資源為先行建構的內容，未來將包含台灣一到九年級的數學課程。', 1, 0, '0000-00-00', '{$uid}', '{$now}', '1'");
     import_mod_data(10, "'{$insert_id}', '微學習站台', 'http://stream.kh.edu.tw/', '', 2, 1, '0000-00-00', '{$uid}', '{$now}', '1'");
@@ -58,7 +60,7 @@ function tad_link_content($cate_sn = '')
 function uzip_file()
 {
     global $xoopsDB, $xoopsUser, $xoopsModule, $xoopsModuleConfig, $type_to_mime;
-    mk_dir(XOOPS_ROOT_PATH . '/uploads/tad_link/');
+    Utility::mk_dir(XOOPS_ROOT_PATH . '/uploads/tad_link/');
     //取消上傳時間限制
     set_time_limit(0);
 
@@ -79,7 +81,7 @@ function import_mod_data($i, $data)
     global $xoopsDB;
     $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_link') . "`(`cate_sn`, `link_title`, `link_url`, `link_desc`, `link_sort`, `link_counter`, `unable_date`, `uid`, `post_date`, `enable`) VALUES
   ($data)";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $file_id = $xoopsDB->getInsertId();
     rename(XOOPS_ROOT_PATH . "/uploads/tad_link/f{$i}.jpg", XOOPS_ROOT_PATH . "/uploads/tad_link/{$file_id}.jpg");
     rename(XOOPS_ROOT_PATH . "/uploads/tad_link/thumbs/f{$i}.jpg", XOOPS_ROOT_PATH . "/uploads/tad_link/thumbs/{$file_id}.jpg");

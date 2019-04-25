@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 $prefix = '';
 $suffix = '公告';
 // $c1=mt_rand( 200, 255 );
@@ -22,7 +24,7 @@ foreach ($create_cate as $groupid => $cate_name) {
   (`of_ncsn`, `nc_title`, `enable_group`, `enable_post_group`, `sort`, `cate_pic`, `not_news`, `setup`)
   VALUES
   (0,'{$prefix}{$cate_name}{$suffix}', '', '1,$groupid', '{$max_sort}', '', '0','')";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $insert_id = $xoopsDB->getInsertId();
 
     if (!empty($read_perm_name)) {
