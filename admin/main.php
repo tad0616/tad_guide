@@ -1,6 +1,7 @@
 <?php
+use XoopsModules\Tadtools\FancyBox;
+use XoopsModules\Tadtools\StickyTableHeaders;
 use XoopsModules\Tadtools\Utility;
-
 /*-----------引入檔案區--------------*/
 $xoopsOption['template_main'] = 'tad_guide_adm_main.tpl';
 include_once 'header.php';
@@ -104,24 +105,15 @@ function list_all_modules()
     $xoopsTpl->assign('now_op', 'list_all_modules');
     $xoopsTpl->assign('school_mod_arr', $school_mod_arr);
 
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/fancybox.php')) {
-        redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
-    }
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/fancybox.php';
+    $FancyBox = new FancyBox('.modulesadmin', '800px', null, false);
+    $FancyBox->render();
 
-    $fancybox = new fancybox('.modulesadmin', '800px', null, false);
-    $fancybox->render();
-
-    $onekey_fancybox = new fancybox('.onekey', '90%', '100%', false, false);
-    $onekey_fancybox->render(true);
+    $onekey_FancyBox = new FancyBox('.onekey', '90%', '100%', false, false);
+    $onekey_FancyBox->render(true);
     //加在連結中：class="edit_dropdown" rel="group"（圖） data-fancybox-type="iframe"（HTML）
 
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/stickytableheaders.php')) {
-        redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
-    }
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/stickytableheaders.php';
-    $stickytableheaders = new stickytableheaders(false);
-    $stickytableheaders->render('#list_modules');
+    $StickyTableHeaders = new StickyTableHeaders(false);
+    $StickyTableHeaders->render('#list_modules');
 }
 
 //取得模組的安裝精靈設定檔
@@ -411,7 +403,7 @@ function backup_config($dirname = '', $mid = '')
 {
     global $xoopsDB, $xoopsConfig;
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
     //檢查有無之前備份
     $sql = 'select `act_date` from `' . $xoopsDB->prefix('tad_guide_backup') . "` where `act_kind`='config' and `kind_title`='{$dirname}'";
@@ -454,7 +446,7 @@ function restore_config($dirname = '', $mid = '')
 {
     global $xoopsDB, $xoopsConfig;
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     //檢查有無之前備份
     $sql = 'select `backup_content` from `' . $xoopsDB->prefix('tad_guide_backup') . "` where `act_kind`='config' and `kind_title`='{$dirname}'";
     $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
@@ -477,7 +469,7 @@ function backup_blocks($dirname = '', $mid = '')
 {
     global $xoopsDB, $xoopsConfig;
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
     //檢查有無之前備份
     $sql = 'select `act_date` from `' . $xoopsDB->prefix('tad_guide_backup') . "` where `act_kind`='blocks' and `kind_title`='{$dirname}'";
@@ -512,7 +504,7 @@ function restore_blocks($dirname = '', $mid = '')
 {
     global $xoopsDB, $xoopsConfig;
 
-    // $myts = MyTextSanitizer::getInstance();
+    // $myts = \MyTextSanitizer::getInstance();
 
     //檢查有無之前備份
     $sql = 'select `backup_content` from `' . $xoopsDB->prefix('tad_guide_backup') . "` where `act_kind`='blocks' and `kind_title`='{$dirname}'";
@@ -571,7 +563,7 @@ function import_data($dirname, $act_kind, $mid = '0', $cate_sn = '0', $mode = ''
     $mid = (int) $mid;
     $cate_sn = (int) $cate_sn;
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     if ('blocks' === $act_kind) {
         include "setup/{$dirname}/{$xoopsConfig['language']}/blocks.php";
 
