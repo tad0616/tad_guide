@@ -87,7 +87,7 @@ function tadnews_content($insert_id = '')
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
     $i = 1;
-    while (false !== (list($groupid, $name) = $xoopsDB->fetchRow($result))) {
+    while (list($groupid, $name) = $xoopsDB->fetchRow($result)) {
         $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news') . "` (`ncsn`, `news_title`, `news_content`, `start_day`, `end_day`, `enable`, `uid`, `passwd`, `enable_group`, `counter`, `prefix_tag`, `always_top`, `always_top_date`, `have_read_group`, `page_sort`) VALUES
     ('{$insert_id}', '{$name}', '<p>{$name}內容製作中～</p>', '{$now}', '0000-00-00 00:00:00', '1', '{$uid}', '', '', 2, '', '0', '0000-00-00 00:00:00', '', $i)
      ";

@@ -68,7 +68,7 @@ function list_all_modules()
     $act_log = $log = [];
     $sql = 'select `act_kind`, `kind_title`, `act_name`, `act_date`, `cate_sn` from `' . $xoopsDB->prefix('tad_guide') . '` order by `kind_title`';
     $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
-    while (false !== (list($act_kind, $dirname, $act_name, $act_date, $cate_sn) = $xoopsDB->fetchRow($result))) {
+    while (list($act_kind, $dirname, $act_name, $act_date, $cate_sn) = $xoopsDB->fetchRow($result)) {
         $act_log[$dirname][$act_kind] = $act_date;
     }
 
@@ -103,7 +103,7 @@ function list_all_modules()
     $xoopsTpl->assign('school_mod_arr', $school_mod_arr);
 
     if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/fancybox.php')) {
-        redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
+        redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
     }
     require_once XOOPS_ROOT_PATH . '/modules/tadtools/fancybox.php';
 
@@ -115,7 +115,7 @@ function list_all_modules()
     //加在連結中：class="edit_dropdown" rel="group"（圖） data-fancybox-type="iframe"（HTML）
 
     if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/stickytableheaders.php')) {
-        redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
+        redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
     }
     require_once XOOPS_ROOT_PATH . '/modules/tadtools/stickytableheaders.php';
     $stickytableheaders = new stickytableheaders(false);
@@ -297,7 +297,7 @@ function group_cate($dirname, $mid = 0)
     $sql = 'select `groupid`, `name` from ' . $xoopsDB->prefix('groups') . ' order by groupid';
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
-    while (false !== (list($groupid, $name) = $xoopsDB->fetchRow($result))) {
+    while (list($groupid, $name) = $xoopsDB->fetchRow($result)) {
         //以下會產生這些變數： `groupid`, `name`, `description`, `group_type`
         $mod_cate[$groupid]['dirname'] = $dirname;
         $mod_cate[$groupid]['mid'] = $mid;
@@ -333,7 +333,7 @@ function get_group()
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $group = [];
     $i = 0;
-    while (false !== (list($groupid, $name) = $xoopsDB->fetchRow($result))) {
+    while (list($groupid, $name) = $xoopsDB->fetchRow($result)) {
         $group[$i]['groupid'] = $groupid;
         $group[$i]['name'] = $name;
         $i++;
@@ -631,7 +631,7 @@ function import_data($dirname, $act_kind, $mid = '0', $cate_sn = '0', $mode = ''
                 $sql = 'select bid from `' . $xoopsDB->prefix('newblocks') . "` where `mid`='{$mid}' and `func_num`='{$func_num}' and `block_type`='D'";
                 $r = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 
-                while (false !== (list($copy_bid) = $xoopsDB->fetchRow($r))) {
+                while (list($copy_bid) = $xoopsDB->fetchRow($r)) {
                     //清除掉之前複製的區塊
                     $sql = ' delete from `' . $xoopsDB->prefix('newblocks') . "` where `bid`='{$copy_bid}'";
                     $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
@@ -688,7 +688,7 @@ function import_data($dirname, $act_kind, $mid = '0', $cate_sn = '0', $mode = ''
         //更新模組偏好設定
         $sql = 'select `conf_name` from `' . $xoopsDB->prefix('config') . "` where `conf_modid`='{$mid}'";
         $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
-        while (false !== (list($conf_name) = $xoopsDB->fetchRow($result))) {
+        while (list($conf_name) = $xoopsDB->fetchRow($result)) {
             $new_config_conf_name = $myts->addSlashes($new_config[$conf_name]);
 
             $update_sql = 'update `' . $xoopsDB->prefix('config') . "` set `conf_value`='{$new_config_conf_name}' where `conf_name`='$conf_name' and `conf_modid`='{$mid}'";
