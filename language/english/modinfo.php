@@ -1,5 +1,5 @@
 <?php
-xoops_loadLanguage('modinfo_common', 'tadtools');
+ xoops_loadLanguage('modinfo_common', 'tadtools');
 
 define('_MI_TADGUIDE_NAME', 'Tad Guide');
 define('_MI_TADGUIDE_AUTHOR', 'Tad');

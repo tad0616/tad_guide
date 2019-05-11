@@ -1,5 +1,4 @@
 <?php
-
 use XoopsModules\Tadtools\Utility;
 
 function tad_player_content($cate_sn = '')
@@ -7,7 +6,7 @@ function tad_player_content($cate_sn = '')
     global $xoopsDB, $xoopsUser;
 
     // $sql="delete from `".$xoopsDB->prefix("tad_player")."`";
-    // $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
+    // $xoopsDB->queryF($sql) or Utility::web_error($sql,  __FILE__, __LINE__);
 
     $sql = 'select max(sort) from `' . $xoopsDB->prefix('tad_player_cate') . '`';
     $result = $xoopsDB->query($sql);
@@ -18,7 +17,7 @@ function tad_player_content($cate_sn = '')
   (`of_csn`, `title`, `enable_group`, `enable_upload_group`, `sort`, `width`, `height`)
   VALUES
   (0,'翻轉教育', '', '1', '{$max_sort}', '640', '480')";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $insert_id = $xoopsDB->getInsertId();
 
     uzip_file($insert_id);
@@ -59,7 +58,7 @@ function import_mod_data($i, $data)
     global $xoopsDB;
     $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_player') . "` (`pcsn`, `title`, `creator`, `location`, `image`, `info`, `uid`, `post_date`, `enable_group`, `counter`, `width`, `height`, `sort`, `content`, `youtube`, `logo`) VALUES
   ($data)";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $file_id = $xoopsDB->getInsertId();
     rename(XOOPS_ROOT_PATH . "/uploads/tad_player/img/s_f{$i}.png", XOOPS_ROOT_PATH . "/uploads/tad_player/img/s_{$file_id}.png");
 }

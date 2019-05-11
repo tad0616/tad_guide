@@ -1,3 +1,11 @@
+Tad gudie 1.5 (released from 2019-05-10)
+=========================================================
+1. Modify tadgallery block settings
+2. Remove the phpseclib suite
+3. Support XOOPS 2.5.10
+4. No longer supports PHP 5.3
+
+
 Tad gudie 1.4.9 (2019-01-01 released)
 ================================================
 1.Support BootStrap4

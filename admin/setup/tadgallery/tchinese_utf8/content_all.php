@@ -1,5 +1,4 @@
 <?php
-
 use XoopsModules\Tadtools\Utility;
 
 function tadgallery_content($cate_sn = '')
@@ -7,7 +6,7 @@ function tadgallery_content($cate_sn = '')
     global $xoopsDB, $xoopsUser;
 
     // $sql="delete from `".$xoopsDB->prefix("tad_gallery")."`";
-    // $xoopsDB->queryF($sql) or web_error($sql,  __FILE__, __LINE__);
+    // $xoopsDB->queryF($sql) or Utility::web_error($sql,  __FILE__, __LINE__);
 
     $now = date('Y-m-d H:i:s');
 
@@ -20,7 +19,7 @@ function tadgallery_content($cate_sn = '')
   (`of_csn`, `title`,  `content`, `passwd`, `enable_group`, `enable_upload_group`, `sort`, `mode`, `show_mode`, `cover`, `no_hotlink`, `uid`)
   VALUES
   (0,'戶外教學','期待已久的校外教學日子終於來臨了！9月14日這一天低年級及幼稚班到戶外體驗自然生態知性之旅，牧場保有土地與生態現況，可看見品種繁多、多姿多彩的各種鳳蝶飛舞其中，各式各樣活潑可愛的昆蟲遨遊期間，光是紀錄到的蜻蛉目昆蟲【蜻蜓及豆娘】即已超過20種。另外，還有可愛的乳牛、山羊及鴕鳥，可以體驗親自餵食的樂趣哦！實在是一戶外教學、生態觀察的寶庫。', '', '', '1', '{$max_sort}', '', '', '', '', '1')";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $insert_id = $xoopsDB->getInsertId();
 
     $uid = $xoopsUser->uid();
@@ -87,7 +86,7 @@ function import_mod_data($i, $data)
     global $xoopsDB;
     $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_gallery') . "` (`csn`, `title`, `description`, `filename`, `size`, `type`, `width`, `height`, `dir`, `uid`, `post_date`, `counter`, `exif`, `tag`, `good`, `photo_sort`) VALUES
   ($data)";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $file_id = $xoopsDB->getInsertId();
     rename(XOOPS_ROOT_PATH . "/uploads/tadgallery/2013_07_17/f{$file_id}_photo{$i}.jpg", XOOPS_ROOT_PATH . "/uploads/tadgallery/2013_07_17/{$file_id}_photo{$i}.jpg");
     rename(XOOPS_ROOT_PATH . "/uploads/tadgallery/small/2013_07_17/f{$file_id}_s_photo{$i}.jpg", XOOPS_ROOT_PATH . "/uploads/tadgallery/small/2013_07_17/{$file_id}_s_photo{$i}.jpg");
