@@ -4,8 +4,8 @@ use XoopsModules\Tadtools\StickyTableHeaders;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 $xoopsOption['template_main'] = 'tad_guide_adm_main.tpl';
-include_once 'header.php';
-include_once '../function.php';
+require_once __DIR__ . '/header.php';
+require_once dirname(__DIR__) . '/function.php';
 
 require_once XOOPS_ROOT_PATH . '/modules/tad_adm/admin/adm_function.php';
 /*-----------功能函數區--------------*/
@@ -43,7 +43,7 @@ function list_all_modules()
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     //模組部份
-    while ($data = $xoopsDB->fetchArray($result)) {
+    while (false !== ($data = $xoopsDB->fetchArray($result))) {
         foreach ($data as $k => $v) {
             $$k = $v;
         }
@@ -200,7 +200,7 @@ function one_key($dirname, $mid)
         //die($sql);
         $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         $backup_content = '';
-        while ($col = $xoopsDB->fetchArray($result)) {
+        while (false !== ($col = $xoopsDB->fetchArray($result))) {
             foreach ($col as $k => $v) {
                 $$k = $v;
             }
@@ -390,7 +390,7 @@ function get_mod_cate($dirname = '', $group_name = '')
     $cate['file'] = '';
     $cate['col'] = '';
     if (file_exists(XOOPS_ROOT_PATH . "/modules/tad_guide/admin/setup/{$dirname}/function.php")) {
-        include_once XOOPS_ROOT_PATH . "/modules/tad_guide/admin/setup/{$dirname}/function.php";
+        require_once XOOPS_ROOT_PATH . "/modules/tad_guide/admin/setup/{$dirname}/function.php";
 
         $cate = call_user_func("get_{$dirname}_cate", $group_name);
     }
@@ -415,7 +415,7 @@ function backup_config($dirname = '', $mid = '')
         $sql = 'select * from `' . $xoopsDB->prefix('config') . "` where `conf_modid`='{$mid}'";
         $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         $backup_content = [];
-        while ($col = $xoopsDB->fetchArray($result)) {
+        while (false !== ($col = $xoopsDB->fetchArray($result))) {
             $syntax = [];
             foreach ($col as $k => $v) {
                 $syntax[] = "`{$k}`='{$v}'";
@@ -481,7 +481,7 @@ function backup_blocks($dirname = '', $mid = '')
         $sql = 'select * from `' . $xoopsDB->prefix('newblocks') . "` where `dirname`='{$dirname}' and `block_type`!='D' order by `func_num`";
         $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         $backup_content = '';
-        while ($col = $xoopsDB->fetchArray($result)) {
+        while (false !== ($col = $xoopsDB->fetchArray($result))) {
             $syntax = [];
             foreach ($col as $k => $v) {
                 $syntax[] = "`{$k}`='{$v}'";
@@ -573,7 +573,7 @@ function import_data($dirname, $act_kind, $mid = '0', $cate_sn = '0', $mode = ''
         $sql = 'select * from `' . $xoopsDB->prefix('newblocks') . "` where `dirname`='{$dirname}' and `block_type`!='D' order by `func_num`";
 
         $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-        while ($tad_guide_data = $xoopsDB->fetchArray($result)) {
+        while (false !== ($tad_guide_data = $xoopsDB->fetchArray($result))) {
             foreach ($tad_guide_data as $k => $v) {
                 $$k = $v;
             }
@@ -756,7 +756,7 @@ function create_one_cate($mid = '', $groupid = '', $dirname = '')
         list($name) = $xoopsDB->fetchRow($result);
 
         $create_cate[$groupid] = $name;
-        include XOOPS_ROOT_PATH . "/modules/tad_guide/admin/setup/{$dirname}/{$xoopsConfig['language']}/cate.php";
+        require XOOPS_ROOT_PATH . "/modules/tad_guide/admin/setup/{$dirname}/{$xoopsConfig['language']}/cate.php";
     }
 }
 
@@ -818,7 +818,7 @@ function content_backup($dirname = '', $bak_table = [])
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $update_sn = system_CleanVars($_REQUEST, 'update_sn', 0, 'int');
 $file_link = system_CleanVars($_REQUEST, 'file_link', '', 'string');
@@ -888,4 +888,4 @@ switch ($op) {
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign('isAdmin', true);
 $xoopsTpl->assign('hl', $hl);
-include_once 'footer.php';
+require_once __DIR__ . '/footer.php';
