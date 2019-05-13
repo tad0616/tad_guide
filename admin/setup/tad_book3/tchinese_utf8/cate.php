@@ -20,7 +20,7 @@ $post_perm_name = '';
 foreach ($create_cate as $groupid => $cate_name) {
     $max_sort++;
 
-    $sql = "INSERT INTO `" . $xoopsDB->prefix('tad_book3_cate') . "`
+    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_book3_cate') . "`
     (`sort`, `title`, `description`)
     VALUES
     ('$max_sort', '{$prefix}{$cate_name}{$suffix}',  '{$prefix}{$cate_name}{$suffix}');
