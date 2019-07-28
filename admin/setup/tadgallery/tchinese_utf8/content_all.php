@@ -1,5 +1,6 @@
 <?php
 use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tad_guide\DunZip2;
 
 function tadgallery_content($cate_sn = '')
 {
@@ -10,8 +11,8 @@ function tadgallery_content($cate_sn = '')
 
     $now = date('Y-m-d H:i:s');
 
-    $sql = 'select max(sort) from `' . $xoopsDB->prefix('tad_gallery_cate') . '`';
-    $result = $xoopsDB->query($sql);
+    $sql            = 'select max(sort) from `' . $xoopsDB->prefix('tad_gallery_cate') . '`';
+    $result         = $xoopsDB->query($sql);
     list($max_sort) = $xoopsDB->fetchRow($result);
 
     $max_sort++;
@@ -72,10 +73,8 @@ function uzip_file()
     //設置上傳大小
     ini_set('memory_limit', '100M');
 
-    require_once XOOPS_ROOT_PATH . '/modules/tad_guide/class/dunzip2/dUnzip2.inc.php';
-    require_once XOOPS_ROOT_PATH . '/modules/tad_guide/class/dunzip2/dZip.inc.php';
     copy(XOOPS_ROOT_PATH . '/modules/tad_guide/admin/setup/tadgallery/tadgallery.zip', XOOPS_ROOT_PATH . '/uploads/tadgallery/tadgallery.zip');
-    $zip = new dUnzip2(XOOPS_ROOT_PATH . '/uploads/tadgallery/tadgallery.zip');
+    $zip = new DunZip2(XOOPS_ROOT_PATH . '/uploads/tadgallery/tadgallery.zip');
     $zip->getList();
     $zip->unzipAll(XOOPS_ROOT_PATH . '/uploads/tadgallery/');
 }

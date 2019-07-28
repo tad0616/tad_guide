@@ -1,5 +1,6 @@
 <?php
 use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tad_guide\DunZip2;
 
 function tad_book3_content($cate_sn = '')
 {
@@ -95,10 +96,8 @@ function tad_book3_content($cate_sn = '')
 //   //設置上傳大小
 //   ini_set('memory_limit', '100M');
 
-//   require_once XOOPS_ROOT_PATH."/modules/tad_guide/class/dunzip2/dUnzip2.inc.php";
-//   require_once XOOPS_ROOT_PATH."/modules/tad_guide/class/dunzip2/dZip.inc.php";
 //   copy(XOOPS_ROOT_PATH."/modules/tad_guide/admin/setup/tad_link/tad_link.zip", XOOPS_ROOT_PATH."/uploads/tad_link/tad_link.zip");
-//   $zip = new dUnzip2(XOOPS_ROOT_PATH."/uploads/tad_link/tad_link.zip");
+//   $zip = new DunZip2(XOOPS_ROOT_PATH."/uploads/tad_link/tad_link.zip");
 //   $zip->getList();
 //   $zip->unzipAll(XOOPS_ROOT_PATH."/uploads/tad_link/");
 

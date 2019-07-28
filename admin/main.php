@@ -2,12 +2,13 @@
 use XoopsModules\Tadtools\FancyBox;
 use XoopsModules\Tadtools\StickyTableHeaders;
 use XoopsModules\Tadtools\Utility;
+
 /*-----------引入檔案區--------------*/
 $xoopsOption['template_main'] = 'tad_guide_adm_main.tpl';
 require_once __DIR__ . '/header.php';
 require_once dirname(__DIR__) . '/function.php';
-
-require_once XOOPS_ROOT_PATH . '/modules/tad_adm/admin/adm_function.php';
+require_once XOOPS_ROOT_PATH . '/modules/tad_adm/class/OnlineUpgrade.php';
+use XoopsModules\Tad_adm\OnlineUpgrade;
 /*-----------功能函數區--------------*/
 
 //可開群組的模組
@@ -20,86 +21,55 @@ function list_all_modules()
 {
     global $xoopsDB, $xoopsTpl, $mod_arr, $school_mod_arr, $xoopsConfig;
 
+    list($all_install, $all_uninstall) = OnlineUpgrade::list_modules('return');
+    // die(var_export($all_install));
+
+    $act_log = $log = $all_data = [];
+    // print_r($all_uninstall);
+
+    foreach ($all_install as $function => $all_items) {
+        foreach ($all_items as $kind => $items) {
+            foreach ($items as $enable => $mods) {
+                foreach ($mods as $dirname => $module) {
+                    if (!in_array($dirname, $school_mod_arr)) {
+                        continue;
+                    }
+
+                    $log[$dirname]                  = get_dir_log($dirname, $module['mid']);
+                    $all_data[$dirname]             = $module;
+                    $all_data[$dirname]['function'] = $function;
+                }
+            }
+        }
+    }
+
+    foreach ($all_uninstall as $kind => $items) {
+        foreach ($items as $enable => $mods) {
+            foreach ($mods as $dirname => $module) {
+                if (!in_array($dirname, $school_mod_arr)) {
+                    continue;
+                }
+
+                $log[$dirname]                  = get_dir_log($dirname, 0);
+                $all_data[$dirname]             = $module;
+                $all_data[$dirname]['function'] = 'install';
+            }
+        }
+    }
+
+    // die(var_export($all_data));
     //取得群組
     $group = get_group();
     $xoopsTpl->assign('group', $group);
-
-    //取得遠端的模組資訊
-    $mod = get_tad_json_info();
-    // die(var_export($mod['tadtools']['module']));
-    //         $mod[$dirname]['module']['module_title']       = $module_title;
-    //         $mod[$dirname]['module']['update_sn']          = $update_sn;
-    //         $mod[$dirname]['module']['new_version']        = $new_version;
-    //         $mod[$dirname]['module']['new_status']         = $new_status;
-    //         $mod[$dirname]['module']['new_status_version'] = $new_status_version;
-    //         $mod[$dirname]['module']['new_last_update']    = $new_last_update;
-    //         $mod[$dirname]['module']['update_descript']    = str_replace("\n", "\\n", $update_descript);
-    //         $mod[$dirname]['module']['module_sn']          = $module_sn;
-    //         $mod[$dirname]['module']['module_descript']    = str_replace("\n", "\\n", $module_descript);
-    //         $mod[$dirname]['module']['file_link']          = $file_link;
-    //         $mod[$dirname]['module']['kind']               = $kind;
-    //抓出現有模組
-    $sql = 'SELECT * FROM ' . $xoopsDB->prefix('modules') . ' ORDER BY hasmain DESC, weight';
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-
-    //模組部份
-    while (false !== ($data = $xoopsDB->fetchArray($result))) {
-        foreach ($data as $k => $v) {
-            $$k = $v;
-        }
-        if (!isset($mod[$dirname])) {
-            continue;
-        }
-        if ('module' === $mod[$dirname]['module']['kind']) {
-            $ok['module'][] = $dirname;
-        } else {
-            continue;
-        }
-
-        $version = (int) $version;
-        $new_version = $mod[$dirname]['module']['new_version'] * 100;
-        $new_version = (int) $new_version;
-
-        $last_update = filemtime(XOOPS_ROOT_PATH . "/modules/{$dirname}/xoops_version.php");
-        $new_last_update = $mod[$dirname]['module']['new_last_update'];
-
-        $mod[$dirname]['module']['function'] = (($new_version > $version) or ($new_last_update > $last_update)) ? 'update' : 'last_mod';
-        $mod[$dirname]['module']['mid'] = $mid;
-    }
+    $xoopsTpl->assign('all_data', $all_data);
 
     //找出目前的更新紀錄
-    $act_log = $log = [];
-    $sql = 'select `act_kind`, `kind_title`, `act_name`, `act_date`, `cate_sn` from `' . $xoopsDB->prefix('tad_guide') . '` order by `kind_title`';
+    $sql    = 'select `act_kind`, `kind_title`, `act_name`, `act_date`, `cate_sn` from `' . $xoopsDB->prefix('tad_guide') . '` order by `kind_title`';
     $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     while (list($act_kind, $dirname, $act_name, $act_date, $cate_sn) = $xoopsDB->fetchRow($result)) {
         $act_log[$dirname][$act_kind] = $act_date;
     }
 
-    // die(var_export($log));
-
-    // $dir = XOOPS_ROOT_PATH."/modules/tad_guide/admin/setup/{$dirname}/{$xoopsConfig['language']}/";
-    // $log[$dirname]['blocks_file_exists']=file_exists("{$dir}/blocks.php");
-    // $log[$dirname]['blocks_all_file_exists']=file_exists("{$dir}/blocks_all.php");
-    // $log[$dirname]['config_exists']=file_exists("{$dir}/config.php");
-    // $log[$dirname]['content_exists']=file_exists("{$dir}/content.php");
-    // $log[$dirname]['content_all_exists']=file_exists("{$dir}/content_all.php");
-    // $log[$dirname]['cates']=group_cate($dirname,$mod['mid']);
-
-    $all_data = [];
-    foreach ($school_mod_arr as $dirname) {
-        if (empty($mod[$dirname]['module']['function'])) {
-            $mod[$dirname]['module']['function'] = 'install';
-            $mod[$dirname]['module']['mid'] = 0;
-        }
-        $all_data[$dirname] = $mod[$dirname]['module'];
-
-        //取得各個模組是否有相對應的設定檔
-        $log[$dirname] = get_dir_log($dirname, $mod[$dirname]['module']['mid']);
-    }
-
-    ksort($all_mod_data);
-
-    $xoopsTpl->assign('all_data', $all_data);
     $xoopsTpl->assign('log', $log);
     $xoopsTpl->assign('act_log', $act_log);
     $xoopsTpl->assign('now_op', 'list_all_modules');
@@ -124,13 +94,13 @@ function get_dir_log($dirname, $mid)
         return;
     }
 
-    $dir = XOOPS_ROOT_PATH . "/modules/tad_guide/admin/setup/{$dirname}/{$xoopsConfig['language']}/";
+    $dir                       = XOOPS_ROOT_PATH . "/modules/tad_guide/admin/setup/{$dirname}/{$xoopsConfig['language']}/";
     $log['blocks_file_exists'] = file_exists("{$dir}/blocks.php");
     //$log['blocks_all_file_exists']=file_exists("{$dir}/blocks_all.php");
-    $log['config_exists'] = file_exists("{$dir}/config.php");
-    $log['content_exists'] = file_exists("{$dir}/content.php");
+    $log['config_exists']      = file_exists("{$dir}/config.php");
+    $log['content_exists']     = file_exists("{$dir}/content.php");
     $log['content_all_exists'] = file_exists("{$dir}/content_all.php");
-    $log['cates'] = group_cate($dirname, $mid);
+    $log['cates']              = group_cate($dirname, $mid);
 
     return $log;
 }
@@ -139,7 +109,7 @@ function get_dir_log($dirname, $mid)
 function one_key($dirname, $mid)
 {
     global $xoopsConfig, $xoopsDB;
-    $log = get_dir_log($dirname, $mid);
+    $log  = get_dir_log($dirname, $mid);
     $main = "
         <script type='text/javascript'>
             $().ready(function(){
@@ -198,7 +168,7 @@ function one_key($dirname, $mid)
     if ($log['blocks_file_exists']) {
         $sql = 'select * from `' . $xoopsDB->prefix('newblocks') . "` where `dirname`='{$dirname}' and `block_type`!='D' order by `func_num`";
         //die($sql);
-        $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $result         = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         $backup_content = '';
         while (false !== ($col = $xoopsDB->fetchArray($result))) {
             foreach ($col as $k => $v) {
@@ -220,7 +190,7 @@ function one_key($dirname, $mid)
 
         foreach ($new_data as $func_num => $block) {
             $checked = 1 == $block['visible'] ? 'checked' : '';
-            $place = constant("_MA_GUIDE_BS_{$block['side']}");
+            $place   = constant("_MA_GUIDE_BS_{$block['side']}");
 
             $visible = 1 == $b[$func_num]['visible'] ? "<span class='badge badge-warning'>" . _MA_GUIDE_BLOCK_INSTALLED . '</span>' : '';
             $main .= "
@@ -276,8 +246,8 @@ function one_key($dirname, $mid)
 function get_last_update($dirname = '')
 {
     global $xoopsDB;
-    $sql = 'select last_update from ' . $xoopsDB->prefix('modules') . " where dirname='$dirname'";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql               = 'select last_update from ' . $xoopsDB->prefix('modules') . " where dirname='$dirname'";
+    $result            = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     list($last_update) = $xoopsDB->fetchRow($result);
 
     return $last_update;
@@ -288,29 +258,29 @@ function group_cate($dirname, $mid = 0)
 {
     global $xoopsDB, $xoopsTpl, $mod_arr;
 
-    $sql = 'select `groupid`, `name` from ' . $xoopsDB->prefix('groups') . ' order by groupid';
+    $sql    = 'select `groupid`, `name` from ' . $xoopsDB->prefix('groups') . ' order by groupid';
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     while (list($groupid, $name) = $xoopsDB->fetchRow($result)) {
         //以下會產生這些變數： `groupid`, `name`, `description`, `group_type`
-        $mod_cate[$groupid]['dirname'] = $dirname;
-        $mod_cate[$groupid]['mid'] = $mid;
-        $mod_cate[$groupid]['groupid'] = $groupid;
+        $mod_cate[$groupid]['dirname']   = $dirname;
+        $mod_cate[$groupid]['mid']       = $mid;
+        $mod_cate[$groupid]['groupid']   = $groupid;
         $mod_cate[$groupid]['groupname'] = $name;
         $mod_cate[$groupid]['show_cate'] = in_array($dirname, $mod_arr);
         if ($mid and in_array($dirname, $mod_arr)) {
-            $cate = get_mod_cate($dirname, $name);
-            $mod_cate[$groupid]['cate_sn'] = $cate['sn'];
+            $cate                             = get_mod_cate($dirname, $name);
+            $mod_cate[$groupid]['cate_sn']    = $cate['sn'];
             $mod_cate[$groupid]['cate_title'] = $cate['title'];
             $mod_cate[$groupid]['cate_power'] = $cate['power'];
-            $mod_cate[$groupid]['file'] = $cate['file'];
-            $mod_cate[$groupid]['col'] = $cate['col'];
+            $mod_cate[$groupid]['file']       = $cate['file'];
+            $mod_cate[$groupid]['col']        = $cate['col'];
         } else {
-            $mod_cate[$groupid]['cate_sn'] = '';
+            $mod_cate[$groupid]['cate_sn']    = '';
             $mod_cate[$groupid]['cate_title'] = '';
             $mod_cate[$groupid]['cate_power'] = '';
-            $mod_cate[$groupid]['file'] = '';
-            $mod_cate[$groupid]['col'] = '';
+            $mod_cate[$groupid]['file']       = '';
+            $mod_cate[$groupid]['col']        = '';
         }
         //if($groupid==4)die(var_export($mod_cate));
     }
@@ -323,13 +293,13 @@ function get_group()
 {
     global $xoopsDB, $xoopsTpl, $mod_arr;
 
-    $sql = 'select `groupid`, `name` from ' . $xoopsDB->prefix('groups') . ' order by groupid';
+    $sql    = 'select `groupid`, `name` from ' . $xoopsDB->prefix('groups') . ' order by groupid';
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-    $group = [];
-    $i = 0;
+    $group  = [];
+    $i      = 0;
     while (list($groupid, $name) = $xoopsDB->fetchRow($result)) {
         $group[$i]['groupid'] = $groupid;
-        $group[$i]['name'] = $name;
+        $group[$i]['name']    = $name;
         $i++;
     }
 
@@ -360,8 +330,8 @@ function to_create_group($create_group = '')
 function mk_group($name = '')
 {
     global $xoopsDB;
-    $sql = 'select groupid from ' . $xoopsDB->prefix('groups') . " where `name`='$name'";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql           = 'select groupid from ' . $xoopsDB->prefix('groups') . " where `name`='$name'";
+    $result        = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     list($groupid) = $xoopsDB->fetchRow($result);
 
     if (empty($groupid)) {
@@ -384,11 +354,11 @@ function get_mod_cate($dirname = '', $group_name = '')
         return;
     }
 
-    $cate['sn'] = '';
+    $cate['sn']    = '';
     $cate['title'] = '-';
     $cate['power'] = '';
-    $cate['file'] = '';
-    $cate['col'] = '';
+    $cate['file']  = '';
+    $cate['col']   = '';
     if (file_exists(XOOPS_ROOT_PATH . "/modules/tad_guide/admin/setup/{$dirname}/function.php")) {
         require_once XOOPS_ROOT_PATH . "/modules/tad_guide/admin/setup/{$dirname}/function.php";
 
@@ -406,14 +376,14 @@ function backup_config($dirname = '', $mid = '')
     $myts = \MyTextSanitizer::getInstance();
 
     //檢查有無之前備份
-    $sql = 'select `act_date` from `' . $xoopsDB->prefix('tad_guide_backup') . "` where `act_kind`='config' and `kind_title`='{$dirname}'";
-    $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql            = 'select `act_date` from `' . $xoopsDB->prefix('tad_guide_backup') . "` where `act_kind`='config' and `kind_title`='{$dirname}'";
+    $result         = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     list($act_date) = $xoopsDB->fetchRow($result);
 
     if (empty($act_date)) {
         //撈取預設偏好設定
-        $sql = 'select * from `' . $xoopsDB->prefix('config') . "` where `conf_modid`='{$mid}'";
-        $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql            = 'select * from `' . $xoopsDB->prefix('config') . "` where `conf_modid`='{$mid}'";
+        $result         = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         $backup_content = [];
         while (false !== ($col = $xoopsDB->fetchArray($result))) {
             $syntax = [];
@@ -426,17 +396,17 @@ function backup_config($dirname = '', $mid = '')
         }
 
         //模組名稱部份
-        $sql = 'select name,weight from `' . $xoopsDB->prefix('modules') . "` where `mid`='{$mid}'";
-        $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql                 = 'select name,weight from `' . $xoopsDB->prefix('modules') . "` where `mid`='{$mid}'";
+        $result              = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         list($name, $weight) = $xoopsDB->fetchRow($result);
-        $backup_content[] = 'update `' . $xoopsDB->prefix('modules') . "` set `name`='$name',`weight`='$weight' where `mid`='{$mid}';";
+        $backup_content[]    = 'update `' . $xoopsDB->prefix('modules') . "` set `name`='$name',`weight`='$weight' where `mid`='{$mid}';";
 
         $backup_content = implode('##', $backup_content);
 
         //開始備份
-        $time = date('Y-m-d H:i:s');
+        $time           = date('Y-m-d H:i:s');
         $backup_content = $myts->addSlashes($backup_content);
-        $sql = 'replace into `' . $xoopsDB->prefix('tad_guide_backup') . "` (`act_kind`, `kind_title`, `act_date`, `backup_content`) values('config','{$dirname}','{$time}','{$backup_content}')";
+        $sql            = 'replace into `' . $xoopsDB->prefix('tad_guide_backup') . "` (`act_kind`, `kind_title`, `act_date`, `backup_content`) values('config','{$dirname}','{$time}','{$backup_content}')";
         $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     }
 }
@@ -448,8 +418,8 @@ function restore_config($dirname = '', $mid = '')
 
     $myts = \MyTextSanitizer::getInstance();
     //檢查有無之前備份
-    $sql = 'select `backup_content` from `' . $xoopsDB->prefix('tad_guide_backup') . "` where `act_kind`='config' and `kind_title`='{$dirname}'";
-    $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql                  = 'select `backup_content` from `' . $xoopsDB->prefix('tad_guide_backup') . "` where `act_kind`='config' and `kind_title`='{$dirname}'";
+    $result               = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     list($backup_content) = $xoopsDB->fetchRow($result);
 
     if (!empty($backup_content)) {
@@ -459,7 +429,7 @@ function restore_config($dirname = '', $mid = '')
                 $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
             }
         }
-        $sql = 'delete from `' . $xoopsDB->prefix('tad_guide_backup') . "` where `act_kind`='config' and `kind_title`='{$dirname}'";
+        $sql    = 'delete from `' . $xoopsDB->prefix('tad_guide_backup') . "` where `act_kind`='config' and `kind_title`='{$dirname}'";
         $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     }
 }
@@ -472,14 +442,14 @@ function backup_blocks($dirname = '', $mid = '')
     $myts = \MyTextSanitizer::getInstance();
 
     //檢查有無之前備份
-    $sql = 'select `act_date` from `' . $xoopsDB->prefix('tad_guide_backup') . "` where `act_kind`='blocks' and `kind_title`='{$dirname}'";
-    $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql            = 'select `act_date` from `' . $xoopsDB->prefix('tad_guide_backup') . "` where `act_kind`='blocks' and `kind_title`='{$dirname}'";
+    $result         = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     list($act_date) = $xoopsDB->fetchRow($result);
 
     if (empty($act_date)) {
         //撈取預設偏好設定
-        $sql = 'select * from `' . $xoopsDB->prefix('newblocks') . "` where `dirname`='{$dirname}' and `block_type`!='D' order by `func_num`";
-        $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql            = 'select * from `' . $xoopsDB->prefix('newblocks') . "` where `dirname`='{$dirname}' and `block_type`!='D' order by `func_num`";
+        $result         = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         $backup_content = '';
         while (false !== ($col = $xoopsDB->fetchArray($result))) {
             $syntax = [];
@@ -494,7 +464,7 @@ function backup_blocks($dirname = '', $mid = '')
 
         //開始備份
         $time = date('Y-m-d H:i:s');
-        $sql = 'replace into `' . $xoopsDB->prefix('tad_guide_backup') . "` (`act_kind`, `kind_title`, `act_date`, `backup_content`) values('blocks','{$dirname}','{$time}','{$backup_content}')";
+        $sql  = 'replace into `' . $xoopsDB->prefix('tad_guide_backup') . "` (`act_kind`, `kind_title`, `act_date`, `backup_content`) values('blocks','{$dirname}','{$time}','{$backup_content}')";
         $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     }
 }
@@ -507,8 +477,8 @@ function restore_blocks($dirname = '', $mid = '')
     // $myts = \MyTextSanitizer::getInstance();
 
     //檢查有無之前備份
-    $sql = 'select `backup_content` from `' . $xoopsDB->prefix('tad_guide_backup') . "` where `act_kind`='blocks' and `kind_title`='{$dirname}'";
-    $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql                  = 'select `backup_content` from `' . $xoopsDB->prefix('tad_guide_backup') . "` where `act_kind`='blocks' and `kind_title`='{$dirname}'";
+    $result               = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     list($backup_content) = $xoopsDB->fetchRow($result);
 
     if (!empty($backup_content)) {
@@ -560,7 +530,7 @@ function import_data($dirname, $act_kind, $mid = '0', $cate_sn = '0', $mode = ''
 {
     global $xoopsDB, $xoopsConfig;
 
-    $mid = (int) $mid;
+    $mid     = (int) $mid;
     $cate_sn = (int) $cate_sn;
 
     $myts = \MyTextSanitizer::getInstance();
@@ -590,13 +560,13 @@ function import_data($dirname, $act_kind, $mid = '0', $cate_sn = '0', $mode = ''
 
             //更新該區塊的顯示頁面
             $module_id_val = $new_data[$func_num]['side'] <= 1 ? 0 : -1;
-            $sql = 'update `' . $xoopsDB->prefix('block_module_link') . "` set `module_id`='{$module_id_val}' where `block_id`='$bid'";
+            $sql           = 'update `' . $xoopsDB->prefix('block_module_link') . "` set `module_id`='{$module_id_val}' where `block_id`='$bid'";
             $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
             //檢查群組可讀取權限
             for ($g = 1; $g <= 3; $g++) {
-                $sql = 'select `gperm_id` from `' . $xoopsDB->prefix('group_permission') . "` where `gperm_groupid`='$g'  and `gperm_itemid`='{$bid}' and `gperm_modid`='1' and `gperm_name`='block_read'";
-                $rr = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+                $sql            = 'select `gperm_id` from `' . $xoopsDB->prefix('group_permission') . "` where `gperm_groupid`='$g'  and `gperm_itemid`='{$bid}' and `gperm_modid`='1' and `gperm_name`='block_read'";
+                $rr             = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
                 list($gperm_id) = $xoopsDB->fetchRow($rr);
                 if (empty($gperm_id)) {
                     $sql = 'insert into `' . $xoopsDB->prefix('group_permission') . "` (`gperm_groupid`, `gperm_itemid`, `gperm_modid`, `gperm_name`) values('{$g}' , '{$bid}', '1', 'block_read')";
@@ -606,13 +576,13 @@ function import_data($dirname, $act_kind, $mid = '0', $cate_sn = '0', $mode = ''
 
             //找出該區塊的樣板設定
             $sql = 'select * from `' . $xoopsDB->prefix('tplfile') . "` where tpl_refid='$bid' and tpl_type='block'";
-            $r = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+            $r   = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
             $blockTpl = $xoopsDB->fetchArray($r);
 
             //找出該區塊的樣板
-            $sql = 'select `tpl_source` from `' . $xoopsDB->prefix('tplsource') . "` where tpl_id='{$blockTpl['tpl_id']}'";
-            $r = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+            $sql              = 'select `tpl_source` from `' . $xoopsDB->prefix('tplsource') . "` where tpl_id='{$blockTpl['tpl_id']}'";
+            $r                = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
             list($tpl_source) = $xoopsDB->fetchRow($r);
 
             //假設有要匯入該區塊的複製區塊
@@ -623,7 +593,7 @@ function import_data($dirname, $act_kind, $mid = '0', $cate_sn = '0', $mode = ''
 
                 //找出之前複製的區塊
                 $sql = 'select bid from `' . $xoopsDB->prefix('newblocks') . "` where `mid`='{$mid}' and `func_num`='{$func_num}' and `block_type`='D'";
-                $r = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+                $r   = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
                 while (list($copy_bid) = $xoopsDB->fetchRow($r)) {
                     //清除掉之前複製的區塊
@@ -651,24 +621,28 @@ function import_data($dirname, $act_kind, $mid = '0', $cate_sn = '0', $mode = ''
                 $new_copy_bid = $xoopsDB->getInsertId();
 
                 //複製區塊權限
-                $sql = ' INSERT INTO `' . $xoopsDB->prefix('group_permission') . "` (`gperm_groupid`, `gperm_itemid`, `gperm_modid`, `gperm_name`) VALUES
+                $tbl = $xoopsDB->prefix('group_permission');
+                $sql = "INSERT INTO `$tbl` (`gperm_groupid`, `gperm_itemid`, `gperm_modid`, `gperm_name`) VALUES
                 (1,  $new_copy_bid,  1,  'block_read'), (2,  $new_copy_bid,  1,  'block_read'),   (3,  $new_copy_bid,  1,  'block_read');";
                 $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
                 //設定區塊顯示位置
                 $module_id_val = $bb['side'] <= 1 ? 0 : -1;
-                $sql = ' INSERT INTO `' . $xoopsDB->prefix('block_module_link') . "` (`block_id`, `module_id`) VALUES
+                $tbl           = $xoopsDB->prefix('block_module_link');
+                $sql           = "INSERT INTO `$tbl` (`block_id`, `module_id`) VALUES
                 ('{$new_copy_bid}', '{$module_id_val}');";
                 $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
                 //複製區塊樣板設定
-                $sql = ' INSERT INTO `' . $xoopsDB->prefix('tplfile') . "` (`tpl_refid`, `tpl_module`, `tpl_tplset`, `tpl_file`, `tpl_desc`, `tpl_lastmodified`, `tpl_lastimported`, `tpl_type`) VALUES('{$new_copy_bid}' , '{$blockTpl['tpl_module']}' , '{$blockTpl['tpl_tplset']}' , '{$blockTpl['tpl_file']}' , '{$blockTpl['tpl_desc']}' , '{$blockTpl['tpl_lastmodified']}' , '{$blockTpl['tpl_lastimported']}' , '{$blockTpl['tpl_type']}')";
+                $tbl = $xoopsDB->prefix('tplfile');
+                $sql = "INSERT INTO `$tbl` (`tpl_refid`, `tpl_module`, `tpl_tplset`, `tpl_file`, `tpl_desc`, `tpl_lastmodified`, `tpl_lastimported`, `tpl_type`) VALUES('{$new_copy_bid}' , '{$blockTpl['tpl_module']}' , '{$blockTpl['tpl_tplset']}' , '{$blockTpl['tpl_file']}' , '{$blockTpl['tpl_desc']}' , '{$blockTpl['tpl_lastmodified']}' , '{$blockTpl['tpl_lastimported']}' , '{$blockTpl['tpl_type']}')";
                 $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
                 $tpl_id = $xoopsDB->getInsertId();
 
                 //複製區塊樣板
-                $sql = ' INSERT INTO `' . $xoopsDB->prefix('tplsource') . "` (`tpl_id`,`tpl_source`) VALUES('{$tpl_id}','{$tpl_source}')";
+                $tbl = $xoopsDB->prefix('tplsource');
+                $sql = "INSERT INTO `$tbl` (`tpl_id`,`tpl_source`) VALUES('{$tpl_id}','{$tpl_source}')";
                 $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
             }
         }
@@ -680,7 +654,7 @@ function import_data($dirname, $act_kind, $mid = '0', $cate_sn = '0', $mode = ''
         backup_config($dirname, $mid);
 
         //更新模組偏好設定
-        $sql = 'select `conf_name` from `' . $xoopsDB->prefix('config') . "` where `conf_modid`='{$mid}'";
+        $sql    = 'select `conf_name` from `' . $xoopsDB->prefix('config') . "` where `conf_modid`='{$mid}'";
         $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         while (list($conf_name) = $xoopsDB->fetchRow($result)) {
             $new_config_conf_name = $myts->addSlashes($new_config[$conf_name]);
@@ -741,7 +715,7 @@ function import_data($dirname, $act_kind, $mid = '0', $cate_sn = '0', $mode = ''
 
     if ($act_name) {
         $time = date('Y-m-d H:i:s');
-        $sql = 'replace into `' . $xoopsDB->prefix('tad_guide') . "` (`act_kind`, `kind_title`, `act_name`, `act_date`, `cate_sn`) values('{$act_kind}','{$dirname}','{$act_name}',now(),'{$cate_sn}')";
+        $sql  = 'replace into `' . $xoopsDB->prefix('tad_guide') . "` (`act_kind`, `kind_title`, `act_name`, `act_date`, `cate_sn`) values('{$act_kind}','{$dirname}','{$act_name}',now(),'{$cate_sn}')";
         $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     }
 }
@@ -751,8 +725,8 @@ function create_one_cate($mid = '', $groupid = '', $dirname = '')
 {
     global $xoopsDB, $xoopsConfig;
     if (file_exists(XOOPS_ROOT_PATH . "/modules/tad_guide/admin/setup/{$dirname}/{$xoopsConfig['language']}/cate.php")) {
-        $sql = 'select `name` from ' . $xoopsDB->prefix('groups') . " where groupid='{$groupid}'";
-        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql        = 'select `name` from ' . $xoopsDB->prefix('groups') . " where groupid='{$groupid}'";
+        $result     = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         list($name) = $xoopsDB->fetchRow($result);
 
         $create_cate[$groupid] = $name;
@@ -765,17 +739,15 @@ function add_perm($groupid = '', $insert_id = '', $mid = '', $perm_name = '')
 {
     global $xoopsDB;
 
-    $sql = 'select gperm_id from `' . $xoopsDB->prefix('group_permission') . "` where `gperm_groupid`='{$groupid}' and `gperm_itemid`='{$insert_id}' and `gperm_modid`='{$mid}' and `gperm_name`='{$perm_name}'";
-    $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql            = 'select gperm_id from `' . $xoopsDB->prefix('group_permission') . "` where `gperm_groupid`='{$groupid}' and `gperm_itemid`='{$insert_id}' and `gperm_modid`='{$mid}' and `gperm_name`='{$perm_name}'";
+    $result         = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     list($gperm_id) = $xoopsDB->fetchRow($result);
     if (!empty($gperm_id)) {
         return;
     }
 
-    $sql = 'INSERT INTO `' . $xoopsDB->prefix('group_permission') . "`
-  (`gperm_groupid`, `gperm_itemid`, `gperm_modid`, `gperm_name`)
-  VALUES
-  ('{$groupid}','{$insert_id}',  '{$mid}', '{$perm_name}')";
+    $tbl = $xoopsDB->prefix('group_permission');
+    $sql = "INSERT INTO `$tbl` (`gperm_groupid`, `gperm_itemid`, `gperm_modid`, `gperm_name`)  VALUES('{$groupid}','{$insert_id}',  '{$mid}', '{$perm_name}')";
     $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $gperm_id = $xoopsDB->getInsertId();
 
@@ -787,7 +759,7 @@ function content_get_backup($tbl = '')
 {
     global $xoopsDB;
 
-    $sql = 'select count(*) from ' . $xoopsDB->prefix("{$tbl}_gbak");
+    $sql    = 'select count(*) from ' . $xoopsDB->prefix("{$tbl}_gbak");
     $result = $xoopsDB->queryF($sql);
     if (!empty($result)) {
         return true;
@@ -809,9 +781,9 @@ function content_backup($dirname = '', $bak_table = [])
             $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
             $sql = '
-      INSERT INTO `' . $xoopsDB->prefix("{$bak['name']}_gbak") . '`
-      SELECT * from `' . $xoopsDB->prefix($bak['name']) . '`;
-      ';
+            INSERT INTO `' . $xoopsDB->prefix("{$bak['name']}_gbak") . '`
+            SELECT * from `' . $xoopsDB->prefix($bak['name']) . '`;
+            ';
             $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         }
     }
@@ -819,24 +791,24 @@ function content_backup($dirname = '', $bak_table = [])
 
 /*-----------執行動作判斷區----------*/
 require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$update_sn = system_CleanVars($_REQUEST, 'update_sn', 0, 'int');
-$file_link = system_CleanVars($_REQUEST, 'file_link', '', 'string');
-$dirname = system_CleanVars($_REQUEST, 'dirname', '', 'string');
-$act = system_CleanVars($_REQUEST, 'act', '', 'string');
-$kind_dir = system_CleanVars($_REQUEST, 'kind_dir', '', 'string');
-$ssh_id = system_CleanVars($_REQUEST, 'ssh_id', '', 'string');
-$ssh_passwd = system_CleanVars($_REQUEST, 'ssh_passwd', '', 'string');
-$ssh_host = system_CleanVars($_REQUEST, 'ssh_host', '', 'string');
-$ftp_id = system_CleanVars($_REQUEST, 'ftp_id', '', 'string');
-$ftp_passwd = system_CleanVars($_REQUEST, 'ftp_passwd', '', 'string');
-$ftp_host = system_CleanVars($_REQUEST, 'ftp_host', '', 'string');
-$act_kind = system_CleanVars($_REQUEST, 'act_kind', '', 'string');
+$op           = system_CleanVars($_REQUEST, 'op', '', 'string');
+$update_sn    = system_CleanVars($_REQUEST, 'update_sn', 0, 'int');
+$file_link    = system_CleanVars($_REQUEST, 'file_link', '', 'string');
+$dirname      = system_CleanVars($_REQUEST, 'dirname', '', 'string');
+$act          = system_CleanVars($_REQUEST, 'act', '', 'string');
+$kind_dir     = system_CleanVars($_REQUEST, 'kind_dir', '', 'string');
+$ssh_id       = system_CleanVars($_REQUEST, 'ssh_id', '', 'string');
+$ssh_passwd   = system_CleanVars($_REQUEST, 'ssh_passwd', '', 'string');
+$ssh_host     = system_CleanVars($_REQUEST, 'ssh_host', '', 'string');
+$ftp_id       = system_CleanVars($_REQUEST, 'ftp_id', '', 'string');
+$ftp_passwd   = system_CleanVars($_REQUEST, 'ftp_passwd', '', 'string');
+$ftp_host     = system_CleanVars($_REQUEST, 'ftp_host', '', 'string');
+$act_kind     = system_CleanVars($_REQUEST, 'act_kind', '', 'string');
 $act_kind_arr = system_CleanVars($_REQUEST, 'act_kind_arr', '', 'array');
-$hl = system_CleanVars($_REQUEST, 'hl', '', 'string');
-$mid = system_CleanVars($_REQUEST, 'mid', 0, 'int');
-$groupid = system_CleanVars($_REQUEST, 'groupid', 0, 'int');
-$cate_sn = system_CleanVars($_REQUEST, 'cate_sn', 0, 'int');
+$hl           = system_CleanVars($_REQUEST, 'hl', '', 'string');
+$mid          = system_CleanVars($_REQUEST, 'mid', 0, 'int');
+$groupid      = system_CleanVars($_REQUEST, 'groupid', 0, 'int');
+$cate_sn      = system_CleanVars($_REQUEST, 'cate_sn', 0, 'int');
 
 switch ($op) {
     /*---判斷動作請貼在下方---*/
@@ -844,21 +816,19 @@ switch ($op) {
     case 'one_key':
         one_key($dirname, $mid);
         break;
-    case 'install_module':
-        to_do($file_link, $dirname, 'install_module', $update_sn);
+
+    case "ssh_login":
+        OnlineUpgrade::ssh_login($ssh_host, $ssh_id, $ssh_passwd, $file_link, $dirname, $act, $update_sn, $xoops_sn);
         break;
-    case 'update_module':
-        to_do($file_link, $dirname, 'update_module', $update_sn);
+
+    case "install_module":
+        OnlineUpgrade::to_do($file_link, $dirname, "install_module", $update_sn);
         break;
-    case 'ssh_login':
-        ssh_login($ssh_host, $ssh_id, $ssh_passwd, $file_link, $dirname, $act, $update_sn);
+
+    case "upgrade_module":
+        OnlineUpgrade::to_do($file_link, $dirname, "upgrade_module", $update_sn);
         break;
-    case 'install_theme':
-        install_module($file_link, $dirname, 'install', $update_sn, 'themes');
-        break;
-    case 'update_theme':
-        install_module($file_link, $dirname, 'update', $update_sn, 'themes');
-        break;
+
     case 'to_create_group':
         to_create_group($_POST['create_group']);
         redirect_header('main.php', 3, _MA_GUIDE_CREATE_GROUP_OK);

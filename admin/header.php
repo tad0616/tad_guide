@@ -16,7 +16,7 @@
  **/
 include dirname(__DIR__) . '/preloads/autoloader.php';
 
-require  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 
 xoops_loadLanguage('main', $xoopsModule->getVar('dirname'));
 
@@ -29,5 +29,7 @@ xoops_cp_header();
 
 // Define Stylesheet and JScript
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/css/admin.css');
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/tad_guide/css/module.css');
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/font-awesome/css/font-awesome.css');
 //$xoTheme->addScript("browse.php?Frameworks/jquery/jquery.js");
 //$xoTheme->addScript("browse.php?modules/" . $xoopsModule->getVar("dirname") . "/js/admin.js");

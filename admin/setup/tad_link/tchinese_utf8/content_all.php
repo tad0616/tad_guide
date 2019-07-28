@@ -1,5 +1,6 @@
 <?php
 use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tad_guide\DunZip2;
 
 function tad_link_content($cate_sn = '')
 {
@@ -10,8 +11,8 @@ function tad_link_content($cate_sn = '')
 
     uzip_file();
 
-    $sql = 'select max(cate_sort) from `' . $xoopsDB->prefix('tad_link_cate') . '`';
-    $result = $xoopsDB->query($sql);
+    $sql            = 'select max(cate_sort) from `' . $xoopsDB->prefix('tad_link_cate') . '`';
+    $result         = $xoopsDB->query($sql);
     list($max_sort) = $xoopsDB->fetchRow($result);
 
     $max_sort++;
@@ -67,10 +68,8 @@ function uzip_file()
     //設置上傳大小
     ini_set('memory_limit', '100M');
 
-    require_once XOOPS_ROOT_PATH . '/modules/tad_guide/class/dunzip2/dUnzip2.inc.php';
-    require_once XOOPS_ROOT_PATH . '/modules/tad_guide/class/dunzip2/dZip.inc.php';
     copy(XOOPS_ROOT_PATH . '/modules/tad_guide/admin/setup/tad_link/tad_link.zip', XOOPS_ROOT_PATH . '/uploads/tad_link/tad_link.zip');
-    $zip = new dUnzip2(XOOPS_ROOT_PATH . '/uploads/tad_link/tad_link.zip');
+    $zip = new DunZip2(XOOPS_ROOT_PATH . '/uploads/tad_link/tad_link.zip');
     $zip->getList();
     $zip->unzipAll(XOOPS_ROOT_PATH . '/uploads/tad_link/');
 }
