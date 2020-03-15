@@ -1,4 +1,18 @@
-Tad gudie 1.5 (released from 2019-05-10)
+Tad gudie 1.8 (2020-03-15 released)
+====================================================
+1. Modify the tadnews block settings
+2. corrected for 2.0 AA accessibility standards
+
+Tad gudie 1.7 (2019-08-21 released)
+================================================
+1.Modify tadnews block settings
+2.Modify tadtools block settings
+
+Tad gudie 1.6 (2019-07-28 released)
+=========================================================
+1. Fix the problem that the content cannot be imported
+
+Tad gudie 1.5 (2019-05-10 released)
 =========================================================
 1. Modify tadgallery block settings
 2. Remove the phpseclib suite

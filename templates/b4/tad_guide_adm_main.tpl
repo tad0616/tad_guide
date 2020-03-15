@@ -111,7 +111,7 @@
                     <a href="https://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=<{$mod.module_sn}>" target="_blank"><{$mod.name}></a>
                     <div>
                         <{if $mod.function=='latest' or $mod.function=='upgrade'}>
-                            <{$mod_dirname}> <{$mod.now_version}>          
+                            <{$mod_dirname}> <{$mod.now_version}>
                         <{else}>
                             <{$mod_dirname}> <{$mod.new_version}>
                         <{/if}>
@@ -120,7 +120,7 @@
 
                 <td nowrap>
                     <{if $mod.function=='unable'}>
-                        <div style="font-size:11pt;line-height: 1.5;">
+                        <div style="font-size:0.92em;line-height: 1.5;">
                             <span style="color:rgb(156, 13, 13)"><{$mod.status}></span>
                             <a href="https://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=<{$mod.module_sn}>" title="<{$mod.dirname}>">
                                 <{$mod.name}>
@@ -137,7 +137,7 @@
                                 <{$mod.dirname}> <{$mod.new_version}>
                             <{/if}>
                         </a>
-        
+
                     <{elseif $mod.function=='install'}>
                         <a href="main.php?op=install_<{$mod.kind}>&dirname=<{$mod.dirname}>&file_link=<{$mod.file_link}>&update_sn=<{$mod.update_sn}>&tad_adm_tpl=clean" class="modulesadmin install_btn" title="<{$mod.dirname}> <{$mod.now_version}> (<{$mod.last_update}>) to <{$mod.new_version}> (<{$mod.new_last_update}>)" data-fancybox-type="iframe">
                         <{$smarty.const._MA_GUIDE_MOD_INSTALL_MODULE}>

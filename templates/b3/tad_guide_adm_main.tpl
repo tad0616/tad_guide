@@ -109,7 +109,7 @@
                         <a href="https://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=<{$mod.module_sn}>" target="_blank"><{$mod.name}></a>
                         <div>
                         <{if $mod.function=='latest' or $mod.function=='upgrade'}>
-                            <{$mod_dirname}> <{$mod.now_version}>          
+                            <{$mod_dirname}> <{$mod.now_version}>
                         <{else}>
                             <{$mod_dirname}> <{$mod.new_version}>
                         <{/if}>
@@ -118,7 +118,7 @@
 
                     <td nowrap>
                         <{if $mod.function=='unable'}>
-                            <div style="font-size:11pt;line-height: 1.5;">
+                            <div style="font-size:0.92em;line-height: 1.5;">
                                 <span style="color:rgb(156, 13, 13)"><{$mod.status}></span>
                                 <a href="https://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=<{$mod.module_sn}>" title="<{$mod.dirname}>">
                                     <{$mod.name}>
