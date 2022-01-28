@@ -2,7 +2,7 @@
 //文章類別
 $new_data[1] = array('options' => '', 'title' => '文章類別', 'side' => '0', 'weight' => '2', 'visible' => '0');
 //本站最新消息
-$new_data[2] = array('options' => '5|99|color:gray; font-size:0.8em; margin-top:3px; line-height:180%;|0|1|width:80px;height:60px;float:left;border:0px solid #9999CC;margin:0px 4px 4px 0px;overflow:hidden;background-size:cover;|0|', 'title' => '本站最新消息[pic]images/newstitle.png', 'side' => '5', 'weight' => '9', 'visible' => '0');
+$new_data[2] = array('options' => '5|99|color: #707070; font-size: 0.95rem; margin-top:3px; line-height:150%; white-space: pre-line;|0|1|width:80px;height:60px;float:left;border:0px solid #9999CC;margin:0px 4px 4px 0px;overflow:hidden;background-size:cover;|0|', 'title' => '本站最新消息[pic]images/newstitle.png', 'side' => '5', 'weight' => '9', 'visible' => '0');
 //最新回應
 $new_data[3] = array('options' => '10|160', 'title' => '最新回應', 'side' => '9', 'weight' => '1', 'visible' => '0');
 //訂閱 / 取消電子報

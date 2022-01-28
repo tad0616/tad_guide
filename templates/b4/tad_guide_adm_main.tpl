@@ -3,7 +3,7 @@
         <h2><{$smarty.const._MA_GUIDE_SSH_ID}></h2>
         <div class="card card-body bg-light m-1">
             <form action="main.php" method="post" role="form">
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label class="col-sm-3 col-form-label text-sm-right">
                 <{$smarty.const._MA_GUIDE_SSH_ID}><{$smarty.const._TAD_FOR}>
                 </label>
@@ -11,7 +11,7 @@
                 <input type="text" name="ssh_id" placeholder="<{$smarty.const._MA_GUIDE_SSH_ID}>" class="form-control" value="<{$tad_adm_ssh_id}>">
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label class="col-sm-3 col-form-label text-sm-right">
                 <{$smarty.const._MA_GUIDE_SSH_PASS}><{$smarty.const._TAD_FOR}>
                 </label>
@@ -63,7 +63,7 @@
         </script>
 
         <form action="main.php" method="post" role="form">
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <div class="col-sm-2">
                     <select id="group_kind" class="form-control">
                         <option value="custom"><{$smarty.const._MA_GUIDE_CUSTOM}></option>
@@ -78,7 +78,7 @@
                     <input type="text" name="create_group" id="create_group" value="" class="form-control" placeholder="<{$smarty.const._MA_GUIDE_CREATE_GROUP_PLACEHOLDER}>">
                     <input type="hidden" name="op" value="to_create_group">
                 </div>
-                <div class="col-sm-1">
+                <div class="col-sm-1 d-grid gap-2">
                     <button type="submit" class="btn btn-block btn-primary"><{$smarty.const._MA_GUIDE_CREATE}></button>
                 </div>
             </div>
