@@ -1,5 +1,5 @@
 <?php
-// $new_config['show_kind']='0';
+$new_config['show_amount'] = '1';
 
-$mod_config['name'] = '校內填報';
-$mod_config['weight'] = '12';
+$mod_config['name'] = '萬用表單';
+$mod_config['weight'] = '13';

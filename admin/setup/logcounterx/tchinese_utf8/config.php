@@ -1,5 +1,4 @@
 <?php
-// $new_config['use_pda']='1';
 
-$mod_config['name'] = '流量統計';
-$mod_config['weight'] = '22';
+$mod_config['name'] = '網站計數器';
+$mod_config['weight'] = '0';

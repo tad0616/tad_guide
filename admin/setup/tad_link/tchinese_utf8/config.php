@@ -5,5 +5,5 @@ $new_config['direct_link'] = '0';
 $new_config['facebook_comments_width'] = '0';
 $new_config['use_social_tools'] = '0';
 
-$mod_config['name'] = '常用網站';
-$mod_config['weight'] = '6';
+$mod_config['name'] = '好站連結';
+$mod_config['weight'] = '9';

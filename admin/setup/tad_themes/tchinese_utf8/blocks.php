@@ -1,11 +1,9 @@
 <?php
 //佈景首頁滑動區塊
-$new_data[1] = ['options' => '', 'title' => '佈景首頁滑動區塊[hide]', 'side' => '5', 'weight' => '0', 'visible' => '0'];
+$new_data[1] = ['options' => '', 'title' => '佈景首頁滑動區塊[hide]', 'side' => '5', 'weight' => '2', 'visible' => '0'];
 //上方隱藏選單
-$new_data[2] = ['options' => '', 'title' => '上方隱藏選單[hide]', 'side' => '0', 'weight' => '17', 'visible' => '0'];
+$new_data[2] = ['options' => '', 'title' => '上方隱藏選單', 'side' => '0', 'weight' => '18', 'visible' => '0'];
 //垂直BootStrap選單
-$new_data[3] = ['options' => '', 'title' => '垂直BootStrap選單[hide]', 'side' => '0', 'weight' => '1', 'visible' => '0'];
+$new_data[3] = ['options' => '1,16,30,45', 'title' => '垂直BootStrap選單', 'side' => '0', 'weight' => '27', 'visible' => '0'];
 //垂直選單
-$new_data[4] = ['options' => '1,12,13,5,14,11,16,17|0', 'title' => '垂直選單[hide]', 'side' => '0', 'weight' => '2', 'visible' => '1'];
-
-//select CONCAT('//',`name`,'\\n\$new_data[',`func_num`,'] = array(\'options\' => \'',`options`,'\', \'title\' => \'',`title`,'\', \'side\' => \'',`side`,'\', \'weight\' => \'',`weight`,'\', \'visible\' => \'',`visible`,'\');')from `xx_newblocks` where `dirname`='tad_themes' and `block_type`!='D' order by `func_num`
+$new_data[4] = ['options' => '|0', 'title' => '垂直選單', 'side' => '0', 'weight' => '28', 'visible' => '0'];

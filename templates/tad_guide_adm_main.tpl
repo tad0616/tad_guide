@@ -85,31 +85,31 @@
         </form>
 
         <table id="list_modules" class="table table-bordered table-hover" style="width:auto;">
-        <thead>
+        <thead class="bg-secondary">
             <tr>
-            <th><{$smarty.const._MA_GUIDE_MODULES_COL}></th>
-            <th><{$smarty.const._MA_GUIDE_INSTALL_COL}></th>
-            <th><{$smarty.const._MA_GUIDE_ONE_KEY}></th>
-            <th><{$smarty.const._MA_GUIDE_CONFIG_COL}></th>
-            <th><{$smarty.const._MA_GUIDE_CONTENT_COL}></th>
-            <th><{$smarty.const._MA_GUIDE_BLOCKS_COL}></th>
-            <{foreach from=$group item=g}>
-            <{if $g.groupid > 3}>
-                <th style="text-align:center;background-color:#6C873D;">
-                <{$g.name}>
-                </th>
-            <{/if}>
-            <{/foreach}>
+                <th><{$smarty.const._MA_GUIDE_MODULES_COL}></th>
+                <th><{$smarty.const._MA_GUIDE_INSTALL_COL}></th>
+                <th><{$smarty.const._MA_GUIDE_ONE_KEY}></th>
+                <th><{$smarty.const._MA_GUIDE_CONFIG_COL}></th>
+                <th><{$smarty.const._MA_GUIDE_CONTENT_COL}></th>
+                <th><{$smarty.const._MA_GUIDE_BLOCKS_COL}></th>
+                <{foreach from=$group item=g}>
+                    <{if $g.groupid > 3}>
+                        <th style="text-align:center;background-color:#6C873D;">
+                        <{$g.name}>
+                        </th>
+                    <{/if}>
+                <{/foreach}>
             </tr>
         </thead>
         <tbody>
             <{foreach from=$all_data key=mod_dirname item=mod}>
-                <tr <{if $mod_dirname==$hl and $hl!=""}>style="background-color:yellow;"<{/if}>>
+                <tr <{if $mod_dirname==$hl and $hl!=""}>style="background-color: #ffffaa;"<{/if}>>
 
                 <td>
                     <a name="<{$mod_dirname}>"><img src="<{$mod.logo}>" style="float:left; margin-right:6px;"></a>
                     <a href="https://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=<{$mod.module_sn}>" target="_blank"><{$mod.name}></a>
-                    <div>
+                    <div class="my-1">
                         <{if $mod.function=='latest' or $mod.function=='upgrade'}>
                             <{$mod_dirname}> <{$mod.now_version}>
                         <{else}>
@@ -146,7 +146,7 @@
                 </td>
 
 
-                <td nowrap>
+                <td class="text-center" nowrap>
                     <{if $mod.function!='install'}>
                     <{if ($act_log.$mod_dirname.config=='' and $log.$mod_dirname.config_exists) or ($act_log.$mod_dirname.content_all=='' and $log.$mod_dirname.content_all_exists) or ($act_log.$mod_dirname.blocks=='' and $log.$mod_dirname.blocks_file_exists)}>
                         <a href="main.php?op=one_key&dirname=<{$mod_dirname}>&mid=<{$mod.mid}>" alt="<{$smarty.const._MA_GUIDE_ONE_KEY}>" title="<{$smarty.const._MA_GUIDE_ONE_KEY}>" class="btn btn-sm btn-primary onekey" data-fancybox-type="iframe"><i class="fa fa-hand-o-up"></i></a>
@@ -156,7 +156,7 @@
                     <{/if}>
                 </td>
 
-                <td style="text-align:center;">
+                <td class="text-center">
                     <{if $log.$mod_dirname.config_exists and $mod.function!='install'}>
                     <{if $act_log.$mod_dirname.config}>
                         <a href="main.php?op=import_data&dirname=<{$mod_dirname}>&act_kind=config&mid=<{$mod.mid}>" class="btn btn-sm btn-success" alt="<{$smarty.const._MA_GUIDE_RE_IMPORT_CONFIG}><{$log.$mod_dirname.config}>" title="<{$smarty.const._MA_GUIDE_RE_IMPORT_CONFIG}><{$log.$mod_dirname.config}>"><i class="fa fa-cog"></i></a>
@@ -172,7 +172,7 @@
                     <{/if}>
                 </td>
 
-                <td style="text-align:center;">
+                <td class="text-center">
                     <{if $log.$mod_dirname.content_all_exists and $mod.function!='install'}>
                     <{if $act_log.$mod_dirname.content_all}>
                         <a href="main.php?op=import_data&dirname=<{$mod_dirname}>&act_kind=content_all&mid=<{$mod.mid}>" class="btn btn-sm btn-success" alt="<{$smarty.const._MA_GUIDE_RE_IMPORT_CONTENT}><{$log.$mod_dirname.content_all}>" title="<{$smarty.const._MA_GUIDE_RE_IMPORT_CONTENT}><{$log.$mod_dirname.content_all}>"><i class="fa fa-cloud-download"></i></a>
@@ -186,7 +186,7 @@
                     <{/if}>
                 </td>
 
-                <td style="text-align:center;">
+                <td class="text-center">
                     <{if $log.$mod_dirname.blocks_file_exists and $mod.function!='install'}>
                     <{if $act_log.$mod_dirname.blocks}>
                         <a href="main.php?op=import_data&dirname=<{$mod_dirname}>&act_kind=blocks" class="btn btn-sm btn-success" alt="<{$smarty.const._MA_GUIDE_RE_IMPORT_BLOCKS}><{$log.$mod_dirname.blocks}>" title="<{$smarty.const._MA_GUIDE_RE_IMPORT_BLOCKS}><{$log.$mod_dirname.blocks}>"><i class="fa fa-arrow-down"></i></a>
@@ -211,7 +211,9 @@
                     <{if $groupid > 3}>
                     <{if $cates.cate_title}>
                         <td style="text-align:center;background-color:#F1F2F0;">
-                        <div><a href="<{$xoops_url}>/modules/<{$cates.dirname}>/<{$cates.file}>?<{$cates.col}>=<{$cates.cate_sn}>"><{$cates.cate_title}></a></div>
+                        <div class="my-1">
+                            <a href="<{$xoops_url}>/modules/<{$cates.dirname}>/<{$cates.file}>?<{$cates.col}>=<{$cates.cate_sn}>"><{$cates.cate_title}></a>
+                        </div>
                         <{if $log.$mod_dirname.content_exists and $mod.function!='install'}>
                             <{if $mod_c.$c_sn}>
                             <a href="main.php?op=import_data&dirname=<{$mod_dirname}>&act_kind=content&mid=<{$mod.mid}>&cate_sn=<{$cates.cate_sn}>" class="btn btn-sm btn-success" alt="<{$smarty.const._MA_GUIDE_RE_IMPORT_CONTENT}><{$mod_c.$c_sn}>" title="<{$smarty.const._MA_GUIDE_RE_IMPORT_CONTENT}><{$mod_c.$c_sn}>"><i class="fa fa-cloud-download"></i></a>

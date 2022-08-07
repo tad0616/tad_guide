@@ -1,7 +1,9 @@
-Tad gudie 1.9 (2022-01-28 released)
+Tad gudie 1.9 (2022-02-01 released)
 =================================================
 1.Support BootStrap5
 2.Remove unnecessary templates
+3.Add several module settings
+4.Update all module settings
 
 Tad gudie 1.8 (2020-03-15 released)
 ====================================================
