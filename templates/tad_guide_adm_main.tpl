@@ -166,7 +166,7 @@
                         <a href="main.php?op=import_data&dirname=<{$mod_dirname}>&act_kind=config&mid=<{$mod.mid}>" class="btn btn-sm btn-info " alt="<{$smarty.const._MA_GUIDE_IMPORT_CONFIG}>" title="<{$smarty.const._MA_GUIDE_IMPORT_CONFIG}>"><i class="fa fa-cog"></i></a>
                     <{/if}>
                     <{elseif $log.$mod_dirname.config_exists}>
-                    <img src="<{xoAppUrl modules/tad_guide/images/1.gif}>" alt="<{$smarty.const._MA_GUIDE_CONFIG_EXIST}>" title="<{$smarty.const._MA_GUIDE_CONFIG_EXIST}>">
+                    <img src="<{$xoops_url}>/modules/tad_guide/images/1.gif" alt="<{$smarty.const._MA_GUIDE_CONFIG_EXIST}>" title="<{$smarty.const._MA_GUIDE_CONFIG_EXIST}>">
                     <{else}>
 
                     <{/if}>
@@ -182,7 +182,7 @@
                         <a href="main.php?op=import_data&dirname=<{$mod_dirname}>&act_kind=content_all&mid=<{$mod.mid}>" class="btn btn-sm btn-info " alt="<{$smarty.const._MA_GUIDE_IMPORT_CONTENT}>" title="<{$smarty.const._MA_GUIDE_IMPORT_CONTENT}>"><i class="fa fa-cloud-download"></i></a>
                     <{/if}>
                     <{elseif $log.$mod_dirname.content_all_exists}>
-                    <img src="<{xoAppUrl modules/tad_guide/images/1.gif}>" alt="<{$smarty.const._MA_GUIDE_CONTENT_EXIST}>" title="<{$smarty.const._MA_GUIDE_CONTENT_EXIST}>">
+                    <img src="<{$xoops_url}>/modules/tad_guide/images/1.gif" alt="<{$smarty.const._MA_GUIDE_CONTENT_EXIST}>" title="<{$smarty.const._MA_GUIDE_CONTENT_EXIST}>">
                     <{/if}>
                 </td>
 
@@ -196,7 +196,7 @@
                         <a href="main.php?op=import_data&dirname=<{$mod_dirname}>&act_kind=blocks" class="btn btn-sm btn-info " alt="<{$smarty.const._MA_GUIDE_IMPORT_BLOCKS}>" title="<{$smarty.const._MA_GUIDE_IMPORT_BLOCKS}>"><i class="fa fa-arrow-down"></i></a>
                     <{/if}>
                     <{elseif $log.$mod_dirname.blocks_file_exists}>
-                    <img src="<{xoAppUrl modules/tad_guide/images/1.gif}>" alt="<{$smarty.const._MA_GUIDE_BLOCKS_EXIST}>" title="<{$smarty.const._MA_GUIDE_BLOCKS_EXIST}>">
+                    <img src="<{$xoops_url}>/modules/tad_guide/images/1.gif" alt="<{$smarty.const._MA_GUIDE_BLOCKS_EXIST}>" title="<{$smarty.const._MA_GUIDE_BLOCKS_EXIST}>">
                     <{/if}>
 
 
@@ -221,7 +221,7 @@
                             <a href="main.php?op=import_data&dirname=<{$mod_dirname}>&act_kind=content&mid=<{$mod.mid}>&cate_sn=<{$cates.cate_sn}>" class="btn btn-sm btn-info " alt="<{$smarty.const._MA_GUIDE_IMPORT_CONTENT}>" title="<{$smarty.const._MA_GUIDE_IMPORT_CONTENT}>"><i class="fa fa-cloud-download"></i></a>
                             <{/if}>
                         <{elseif $log.$mod_dirname.content_exists and $mod.function=='install'}>
-                            <img src="<{xoAppUrl modules/tad_guide/images/1.gif}>" alt="<{$smarty.const._MA_GUIDE_CONTENT_EXIST}>" title="<{$smarty.const._MA_GUIDE_CONTENT_EXIST}>">
+                            <img src="<{$xoops_url}>/modules/tad_guide/images/1.gif" alt="<{$smarty.const._MA_GUIDE_CONTENT_EXIST}>" title="<{$smarty.const._MA_GUIDE_CONTENT_EXIST}>">
                         <{/if}>
                         </td>
                     <{elseif $cates.mid and $cates.show_cate}>

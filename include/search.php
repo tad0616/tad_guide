@@ -7,7 +7,7 @@ function 搜尋函數名稱($queryarray, $andor, $limit, $offset, $userid)
     $myts = \MyTextSanitizer::getInstance();
     if (is_array($queryarray)) {
         foreach ($queryarray as $k => $v) {
-            $arr[$k] = $myts->addSlashes($v);
+            $arr[$k] = $xoopsDB->escape($v);
         }
         $queryarray = $arr;
     } else {

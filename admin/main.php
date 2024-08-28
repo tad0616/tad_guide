@@ -405,7 +405,7 @@ function backup_config($dirname = '', $mid = '')
 
         //開始備份
         $time = date('Y-m-d H:i:s');
-        $backup_content = $myts->addSlashes($backup_content);
+        $backup_content = $xoopsDB->escape($backup_content);
         $sql = 'replace into `' . $xoopsDB->prefix('tad_guide_backup') . "` (`act_kind`, `kind_title`, `act_date`, `backup_content`) values('config','{$dirname}','{$time}','{$backup_content}')";
         $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     }
@@ -460,7 +460,7 @@ function backup_blocks($dirname = '', $mid = '')
 
             $backup_content .= 'update `' . $xoopsDB->prefix('newblocks') . "` set {$all_syntax} where `bid`='{$col['bid']}';\n";
         }
-        $backup_content = $myts->addSlashes($backup_content);
+        $backup_content = $xoopsDB->escape($backup_content);
 
         //開始備份
         $time = date('Y-m-d H:i:s');
@@ -482,7 +482,7 @@ function restore_blocks($dirname = '', $mid = '')
     list($backup_content) = $xoopsDB->fetchRow($result);
 
     if (!empty($backup_content)) {
-        // $backup_content = $myts->addSlashes($backup_content); 語法會錯
+        // $backup_content = $xoopsDB->escape($backup_content); 語法會錯
 
         $sql_arr = explode("\n", $backup_content);
         // die(var_dump($sql_arr));
@@ -657,7 +657,7 @@ function import_data($dirname, $act_kind, $mid = '0', $cate_sn = '0', $mode = ''
         $sql = 'select `conf_name` from `' . $xoopsDB->prefix('config') . "` where `conf_modid`='{$mid}'";
         $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         while (list($conf_name) = $xoopsDB->fetchRow($result)) {
-            $new_config_conf_name = $myts->addSlashes($new_config[$conf_name]);
+            $new_config_conf_name = $xoopsDB->escape($new_config[$conf_name]);
 
             $update_sql = 'update `' . $xoopsDB->prefix('config') . "` set `conf_value`='{$new_config_conf_name}' where `conf_name`='$conf_name' and `conf_modid`='{$mid}'";
             $xoopsDB->queryF($update_sql) or die($update_sql . '<br>' . $xoopsDB->error() . '<br>' . __FILE__ . ':' . __LINE__);
