@@ -209,7 +209,7 @@
                     <{assign var="c_sn" value=$cates.cate_sn}>
 
                     <{if $groupid > 3}>
-                    <{if $cates.cate_title}>
+                    <{if $cates.cate_title|default:false}>
                         <td style="text-align:center;background-color:#F1F2F0;">
                         <div class="my-1">
                             <a href="<{$xoops_url}>/modules/<{$cates.dirname}>/<{$cates.file}>?<{$cates.col}>=<{$cates.cate_sn}>"><{$cates.cate_title}></a>
