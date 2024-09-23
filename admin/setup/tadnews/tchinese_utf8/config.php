@@ -14,7 +14,6 @@ $new_config['creat_cate_group'] = 'a:2:{i:0;s:1:"7";i:1;s:1:"8";}';
 $new_config['use_top_group'] = 'a:2:{i:0;s:1:"7";i:1;s:1:"8";}';
 $new_config['top_max_day'] = '14';
 $new_config['summary_lengths'] = '100';
-$new_config['facebook_comments_width'] = '0';
 $new_config['use_pda'] = '0';
 $new_config['use_social_tools'] = '0';
 $new_config['use_star_rating'] = '0';
@@ -23,8 +22,5 @@ $new_config['upload_deny'] = '';
 $new_config['show_next_btn'] = '1';
 $new_config['show_rss'] = '0';
 $new_config['use_table_shadow'] = '1';
-$new_config['com_rule'] = '0';
-$new_config['com_anonpost'] = '0';
-
 $mod_config['name'] = '本校消息';
 $mod_config['weight'] = '1';
