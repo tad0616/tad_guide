@@ -10,8 +10,9 @@ $suffix = '影片';
 // $b2=mt_rand( 50, 255 );
 // $b3=mt_rand( 50, 255 );
 
-$sql = 'select max(sort) from `' . $xoopsDB->prefix('tad_player_cate') . '`';
-$result = $xoopsDB->query($sql);
+$sql = 'SELECT MAX(`sort`) FROM `' . $xoopsDB->prefix('tad_player_cate') . '`';
+$result = Utility::query($sql);
+
 list($max_sort) = $xoopsDB->fetchRow($result);
 
 $read_perm_name = '';
@@ -20,11 +21,12 @@ $post_perm_name = '';
 foreach ($create_cate as $groupid => $cate_name) {
     $max_sort++;
 
-    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_player_cate') . "`
-  (`of_csn`, `title`, `enable_group`, `enable_upload_group`, `sort`, `width`, `height`)
-  VALUES
-  (0,'{$prefix}{$cate_name}{$suffix}', '', '1,$groupid', '{$max_sort}', '640', '480')";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_player_cate') . '`
+    (`of_csn`, `title`, `enable_group`, `enable_upload_group`, `sort`, `width`, `height`)
+    VALUES
+    (0, ?, ?, ?, ?, ?, ?)';
+    $result = Utility::query($sql, 'sssiii', ["{$prefix}{$cate_name}{$suffix}", '', "1,$groupid", $max_sort, 640, 480]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     $insert_id = $xoopsDB->getInsertId();
 
     if (!empty($read_perm_name)) {

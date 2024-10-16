@@ -7,25 +7,27 @@ function tad_gphotos_content($csn = '')
 
     $uid = $xoopsUser->uid();
     if (empty($csn)) {
-        $sql = 'select max(sort) from `' . $xoopsDB->prefix('tad_gphotos_cate') . '`';
-        $result = $xoopsDB->query($sql);
+        $sql = 'SELECT MAX(`sort`) FROM `' . $xoopsDB->prefix('tad_gphotos_cate') . '`';
+        $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+
         list($max_sort) = $xoopsDB->fetchRow($result);
 
         $max_sort++;
 
-        $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_gphotos_cate') . "`
-            (`of_csn`, `sort`, `title`, `description`)
-            VALUES
-            (0, '{$max_sort}', '其他',  '其他圖庫')";
-        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_gphotos_cate') . '`
+        (`of_csn`, `sort`, `title`, `description`)
+        VALUES
+        (0, ?, ?, ?)';
+        Utility::query($sql, 'iss', [$max_sort, '其他', '其他圖庫']) or Utility::web_error($sql, __FILE__, __LINE__);
+
         $csn = $xoopsDB->getInsertId();
 
     }
 
-    $sql = "INSERT INTO `" . $xoopsDB->prefix('tad_gphotos') . "` (`csn`, `album_id`, `album_name`, `album_url`, `album_sort`, `album_counter`, `uid`, `create_date`) VALUES
-    ($csn,	'AF1QipOA6jc2CkHKsNLAncOIxcuD8i-oX_-SssVV1VVk1NRZed6kbE7aPo9x4KXqRVoRjQ',	'素材',	'https://photos.google.com/share/AF1QipOA6jc2CkHKsNLAncOIxcuD8i-oX_-SssVV1VVk1NRZed6kbE7aPo9x4KXqRVoRjQ?key=U0YtVHFmYU9tbU1kNlltMFJNV281TXVEZklPa3Bn',	0,	1,	$uid,	now())";
-
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = "INSERT INTO `" . $xoopsDB->prefix('tad_gphotos') . "`
+    (`csn`, `album_id`, `album_name`, `album_url`, `album_sort`, `album_counter`, `uid`, `create_date`)
+    VALUES (?, ?, ?, ?, ?, ?, ?, NOW())";
+    $result = Utility::query($sql, 'isssiii', [$csn, 'AF1QipOA6jc2CkHKsNLAncOIxcuD8i-oX_-SssVV1VVk1NRZed6kbE7aPo9x4KXqRVoRjQ', '素材', 'https://photos.google.com/share/AF1QipOA6jc2CkHKsNLAncOIxcuD8i-oX_-SssVV1VVk1NRZed6kbE7aPo9x4KXqRVoRjQ?key=U0YtVHFmYU9tbU1kNlltMFJNV281TXVEZklPa3Bn', 0, 1, $uid]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $album_sn = $xoopsDB->getInsertId();
 

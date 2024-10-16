@@ -8,34 +8,45 @@ function tadnews_content($insert_id = '')
     $uid = $xoopsUser->uid();
     $now = date('Y-m-d H:i:s');
 
-    $sql = 'delete from `' . $xoopsDB->prefix('tad_news_tags') . '`';
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_news_tags') . '`';
+    Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news_tags') . "` (`tag_sn`, `tag`, `font_color`, `color`, `enable`) VALUES
-  (1, '公告', '#FFFFFF',  'blue', '1'),
-  (2, '緊急', '#FFFFFF',  'red',  '1'),
-  (3, '調查', '', '#663300',  '1'),
-  (4, '活動', '#29b900',  '#0b005a',  '1'),
-  (5, '注意', '#666600',  '#e6ffd0',  '0'),
-  (6, '重要', '#FFFFFF', '#0066CC',  '1'),
-  (7, '研習', '#FFFFFF', '#006600',  '1'),
-  (8, '宣導', '#FFFFFF', '#FF0099',  '1'),
-  (9, '狂賀', '#FFFFFF', '#990000',  '1');";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news_tags') . '`
+    (`tag_sn`, `tag`, `font_color`, `color`, `enable`) VALUES
+    (1, ?, ?, ?, ?),
+    (2, ?, ?, ?, ?),
+    (3, ?, ?, ?, ?),
+    (4, ?, ?, ?, ?),
+    (5, ?, ?, ?, ?),
+    (6, ?, ?, ?, ?),
+    (7, ?, ?, ?, ?),
+    (8, ?, ?, ?, ?),
+    (9, ?, ?, ?, ?)';
+    $result = Utility::query($sql,
+        'ssssi' . str_repeat('ssss', 8),
+        ['公告', '#FFFFFF', 'blue', 1,
+            '緊急', '#FFFFFF', 'red', 1,
+            '調查', '', '#663300', 1,
+            '活動', '#29b900', '#0b005a', 1,
+            '注意', '#666600', '#e6ffd0', 0,
+            '重要', '#FFFFFF', '#0066CC', 1,
+            '研習', '#FFFFFF', '#006600', 1,
+            '宣導', '#FFFFFF', '#FF0099', 1,
+            '狂賀', '#FFFFFF', '#990000', 1,
+        ]) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    // $sql="delete from `".$xoopsDB->prefix("tad_news")."` where `ncsn`='{$insert_id}'";
-    // $xoopsDB->queryF($sql) or Utility::web_error($sql,  __FILE__, __LINE__);
+    $sql = 'SELECT MAX(`sort`) FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`="0"';
+    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $sql = 'select max(sort) from `' . $xoopsDB->prefix('tad_news_cate') . "` where not_news='0'";
-    $result = $xoopsDB->query($sql);
     list($max_sort) = $xoopsDB->fetchRow($result);
 
     $max_sort++;
-    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news_cate') . "`
-  (`of_ncsn`, `nc_title`, `enable_group`, `enable_post_group`, `sort`, `cate_pic`, `not_news`, `setup`)
-  VALUES
-  (0,'教育新知', '', '1', '{$max_sort}', '', '0','')";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news_cate') . '`
+    (`of_ncsn`, `nc_title`, `enable_group`, `enable_post_group`, `sort`, `cate_pic`, `not_news`, `setup`)
+    VALUES
+    (0, ?, ?, ?, ?, ?, ?, ?)';
+    Utility::query($sql, 'sssisss', ['教育新知', '', '1', $max_sort, '', '0', '']) or Utility::web_error($sql, __FILE__, __LINE__);
+
     $insert_id = $xoopsDB->getInsertId();
 
     $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news') . "` (`ncsn`, `news_title`, `news_content`, `start_day`, `end_day`, `enable`, `uid`, `passwd`, `enable_group`, `counter`, `prefix_tag`, `always_top`, `always_top_date`, `have_read_group`, `page_sort`) VALUES
@@ -57,16 +68,26 @@ function tadnews_content($insert_id = '')
   ";
     $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $sql = 'select max(sort) from `' . $xoopsDB->prefix('tad_news_cate') . "` where not_news='1'";
-    $result = $xoopsDB->query($sql);
+    $sql = 'SELECT MAX(`sort`) FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`=?';
+    $result = Utility::query($sql, 's', ['1']) or Utility::web_error($sql, __FILE__, __LINE__);
+
     list($max_sort) = $xoopsDB->fetchRow($result);
 
     $max_sort++;
-    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news_cate') . "`
-  (`of_ncsn`, `nc_title`, `enable_group`, `enable_post_group`, `sort`, `cate_pic`, `not_news`, `setup`)
-  VALUES
-  (0,'學校簡介', '', '1', '{$max_sort}', '', '1','title=1;tool=0;comm=0;nav=1')";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news_cate') . '`
+    (`of_ncsn`, `nc_title`, `enable_group`, `enable_post_group`, `sort`, `cate_pic`, `not_news`, `setup`)
+    VALUES
+    (0, ?, ?, ?, ?, ?, ?, ?)';
+    $result = Utility::query($sql, 'sssisss', [
+        '學校簡介',
+        '',
+        '1',
+        $max_sort,
+        '',
+        '1',
+        'title=1;tool=0;comm=0;nav=1',
+    ]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     $insert_id = $xoopsDB->getInsertId();
 
     $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news') . "` (`ncsn`, `news_title`, `news_content`, `start_day`, `end_day`, `enable`, `uid`, `passwd`, `enable_group`, `counter`, `prefix_tag`, `always_top`, `always_top_date`, `have_read_group`, `page_sort`) VALUES
@@ -78,22 +99,50 @@ function tadnews_content($insert_id = '')
     $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $max_sort++;
-    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news_cate') . "`
-  (`of_ncsn`, `nc_title`, `enable_group`, `enable_post_group`, `sort`, `cate_pic`, `not_news`, `setup`)
-  VALUES
-  ('{$insert_id}','行政單位', '', '1', '{$max_sort}', '', '1','title=1;tool=0;comm=0;nav=1')";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news_cate') . '`
+    (`of_ncsn`, `nc_title`, `enable_group`, `enable_post_group`, `sort`, `cate_pic`, `not_news`, `setup`)
+    VALUES
+    (?, ?, ?, ?, ?, ?, ?, ?)';
+    $result = Utility::query($sql, 'isssisss', [
+        $insert_id,
+        '行政單位',
+        '',
+        '1',
+        $max_sort,
+        '',
+        '1',
+        'title=1;tool=0;comm=0;nav=1',
+    ]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     $insert_id = $xoopsDB->getInsertId();
 
-    $sql = 'select `groupid`,`name` from ' . $xoopsDB->prefix('groups') . ' where groupid > 3';
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT `groupid`, `name` FROM `' . $xoopsDB->prefix('groups') . '` WHERE `groupid` > 3';
+    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $i = 1;
     while (list($groupid, $name) = $xoopsDB->fetchRow($result)) {
-        $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news') . "` (`ncsn`, `news_title`, `news_content`, `start_day`, `end_day`, `enable`, `uid`, `passwd`, `enable_group`, `counter`, `prefix_tag`, `always_top`, `always_top_date`, `have_read_group`, `page_sort`) VALUES
-    ('{$insert_id}', '{$name}', '<p>{$name}內容製作中～</p>', '{$now}', '0000-00-00 00:00:00', '1', '{$uid}', '', '', 2, '', '0', '0000-00-00 00:00:00', '', $i)
-     ";
-        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news') . '`
+      (`ncsn`, `news_title`, `news_content`, `start_day`, `end_day`, `enable`, `uid`, `passwd`, `enable_group`, `counter`, `prefix_tag`, `always_top`, `always_top_date`, `have_read_group`, `page_sort`)
+      VALUES
+      (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        $result = Utility::query($sql, 'isssssississssi', [
+            $insert_id,
+            $name,
+            "<p>{$name}內容製作中～</p>",
+            $now,
+            '0000-00-00 00:00:00',
+            '1',
+            $uid,
+            '',
+            '',
+            2,
+            '',
+            '0',
+            '0000-00-00 00:00:00',
+            '',
+            $i,
+        ]) or Utility::web_error($sql, __FILE__, __LINE__);
+
         $i++;
     }
 }

@@ -1,5 +1,6 @@
 <?php
 $modversion = [];
+global $xoopsConfig;
 
 //---模組基本資訊---//
 $modversion['name'] = _MI_TADGUIDE_NAME;
@@ -24,11 +25,12 @@ $modversion['min_php'] = 5.4;
 $modversion['min_xoops'] = '2.5';
 
 //---paypal資訊---//
-$modversion['paypal'] = [];
-$modversion['paypal']['business'] = 'tad0616@gmail.com';
-$modversion['paypal']['item_name'] = 'Donation :' . _MI_TADGUIDE_AUTHOR;
-$modversion['paypal']['amount'] = 0;
-$modversion['paypal']['currency_code'] = 'USD';
+$modversion['paypal'] = [
+    'business' => 'tad0616@gmail.com',
+    'item_name' => 'Donation : ' . _MI_TAD_WEB,
+    'amount' => 0,
+    'currency_code' => 'USD',
+];
 
 //---安裝設定---//
 $modversion['onInstall'] = 'include/onInstall.php';
@@ -39,8 +41,10 @@ $modversion['onUninstall'] = 'include/onUninstall.php';
 $modversion['system_menu'] = 1;
 //---資料表架構---//
 $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
-$modversion['tables'][1] = 'tad_guide';
-$modversion['tables'][2] = 'tad_guide_backup';
+$modversion['tables'] = [
+    'tad_guide',
+    'tad_guide_backup',
+];
 
 //---管理介面設定---//
 $modversion['hasAdmin'] = 1;
@@ -51,16 +55,7 @@ $modversion['adminmenu'] = 'admin/menu.php';
 $modversion['hasMain'] = 0;
 
 //---樣板設定---//
-$i = 0;
-$modversion['templates'][$i]['file'] = 'tad_guide_adm_main.tpl';
-$modversion['templates'][$i]['description'] = 'tad_guide_adm_main.tpl';
-
-//---區塊設定---//
-$i = 0;
-// $i++;
-// $modversion['config'][$i]['name']        = 'ssh_port';
-// $modversion['config'][$i]['title']       = '_MI_TADGUIDE_SSH_PORT';
-// $modversion['config'][$i]['description'] = '_MI_TADGUIDE_SSH_PORT_DESC';
-// $modversion['config'][$i]['formtype']    = 'textbox';
-// $modversion['config'][$i]['valuetype']   = 'int';
-// $modversion['config'][$i]['default']     = '22';
+$modversion['templates'][] = [
+    'file' => 'tad_guide_admin.tpl',
+    'description' => 'tad_guide_admin.tpl',
+];

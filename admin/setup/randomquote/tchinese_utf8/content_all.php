@@ -1,7 +1,7 @@
 <?php
 use XoopsModules\Tadtools\Utility;
 
-function randomquote_content($cate_sn = '')
+function randomquote_content()
 {
     global $xoopsDB;
     $sql = 'INSERT INTO `' . $xoopsDB->prefix('citas') . "` (`texto`, `autor`) VALUES
@@ -44,5 +44,5 @@ function randomquote_content($cate_sn = '')
   ('◎ 有智慧才能分辨善惡邪正；有謙虛才能建造美滿人生。', '證嚴法師');
   ";
 
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }

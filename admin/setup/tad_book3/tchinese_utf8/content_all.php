@@ -5,39 +5,37 @@ function tad_book3_content($csn = '')
 {
     global $xoopsDB, $xoopsUser;
 
-    $sql = 'delete from `' . $xoopsDB->prefix('tad_book3') . "` where tbcsn='$csn'";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_book3') . '` WHERE `tbcsn` =?';
+    Utility::query($sql, 'i', [$csn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $uid = $xoopsUser->uid();
 
     if (empty($csn)) {
-        $sql = 'select max(sort) from `' . $xoopsDB->prefix('tad_book3_cate') . '`';
-        $result = $xoopsDB->query($sql);
+        $sql = 'SELECT MAX(`sort`) FROM `' . $xoopsDB->prefix('tad_book3_cate') . '`';
+        $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+
         list($max_sort) = $xoopsDB->fetchRow($result);
 
         $max_sort++;
 
-        $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_book3_cate') . "`
+        $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_book3_cate') . '`
         (`sort`, `title`, `description`)
         VALUES
-        ('$max_sort', '其他',  '其他書籍');
-        ";
-        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        (?, ?, ?)';
+        Utility::query($sql, 'iss', [$max_sort, '其他', '其他書籍']) or Utility::web_error($sql, __FILE__, __LINE__);
+
         $csn = $xoopsDB->getInsertId();
     }
 
-    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_book3') . "` (`tbcsn`, `sort`, `title`, `description`, `author`, `read_group`, `passwd`, `enable`, `pic_name`, `counter`, `create_date`) VALUES
+    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_book3') . '` (`tbcsn`, `sort`, `title`, `description`, `author`, `read_group`, `passwd`, `enable`, `pic_name`, `counter`, `create_date`) VALUES (?, 1, ?, ?, ?, "", "", ?, "", 0, ?)';
 
-    ('$csn', 1, 'XOOPS輕鬆架快速上手', '<p>XOOPS輕鬆架使用手冊，這本只要是針對校園使用，一般網站亦可參考，請自行融會貫通即可。</p>\r\n', '$uid', '', '', '1', '', 0, '2014-01-25 17:15:47')
-    ";
-
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    Utility::query($sql, 'ississ', [$csn, 'XOOPS輕鬆架快速上手', '<p>XOOPS輕鬆架使用手冊，這本只要是針對校園使用，一般網站亦可參考，請自行融會貫通即可。</p>\r\n', $uid, '1', '2014-01-25 17:15:47']) or Utility::web_error($sql, __FILE__, __LINE__);
 
     //取得最後新增資料的流水編號
     $tbsn = $xoopsDB->getInsertId();
 
-    $sql = 'delete from `' . $xoopsDB->prefix('tad_book3_docs') . "` where  tbsn='$tbsn'";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_book3_docs') . '` WHERE `tbsn`=?';
+    Utility::query($sql, 'i', [$tbsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_book3_docs') . "` (`tbsn`, `category`, `page`, `paragraph`, `sort`, `title`, `content`, `add_date`, `last_modify_date`, `uid`, `count`, `enable`) VALUES
 

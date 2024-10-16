@@ -5,20 +5,18 @@ use XoopsModules\Tad_guide\DunZip2;
 function tad_player_content($cate_sn = '')
 {
     global $xoopsDB, $xoopsUser;
+    $sql = 'SELECT MAX(`sort`) FROM `' . $xoopsDB->prefix('tad_player_cate') . '`';
+    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    // $sql="delete from `".$xoopsDB->prefix("tad_player")."`";
-    // $xoopsDB->queryF($sql) or Utility::web_error($sql,  __FILE__, __LINE__);
-
-    $sql            = 'select max(sort) from `' . $xoopsDB->prefix('tad_player_cate') . '`';
-    $result         = $xoopsDB->query($sql);
     list($max_sort) = $xoopsDB->fetchRow($result);
     $max_sort++;
 
-    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_player_cate') . "`
-  (`of_csn`, `title`, `enable_group`, `enable_upload_group`, `sort`, `width`, `height`)
-  VALUES
-  (0,'翻轉教育', '', '1', '{$max_sort}', '640', '480')";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_player_cate') . '`
+    (`of_csn`, `title`, `enable_group`, `enable_upload_group`, `sort`, `width`, `height`)
+    VALUES
+    (0, ?, ?, ?, ?, ?, ?)';
+    $result = Utility::query($sql, 'sssiii', ['翻轉教育', '', '1', $max_sort, 640, 480]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     $insert_id = $xoopsDB->getInsertId();
 
     uzip_file($insert_id);

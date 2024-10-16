@@ -4,10 +4,10 @@ use XoopsModules\Tadtools\Utility;
 function get_tad_link_cate($group_name)
 {
     global $xoopsDB;
-    //`cate_sn`, `of_cate_sn`, `cate_title`, `cate_sort`
 
-    $sql = 'select cate_sn , cate_title  from ' . $xoopsDB->prefix('tad_link_cate') . " where cate_title like '%{$group_name}%'";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT `cate_sn`, `cate_title` FROM `' . $xoopsDB->prefix('tad_link_cate') . '` WHERE `cate_title` LIKE ?';
+    $result = Utility::query($sql, 's', ["%$group_name%"]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     list($cate_sn, $cate_title) = $xoopsDB->fetchRow($result);
     $cate['sn'] = $cate_sn;
     $cate['title'] = $cate_title;
