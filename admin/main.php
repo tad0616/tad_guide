@@ -839,19 +839,60 @@ function add_perm($groupid = '', $insert_id = '', $mid = '', $perm_name = '')
     return $gperm_id;
 }
 
-//檢查是否有資料
+/**
+ * 檢查資料表是否存在且包含資料
+ *
+ * @param string $tbl 資料表名稱（不含前綴）
+ * @return bool 資料表存在且有資料時返回 true，否則返回 false
+ */
 function content_get_backup($tbl = '')
 {
     global $xoopsDB;
 
-    $sql = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix($tbl . '_gbak') . '`';
-    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-
-    if (!empty($result)) {
-        return true;
+    if (empty($tbl)) {
+        return false;
     }
 
-    return false;
+    try {
+        // 先檢查資料表是否存在
+        $table_name = $xoopsDB->prefix($tbl . '_gbak');
+        $check_table_sql = sprintf(
+            "SELECT 1 FROM information_schema.tables
+            WHERE table_schema = '%s'
+            AND table_name = '%s'",
+            $xoopsDB->dbname,
+            $table_name
+        );
+
+        $result = $xoopsDB->query($check_table_sql);
+        if (!$result || $xoopsDB->getRowsNum($result) === 0) {
+            return false;
+        }
+
+        // 檢查資料表是否有資料
+        $count_sql = sprintf(
+            "SELECT COUNT(*) AS total FROM `%s`",
+            $table_name
+        );
+
+        $result = $xoopsDB->query($count_sql);
+        if (!$result) {
+            return false;
+        }
+
+        $row = $xoopsDB->fetchArray($result);
+        return ($row['total'] > 0);
+
+    } catch (Exception $e) {
+        // 可以根據需求記錄錯誤
+        error_log(sprintf(
+            'Check table error: %s, File: %s, Line: %d',
+            $e->getMessage(),
+            __FILE__,
+            __LINE__
+        ));
+        return false;
+    }
 }
 
 function content_backup($dirname = '', $bak_table = [])
