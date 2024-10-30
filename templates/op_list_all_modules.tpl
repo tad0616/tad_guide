@@ -4,7 +4,7 @@
         <div class="well card card-body bg-light m-1">
             <form action="main.php" method="post" class="form-horizontal" role="form">
             <div class="form-group row mb-3">
-                <label class="col-md-3 control-label col-form-label text-md-right">
+                <label class="col-md-3 control-label col-form-label text-md-right text-md-end">
                 <{$smarty.const._MA_GUIDE_SSH_ID}><{$smarty.const._TAD_FOR}>
                 </label>
                 <div class="col-md-9">
@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div class="form-group row mb-3">
-                <label class="col-md-3 control-label col-form-label text-md-right">
+                <label class="col-md-3 control-label col-form-label text-md-right text-md-end">
                 <{$smarty.const._MA_GUIDE_SSH_PASS}><{$smarty.const._TAD_FOR}>
                 </label>
                 <div class="col-md-9">
@@ -65,7 +65,7 @@
         <form action="main.php" method="post" role="form">
             <div class="form-group row mb-3">
                 <div class="col-md-2">
-                    <select id="group_kind" class="form-control">
+                    <select id="group_kind" class="form-select">
                         <option value="custom"><{$smarty.const._MA_GUIDE_CUSTOM}></option>
                         <option value="es12_school"><{$smarty.const._MA_GUIDE_ES12_SCHOOL}></option>
                         <option value="es24_school"><{$smarty.const._MA_GUIDE_ES24_SCHOOL}></option>
