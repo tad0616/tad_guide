@@ -1,3 +1,10 @@
+Tad gudie 2.0 (released on 2024-11-11)
+====================================
+1. Support XOOPS 2.5.11
+2. Support PHP8.1.x
+3. Use $xoopsDB->escape() instead of $myts->addSlashes()
+4. Database syntax parameterization
+
 Tad gudie 1.9 (2022-02-01 released)
 =================================================
 1.Support BootStrap5
