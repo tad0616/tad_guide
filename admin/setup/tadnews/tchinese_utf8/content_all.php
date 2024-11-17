@@ -23,7 +23,7 @@ function tadnews_content($insert_id = '')
     (8, ?, ?, ?, ?),
     (9, ?, ?, ?, ?)';
     $result = Utility::query($sql,
-        'ssssi' . str_repeat('ssss', 8),
+        str_repeat('ssss', 9),
         ['公告', '#FFFFFF', 'blue', 1,
             '緊急', '#FFFFFF', 'red', 1,
             '調查', '', '#663300', 1,

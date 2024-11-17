@@ -7,8 +7,11 @@ use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 $xoopsOption['template_main'] = 'tad_guide_admin.tpl';
 require_once __DIR__ . '/header.php';
-
 use XoopsModules\Tad_adm\OnlineUpgrade;
+if (!class_exists('XoopsModules\Tad_adm\OnlineUpgrade')) {
+    require XOOPS_ROOT_PATH . '/modules/tad_adm/preloads/autoloader.php';
+}
+
 xoops_loadLanguage('admin', 'tad_adm');
 /*-----------執行動作判斷區----------*/
 $op = Request::getString('op');
