@@ -1,5 +1,5 @@
 <?php
-$new_config['index_mode'] = 'normal';
+$new_config['index_mode'] = 'flickr';
 $new_config['thumbnail_s_width'] = '240';
 $new_config['thumbnail_m_width'] = '800';
 $new_config['thumbnail_b_width'] = '1920';

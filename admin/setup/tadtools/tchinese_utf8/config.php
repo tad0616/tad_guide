@@ -1,7 +1,7 @@
 <?php
 $new_config['auto_charset'] = '1';
 $new_config['uploadcare_publickey'] = '';
-$new_config['use_codemirror'] = '1';
+$new_config['use_codemirror'] = '0';
 $new_config['image_max_width'] = '1920';
 $new_config['image_max_height'] = '1920';
 $new_config['insert_spacing'] = '0';

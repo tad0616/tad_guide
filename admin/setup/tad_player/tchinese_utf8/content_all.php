@@ -33,7 +33,6 @@ function tad_player_content($cate_sn = '')
 //上傳壓縮圖檔
 function uzip_file($csn)
 {
-    global $xoopsDB, $xoopsUser, $xoopsModule, $xoopsModuleConfig, $type_to_mime;
     Utility::mk_dir(XOOPS_ROOT_PATH . '/uploads/tad_player/');
     //取消上傳時間限制
     set_time_limit(0);

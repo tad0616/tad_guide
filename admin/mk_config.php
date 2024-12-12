@@ -11,7 +11,7 @@ $op = Request::getString('op');
 //可開群組的模組
 $mod_arr = ['tadnews', 'tadgallery', 'tad_player', 'tad_uploader', 'tad_cal', 'tad_discuss', 'tad_faq', 'tad_link', 'tad_book3', 'tad_gphotos'];
 
-$school_mod_arr = ['tad_adm', 'tadtools', 'tad_blocks', 'tad_users', 'tad_sitemap', 'tad_gphotos', 'tad_honor', 'tad_themes', 'tadnews', 'tadgallery', 'tad_player', 'tad_login', 'tad_uploader', 'tad_cal', 'tad_discuss', 'tad_faq', 'tad_link', 'tad_repair', 'tad_assignment', 'tad_form', 'tad_lunch3', 'tad_book3', 'tad_idioms', 'tad_evaluation', 'tad_web', 'logcounterx', 'tad_rss', 'randomquote'];
+$school_mod_arr = ['logcounterx', 'profile', 'randomquote', 'system', 'tad_adm', 'tad_assignment', 'tad_blocks', 'tad_book3', 'tad_cal', 'tad_discuss', 'tad_evaluation', 'tad_faq', 'tad_form', 'tad_gphotos', 'tad_honor', 'tad_idioms', 'tad_themes', 'tadgallery', 'tad_meeting', 'tad_player', 'tad_login', 'tad_uploader', 'tad_link', 'tad_repair', 'tad_rss', 'tad_sitemap', 'tad_lunch3', 'tad_users', 'tad_web', 'tadnews', 'tadtools'];
 
 switch ($op) {
 
@@ -42,7 +42,7 @@ function mk_config()
     }
 
     $all_mid = implode(',', array_keys($modules));
-    $sql = 'SELECT `bid`, `mid`, `options`, `name`, `title`, `side`, `weight`, `visible` FROM `' . $xoopsDB->prefix('newblocks') . '` WHERE `mid` IN (' . $all_mid . ') ORDER BY `side`, `weight`';
+    $sql = 'SELECT `bid`, `mid`, `func_num`, `options`, `name`, `title`, `side`, `weight`, `visible` FROM `' . $xoopsDB->prefix('newblocks') . '` WHERE `mid` IN (' . $all_mid . ') ORDER BY `func_num`, `side`, `weight`';
     $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     while ($block = $xoopsDB->fetchArray($result)) {

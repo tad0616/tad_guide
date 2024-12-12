@@ -39,7 +39,7 @@
 
         <script type='text/javascript'>
         $(document).ready(function(){
-            $("#group_kind").change(function() {
+            $("#group_kind").on('change', function() {
             var kind=$("#group_kind").val();
             switch(kind){
                 case "es12_school":
@@ -65,7 +65,7 @@
         <form action="main.php" method="post" role="form">
             <div class="form-group row mb-3">
                 <div class="col-md-2">
-                    <select id="group_kind" class="form-select">
+                    <select id="group_kind" class="form-control form-select">
                         <option value="custom"><{$smarty.const._MA_GUIDE_CUSTOM}></option>
                         <option value="es12_school"><{$smarty.const._MA_GUIDE_ES12_SCHOOL}></option>
                         <option value="es24_school"><{$smarty.const._MA_GUIDE_ES24_SCHOOL}></option>
@@ -93,10 +93,10 @@
                 <th><{$smarty.const._MA_GUIDE_CONFIG_COL}></th>
                 <th><{$smarty.const._MA_GUIDE_CONTENT_COL}></th>
                 <th><{$smarty.const._MA_GUIDE_BLOCKS_COL}></th>
-                <{foreach from=$group item=g}>
-                    <{if $g.groupid > 3}>
-                        <th style="text-align:center;background-color:#6C873D;">
-                        <{$g.name}>
+                <{foreach from=$groups key=group_id item=group_name}>
+                    <{if $group_id > 3}>
+                        <th style="text-align:center; background-color:#6C873D;">
+                        <{$group_name}>
                         </th>
                     <{/if}>
                 <{/foreach}>
@@ -107,13 +107,13 @@
                 <tr <{if $mod_dirname==$hl and $hl!=""}>style="background-color: #ffffaa;"<{/if}>>
 
                 <td>
-                    <a name="<{$mod_dirname}>"><img src="<{$mod.logo}>" style="float:left; margin-right:6px;"></a>
+                    <a name="<{$mod_dirname|default:''}>"><img src="<{$mod.logo}>" style="float:left; margin-right:6px;"></a>
                     <a href="https://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=<{$mod.module_sn}>" target="_blank"><{$mod.name}></a>
                     <div class="my-1">
                         <{if $mod.function=='latest' or $mod.function=='upgrade'}>
-                            <{$mod_dirname}> <{$mod.now_version}>
+                            <{$mod_dirname|default:''}> <{$mod.now_version}>
                         <{else}>
-                            <{$mod_dirname}> <{$mod.new_version}>
+                            <{$mod_dirname|default:''}> <{$mod.new_version}>
                         <{/if}>
                     </div>
                 </td>
@@ -149,9 +149,9 @@
                 <td class="text-center" nowrap>
                     <{if $mod.function!='install'}>
                     <{if ($act_log.$mod_dirname.config|default:false=='' and $log.$mod_dirname.config_exists|default:false) or ($act_log.$mod_dirname.content_all|default:false=='' and $log.$mod_dirname.content_all_exists|default:false) or ($act_log.$mod_dirname.blocks|default:false=='' and $log.$mod_dirname.blocks_file_exists|default:false)}>
-                        <a href="main.php?op=one_key&dirname=<{$mod_dirname}>&mid=<{$mod.mid}>" alt="<{$smarty.const._MA_GUIDE_ONE_KEY}>" title="<{$smarty.const._MA_GUIDE_ONE_KEY}>" class="btn btn-sm btn-primary onekey" data-fancybox-type="iframe"><i class="fa fa-hand-o-up"></i></a>
+                        <a href="main.php?op=one_key&dirname=<{$mod_dirname|default:''}>&mid=<{$mod.mid}>" alt="<{$smarty.const._MA_GUIDE_ONE_KEY}>" title="<{$smarty.const._MA_GUIDE_ONE_KEY}>" class="btn btn-sm btn-primary onekey" data-fancybox-type="iframe"><i class="fa fa-hand-pointer"></i></a>
                     <{else}>
-                        <a href="#" alt="<{$smarty.const._MA_GUIDE_ONE_KEY}>" title="<{$smarty.const._MA_GUIDE_ONE_KEY}>" class="btn btn-sm btn-primary onekey disabled" disabled><i class="fa fa-hand-o-up"></i></a>
+                        <a href="#" alt="<{$smarty.const._MA_GUIDE_ONE_KEY}>" title="<{$smarty.const._MA_GUIDE_ONE_KEY}>" class="btn btn-sm btn-primary onekey disabled" disabled><i class="fa fa-hand-pointer"></i></a>
                     <{/if}>
                     <{/if}>
                 </td>
@@ -159,11 +159,11 @@
                 <td class="text-center">
                     <{if $log.$mod_dirname.config_exists|default:false and $mod.function!='install'}>
                     <{if $act_log.$mod_dirname.config|default:false}>
-                        <a href="main.php?op=import_data&dirname=<{$mod_dirname}>&act_kind=config&mid=<{$mod.mid}>" class="btn btn-sm btn-success" alt="<{$smarty.const._MA_GUIDE_RE_IMPORT_CONFIG}><{$log.$mod_dirname.config|default:false}>" title="<{$smarty.const._MA_GUIDE_RE_IMPORT_CONFIG}><{$log.$mod_dirname.config|default:false}>"><i class="fa fa-cog"></i></a>
+                        <a href="main.php?op=import_data&dirname=<{$mod_dirname|default:''}>&act_kind=config&mid=<{$mod.mid}>" class="btn btn-sm btn-success" alt="<{$smarty.const._MA_GUIDE_RE_IMPORT_CONFIG}><{$log.$mod_dirname.config|default:false}>" title="<{$smarty.const._MA_GUIDE_RE_IMPORT_CONFIG}><{$log.$mod_dirname.config|default:false}>"><i class="fa fa-cog"></i></a>
 
-                        <a href="main.php?op=import_data&dirname=<{$mod_dirname}>&act_kind=restore_config&mid=<{$mod.mid}>" class="btn btn-sm btn-info " alt="<{$smarty.const._MA_GUIDE_RESTORE_CONFIG}>" title="<{$smarty.const._MA_GUIDE_RESTORE_CONFIG}>"><i class="fa fa-repeat"></i></a>
+                        <a href="main.php?op=import_data&dirname=<{$mod_dirname|default:''}>&act_kind=restore_config&mid=<{$mod.mid}>" class="btn btn-sm btn-info " alt="<{$smarty.const._MA_GUIDE_RESTORE_CONFIG}>" title="<{$smarty.const._MA_GUIDE_RESTORE_CONFIG}>"><i class="fa fa-repeat"></i></a>
                     <{else}>
-                        <a href="main.php?op=import_data&dirname=<{$mod_dirname}>&act_kind=config&mid=<{$mod.mid}>" class="btn btn-sm btn-info " alt="<{$smarty.const._MA_GUIDE_IMPORT_CONFIG}>" title="<{$smarty.const._MA_GUIDE_IMPORT_CONFIG}>"><i class="fa fa-cog"></i></a>
+                        <a href="main.php?op=import_data&dirname=<{$mod_dirname|default:''}>&act_kind=config&mid=<{$mod.mid}>" class="btn btn-sm btn-info " alt="<{$smarty.const._MA_GUIDE_IMPORT_CONFIG}>" title="<{$smarty.const._MA_GUIDE_IMPORT_CONFIG}>"><i class="fa fa-cog"></i></a>
                     <{/if}>
                     <{elseif $log.$mod_dirname.config_exists}>
                     <img src="<{$xoops_url}>/modules/tad_guide/images/1.gif" alt="<{$smarty.const._MA_GUIDE_CONFIG_EXIST}>" title="<{$smarty.const._MA_GUIDE_CONFIG_EXIST}>">
@@ -175,11 +175,11 @@
                 <td class="text-center">
                     <{if $log.$mod_dirname.content_all_exists|default:false and $mod.function!='install'}>
                     <{if $act_log.$mod_dirname.content_all|default:false}>
-                        <a href="main.php?op=import_data&dirname=<{$mod_dirname}>&act_kind=content_all&mid=<{$mod.mid}>" class="btn btn-sm btn-success" alt="<{$smarty.const._MA_GUIDE_RE_IMPORT_CONTENT}><{$log.$mod_dirname.content_all}>" title="<{$smarty.const._MA_GUIDE_RE_IMPORT_CONTENT}><{$log.$mod_dirname.content_all}>"><i class="fa fa-cloud-download"></i></a>
+                        <a href="main.php?op=import_data&dirname=<{$mod_dirname|default:''}>&act_kind=content_all&mid=<{$mod.mid}>" class="btn btn-sm btn-success" alt="<{$smarty.const._MA_GUIDE_RE_IMPORT_CONTENT}><{$log.$mod_dirname.content_all}>" title="<{$smarty.const._MA_GUIDE_RE_IMPORT_CONTENT}><{$log.$mod_dirname.content_all}>"><i class="fa fa-cloud-download"></i></a>
 
-                        <a href="main.php?op=import_data&dirname=<{$mod_dirname}>&act_kind=restore&mid=<{$mod.mid}>" class="btn btn-sm btn-info " alt="<{$smarty.const._MA_GUIDE_RESTORE_CONTENT}>" title="<{$smarty.const._MA_GUIDE_RESTORE_CONTENT}>"><i class="fa fa-repeat"></i></a>
+                        <a href="main.php?op=import_data&dirname=<{$mod_dirname|default:''}>&act_kind=restore&mid=<{$mod.mid}>" class="btn btn-sm btn-info " alt="<{$smarty.const._MA_GUIDE_RESTORE_CONTENT}>" title="<{$smarty.const._MA_GUIDE_RESTORE_CONTENT}>"><i class="fa fa-repeat"></i></a>
                     <{else}>
-                        <a href="main.php?op=import_data&dirname=<{$mod_dirname}>&act_kind=content_all&mid=<{$mod.mid}>" class="btn btn-sm btn-info " alt="<{$smarty.const._MA_GUIDE_IMPORT_CONTENT}>" title="<{$smarty.const._MA_GUIDE_IMPORT_CONTENT}>"><i class="fa fa-cloud-download"></i></a>
+                        <a href="main.php?op=import_data&dirname=<{$mod_dirname|default:''}>&act_kind=content_all&mid=<{$mod.mid}>" class="btn btn-sm btn-info " alt="<{$smarty.const._MA_GUIDE_IMPORT_CONTENT}>" title="<{$smarty.const._MA_GUIDE_IMPORT_CONTENT}>"><i class="fa fa-cloud-download"></i></a>
                     <{/if}>
                     <{elseif $log.$mod_dirname.content_all_exists}>
                     <img src="<{$xoops_url}>/modules/tad_guide/images/1.gif" alt="<{$smarty.const._MA_GUIDE_CONTENT_EXIST}>" title="<{$smarty.const._MA_GUIDE_CONTENT_EXIST}>">
@@ -189,11 +189,11 @@
                 <td class="text-center">
                     <{if $log.$mod_dirname.blocks_file_exists|default:false and $mod.function!='install'}>
                     <{if $act_log.$mod_dirname.blocks|default:false}>
-                        <a href="main.php?op=import_data&dirname=<{$mod_dirname}>&act_kind=blocks" class="btn btn-sm btn-success" alt="<{$smarty.const._MA_GUIDE_RE_IMPORT_BLOCKS}><{$log.$mod_dirname.blocks}>" title="<{$smarty.const._MA_GUIDE_RE_IMPORT_BLOCKS}><{$log.$mod_dirname.blocks}>"><i class="fa fa-arrow-down"></i></a>
+                        <a href="main.php?op=import_data&dirname=<{$mod_dirname|default:''}>&act_kind=blocks" class="btn btn-sm btn-success" alt="<{$smarty.const._MA_GUIDE_RE_IMPORT_BLOCKS}><{$log.$mod_dirname.blocks}>" title="<{$smarty.const._MA_GUIDE_RE_IMPORT_BLOCKS}><{$log.$mod_dirname.blocks}>"><i class="fa fa-arrow-down"></i></a>
 
-                        <a href="main.php?op=import_data&dirname=<{$mod_dirname}>&act_kind=restore_blocks&mid=<{$mod.mid}>" class="btn btn-sm btn-info " alt="<{$smarty.const._MA_GUIDE_RESTORE_BLOCKS}>" title="<{$smarty.const._MA_GUIDE_RESTORE_BLOCKS}>"><i class="fa fa-repeat"></i></a>
+                        <a href="main.php?op=import_data&dirname=<{$mod_dirname|default:''}>&act_kind=restore_blocks&mid=<{$mod.mid}>" class="btn btn-sm btn-info " alt="<{$smarty.const._MA_GUIDE_RESTORE_BLOCKS}>" title="<{$smarty.const._MA_GUIDE_RESTORE_BLOCKS}>"><i class="fa fa-repeat"></i></a>
                     <{else}>
-                        <a href="main.php?op=import_data&dirname=<{$mod_dirname}>&act_kind=blocks" class="btn btn-sm btn-info " alt="<{$smarty.const._MA_GUIDE_IMPORT_BLOCKS}>" title="<{$smarty.const._MA_GUIDE_IMPORT_BLOCKS}>"><i class="fa fa-arrow-down"></i></a>
+                        <a href="main.php?op=import_data&dirname=<{$mod_dirname|default:''}>&act_kind=blocks" class="btn btn-sm btn-info " alt="<{$smarty.const._MA_GUIDE_IMPORT_BLOCKS}>" title="<{$smarty.const._MA_GUIDE_IMPORT_BLOCKS}>"><i class="fa fa-arrow-down"></i></a>
                     <{/if}>
                     <{elseif $log.$mod_dirname.blocks_file_exists}>
                     <img src="<{$xoops_url}>/modules/tad_guide/images/1.gif" alt="<{$smarty.const._MA_GUIDE_BLOCKS_EXIST}>" title="<{$smarty.const._MA_GUIDE_BLOCKS_EXIST}>">
@@ -216,9 +216,9 @@
                         </div>
                         <{if $log.$mod_dirname.content_exists and $mod.function!='install'}>
                             <{if $mod_c.$c_sn}>
-                            <a href="main.php?op=import_data&dirname=<{$mod_dirname}>&act_kind=content&mid=<{$mod.mid}>&cate_sn=<{$cates.cate_sn}>" class="btn btn-sm btn-success" alt="<{$smarty.const._MA_GUIDE_RE_IMPORT_CONTENT}><{$mod_c.$c_sn}>" title="<{$smarty.const._MA_GUIDE_RE_IMPORT_CONTENT}><{$mod_c.$c_sn}>"><i class="fa fa-cloud-download"></i></a>
+                            <a href="main.php?op=import_data&dirname=<{$mod_dirname|default:''}>&act_kind=content&mid=<{$mod.mid}>&cate_sn=<{$cates.cate_sn}>" class="btn btn-sm btn-success" alt="<{$smarty.const._MA_GUIDE_RE_IMPORT_CONTENT}><{$mod_c.$c_sn}>" title="<{$smarty.const._MA_GUIDE_RE_IMPORT_CONTENT}><{$mod_c.$c_sn}>"><i class="fa fa-cloud-download"></i></a>
                             <{else}>
-                            <a href="main.php?op=import_data&dirname=<{$mod_dirname}>&act_kind=content&mid=<{$mod.mid}>&cate_sn=<{$cates.cate_sn}>" class="btn btn-sm btn-info " alt="<{$smarty.const._MA_GUIDE_IMPORT_CONTENT}>" title="<{$smarty.const._MA_GUIDE_IMPORT_CONTENT}>"><i class="fa fa-cloud-download"></i></a>
+                            <a href="main.php?op=import_data&dirname=<{$mod_dirname|default:''}>&act_kind=content&mid=<{$mod.mid}>&cate_sn=<{$cates.cate_sn}>" class="btn btn-sm btn-info " alt="<{$smarty.const._MA_GUIDE_IMPORT_CONTENT}>" title="<{$smarty.const._MA_GUIDE_IMPORT_CONTENT}>"><i class="fa fa-cloud-download"></i></a>
                             <{/if}>
                         <{elseif $log.$mod_dirname.content_exists and $mod.function=='install'}>
                             <img src="<{$xoops_url}>/modules/tad_guide/images/1.gif" alt="<{$smarty.const._MA_GUIDE_CONTENT_EXIST}>" title="<{$smarty.const._MA_GUIDE_CONTENT_EXIST}>">
@@ -226,7 +226,7 @@
                         </td>
                     <{elseif $cates.mid and $cates.show_cate}>
                         <td style="text-align:center;;background-color:#F1F2F0;">
-                        <a href="main.php?op=create_one_cate&mid=<{$mod.mid}>&groupid=<{$groupid|default:''}>&dirname=<{$mod_dirname}>" alt="<{$cates.groupname|string_format:$smarty.const._MA_GUIDE_CREATE_CATE}>" title="<{$cates.groupname|string_format:$smarty.const._MA_GUIDE_CREATE_CATE}>" class="btn btn-sm btn-info "><i class="fa fa-folder-open"></i></a>
+                        <a href="main.php?op=create_one_cate&mid=<{$mod.mid}>&groupid=<{$groupid|default:''}>&dirname=<{$mod_dirname|default:''}>" alt="<{$cates.groupname|string_format:$smarty.const._MA_GUIDE_CREATE_CATE}>" title="<{$cates.groupname|string_format:$smarty.const._MA_GUIDE_CREATE_CATE}>" class="btn btn-sm btn-info "><i class="fa fa-folder-open"></i></a>
                         </td>
                     <{else}>
                         <td style="text-align:center;background-color:#F1F2F0;">

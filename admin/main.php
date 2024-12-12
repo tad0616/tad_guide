@@ -129,10 +129,9 @@ function list_all_modules()
         }
     }
 
-    // die(var_export($all_data));
     //取得群組
-    $group = get_group();
-    $xoopsTpl->assign('group', $group);
+    $groups = Utility::get_all_groups();
+    $xoopsTpl->assign('groups', $groups);
     $xoopsTpl->assign('all_data', $all_data);
 
     //找出目前的更新紀錄
@@ -360,53 +359,14 @@ function group_cate($dirname, $mid = 0)
     return $mod_cate;
 }
 
-//取得群組
-function get_group()
-{
-    global $xoopsDB;
-
-    $sql = 'SELECT `groupid`, `name` FROM `' . $xoopsDB->prefix('groups') . '` ORDER BY `groupid`';
-    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-
-    $group = [];
-    $i = 0;
-    while (list($groupid, $name) = $xoopsDB->fetchRow($result)) {
-        $group[$i]['groupid'] = $groupid;
-        $group[$i]['name'] = $name;
-        $i++;
-    }
-
-    return $group;
-}
-
 //快速建立群組
 function to_create_group($create_group = '')
 {
     $new_group = explode(';', $create_group);
 
     foreach ($new_group as $group) {
-        mk_group($group);
+        Utility::mk_group($group);
     }
-}
-
-//建立群組
-function mk_group($name = '')
-{
-    global $xoopsDB;
-    $sql = 'SELECT `groupid` FROM `' . $xoopsDB->prefix('groups') . '` WHERE `name`=?';
-    $result = Utility::query($sql, 's', [$name]) or Utility::web_error($sql, __FILE__, __LINE__);
-
-    list($groupid) = $xoopsDB->fetchRow($result);
-
-    if (empty($groupid)) {
-        $sql = 'INSERT INTO `' . $xoopsDB->prefix('groups') . '` (`name`) VALUES (?)';
-        Utility::query($sql, 's', [$name]) or Utility::web_error($sql, __FILE__, __LINE__);
-
-        //取得最後新增資料的流水編號
-        $groupid = $xoopsDB->getInsertId();
-    }
-
-    return $groupid;
 }
 
 //取得模組現有分類

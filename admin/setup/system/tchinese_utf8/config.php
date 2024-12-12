@@ -35,5 +35,4 @@ $new_config['comments_editor'] = 'dhtmltextarea';
 $new_config['general_editor'] = 'dhtmltextarea';
 $new_config['redirect'] = 'admin.php?fct=preferences';
 $new_config['com_anonpost'] = '0';
-$mod_config['name'] = '系統管理';
-$mod_config['weight'] = '0';
+$new_config['default_notification'] = '3';

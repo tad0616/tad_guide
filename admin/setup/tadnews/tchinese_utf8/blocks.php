@@ -3,8 +3,6 @@
 $new_data[1] = ['options' => '', 'title' => '文章類別', 'side' => '0', 'weight' => '25', 'visible' => '0'];
 //本站最新消息
 $new_data[2] = ['options' => '5|99|color:gray; font-size: 0.75em; margin-top:3px; line-height:180%;|0|1|width:80px;height:60px;float:left;border:0px solid #9999CC;margin:0px 4px 4px 0px;overflow:hidden;background-size:cover;|0|', 'title' => '本站最新消息', 'side' => '9', 'weight' => '12', 'visible' => '0'];
-//最新回應
-$new_data[3] = ['options' => '10|160', 'title' => '最新回應', 'side' => '9', 'weight' => '17', 'visible' => '0'];
 //訂閱 / 取消電子報
 $new_data[4] = ['options' => '', 'title' => '訂閱 / 取消電子報', 'side' => '1', 'weight' => '8', 'visible' => '0'];
 //電子報一覽
@@ -28,12 +26,12 @@ $new_data[13] = ['options' => '5|90|ResponsiveSlides|7', 'title' => '自動縮�
 //跑馬燈區塊
 $new_data[14] = ['options' => '5|0|up|5000|height:10em;|', 'title' => '即時快訊', 'side' => '1', 'weight' => '7', 'visible' => '0'];
 //圖文集區塊
-$new_data[15] = ['options' => '3|2|66|font-size:0.8125em ;color: gray; line-height: 1.5; font-family:新細明體;||2|3|80px', 'title' => '圖文集區塊', 'side' => '5', 'weight' => '4', 'visible' => '1'];
+$new_data[15] = ['options' => '3|2|66|font-size:0.8125em ;color: gray; line-height: 1.5;||2|3|80px', 'title' => '圖文集區塊', 'side' => '5', 'weight' => '4', 'visible' => '1'];
 //自訂頁面列表
 $new_data[16] = ['options' => '2|#5b7d00|0|0|#ffffff|padding: 4px; border-radius: 5px; |font-size: 1.3em; text-shadow: 0px 1px #0d4e5c, 1px 0px #0d4e5c, -1px 0px #0d4e5c, 0px -1px #0d4e5c, -1px -1px #0d4e5c, 1px 1px #0d4e5c, 1px -1px #0d4e5c, -1px 1px #0d4e5c; ', 'title' => '學校簡介', 'side' => '0', 'weight' => '10', 'visible' => '1'];
 //頁籤新聞區塊
-$new_data[17] = ['options' => '|10|default|#FFFFFF|#E0D9D9|#9C905C|#9C905C|1|16', 'title' => '頁籤新聞', 'side' => '5', 'weight' => '3', 'visible' => '1'];
+$new_data[17] = ['options' => '|10|default|#FFFFFF|#E0D9D9|#9C905C|#9C905C|1|16|1', 'title' => '頁籤新聞', 'side' => '5', 'weight' => '3', 'visible' => '1'];
 //標籤新聞區塊
-$new_data[18] = ['options' => '|10|default|#FFFFFF|#E0D9D9|#9C905C|#9C905C|0', 'title' => '標籤新聞', 'side' => '9', 'weight' => '10', 'visible' => '0'];
+$new_data[18] = ['options' => '|10|default|#FFFFFF|#E0D9D9|#9C905C|#9C905C|0|16', 'title' => '標籤新聞', 'side' => '9', 'weight' => '10', 'visible' => '0'];
 //自訂頁面選單[hide]
 $new_data[19] = ['options' => '0|1|#ffffff|#006084|padding: 4px; border-radius: 5px; |font-size: 1.3em; text-shadow: 0px 1px #0d4e5c, 1px 0px #0d4e5c, -1px 0px #0d4e5c, 0px -1px #0d4e5c, -1px -1px #0d4e5c, 1px 1px #0d4e5c, 1px -1px #0d4e5c, -1px 1px #0d4e5c; ', 'title' => '自訂頁面自動選單', 'side' => '0', 'weight' => '14', 'visible' => '0'];
